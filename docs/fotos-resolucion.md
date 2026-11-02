@@ -44,3 +44,15 @@ Lo ideal: **los archivos originales de cámara o dron, sin recortar**, al menos 
 ## ¿Y ampliarlas con inteligencia artificial?
 
 Se puede, pero no lo hicimos: el brief pide no ampliar artificialmente las imágenes, y la IA inventa detalles (texturas de piedra, hojas, ventanas) que pueden no coincidir con la obra real, algo delicado en publicidad inmobiliaria ante PROFECO. Si el cliente lo autoriza, conviene usarla solo en fotos de ambiente (cielo, jardín), nunca en fachadas ni interiores que muestran acabados.
+
+## Actualización: fotos del hero, El proyecto y Amenidades
+
+Se reemplazaron por versiones retocadas con ChatGPT a partir de las fotos reales (misma arquitectura, sin poste, auto ni macetas; en la alberca se completó cielo y pasto a los lados) y se ampliaron x2 con Real-ESRGAN (`scripts/ampliar-fotos.py`, mezcla 70 % IA / 30 % Lanczos para conservar la textura):
+
+| Archivo | Antes | Ahora |
+|---|---|---|
+| `hero-fachada.jpg` | 1,448 × 1,086 | 3,072 × 2,048 |
+| `proyecto-conjunto.jpg` | 1,448 × 1,086 | 3,072 × 2,048 |
+| `amenidades-casa-club.jpg` | 1,086 × 1,448 | 3,344 × 1,882 |
+
+Las tres llevan la leyenda "Imagen ilustrativa". Con esta resolución los capítulos vuelven a abrir casi a pantalla completa (hasta ~2,000 px) sin verse estirados.

@@ -1,10 +1,10 @@
 ---
 import Foto from '../Foto.astro';
 import Icono from '../Icono.astro';
-import fachada from '../../assets/fotos/fachada-frontal.jpg';
+import fachada from '../../assets/fotos/hero-fachada.jpg';
 import familia from '../../assets/fotos/familia-alberca.webp';
 import { SITE, mxn } from '../../data/site';
-const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
+const HERO_WIDTHS = [480, 720, 960, 1280, 1600, 2000];
 ---
 <section class="hero tema-oscuro" id="inicio" data-hero aria-labelledby="hero-titulo">
   <div class="hero__panel">
@@ -40,16 +40,17 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
     <div class="hero__foto-in" data-parallax="10">
       <Foto
         src={fachada}
-        alt="Fachadas de las casas de Puerta Magnolia al atardecer, con volúmenes ocres, piedra y jardines al frente"
+        alt="Fachadas de las casas de Puerta Magnolia al atardecer, con volúmenes ocres, muros de piedra, puertas de madera y cocheras con franjas de pasto"
         sizes="(min-width: 900px) 58vw, calc(100vw - 40px)"
         widths={HERO_WIDTHS}
         calidad={68}
         prioridad
         revela={false}
-        posicion="42% 55%"
+        posicion="47% 58%"
       />
     </div>
     <p class="hero__est etiqueta">Est. {SITE.fundacion} · GDL</p>
+    <p class="hero__ilus">Imagen ilustrativa</p>
     <a class="hero__bajar" href="#proyecto" aria-label="Bajar a El proyecto">
       <Icono nombre="flecha" />
     </a>
@@ -82,6 +83,7 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
   .hero__foto-in { position: absolute; inset: -6% 0; }
   .hero__foto :global(.figura), .hero__foto :global(.foto) { height: 100%; }
   .hero__est { position: absolute; left: 1.25rem; bottom: 1.25rem; color: var(--pm-marfil); background: rgba(18, 79, 83, 0.82); padding: 0.4rem 0.7rem; border-radius: 999px; }
+  .hero__ilus { position: absolute; left: 50%; top: 1.25rem; transform: translateX(-50%); white-space: nowrap; font-size: 0.8125rem; font-weight: 500; color: var(--pm-marfil); background: rgba(13, 59, 62, 0.72); padding: 0.25rem 0.6rem; border-radius: 999px; }
   .hero__bajar {
     position: absolute; right: 1.25rem; bottom: 1.25rem;
     width: 52px; height: 52px; border-radius: 50%;
@@ -106,6 +108,7 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
     .hero__titulo { font-size: clamp(3.75rem, 1rem + 5.4vw, 7.5rem); }
     .hero__foto { height: auto; margin: 0; border-radius: 0; }
     .hero__est { left: auto; right: 6rem; bottom: 2rem; }
+    .hero__ilus { left: 2rem; top: auto; bottom: 2rem; transform: none; }
     .hero__bajar { right: 2rem; bottom: 1.5rem; width: 60px; height: 60px; }
     .hero__ovalo {
       display: block; position: absolute;

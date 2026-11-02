@@ -16,14 +16,14 @@ import Apartado from '../components/sections/Apartado.astro';
 import Faq from '../components/sections/Faq.astro';
 import Contacto from '../components/sections/Contacto.astro';
 import { organizacion, lugar, preguntas, todosLosModelos } from '../data/schema';
-import fachada from '../assets/fotos/fachada-frontal.jpg';
+import fachada from '../assets/fotos/hero-fachada.jpg';
 ---
 <Base
   titulo="Casas en venta al sur de Guadalajara · Puerta Magnolia Residencial"
   descripcion="Casas de 3 recámaras en San Agustín, Tlajomulco, cerca de Galerías Santa Anita y Av. López Mateos Sur. Tercera etapa: 73 viviendas desde $2,990,000. Aparta con $10,000."
   jsonld={[organizacion, lugar, ...todosLosModelos(), preguntas]}
   intro
-  lcp={{ src: fachada, sizes: '(min-width: 900px) 58vw, calc(100vw - 40px)', widths: [360, 540, 720, 960, 1280, 1448], quality: 68 }}
+  lcp={{ src: fachada, sizes: '(min-width: 900px) 58vw, calc(100vw - 40px)', widths: [480, 720, 960, 1280, 1600, 2000], quality: 68 }}
 >
   <Indice />
   <Hero />
