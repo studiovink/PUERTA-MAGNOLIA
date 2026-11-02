@@ -1,0 +1,361 @@
+---
+import { Picture } from 'astro:assets';
+import Folio from '../Folio.astro';
+import Icono from '../Icono.astro';
+import render from '../../assets/planos/plan-maestro.png';
+import { LOTES, PLANO, DISPONIBILIDAD_ES_EJEMPLO, resumenPorModelo } from '../../data/lotes';
+import { MODELOS, modeloPorId, fmtM2 } from '../../data/modelos';
+import { mxn, SITE } from '../../data/site';
+
+const resumen = resumenPorModelo();
+const ESTADO = { disponible: 'Disponible', apartado: 'Apartado', vendido: 'Vendido' } as const;
+// Zona de la tercera etapa sobre el render (aprox., a partir del sembrado SEM-03)
+const zonasEtapa3 = [
+  '1103,432 1398,450 1446,455 1450,522 1418,528 1420,640 1330,700 1250,745 1190,752 1100,752',
+  '620,646 940,640 990,668 980,692 620,692',
+];
+const datosLotes = LOTES.map((l) => {
+  const m = modeloPorId(l.modelo);
+  return { id: l.id, manzana: l.manzana, numero: l.numero, modelo: l.modelo, nombre: m.nombre, m2: m.m2, precio: m.precio, estado: l.estado };
+});
+const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) / pts.length, pts.reduce((a, p) => a + p[1], 0) / pts.length];
+---
+<section class="plan tema-oscuro seccion" id="elige-tu-casa" aria-labelledby="plan-titulo" data-plan>
+  <div class="contenedor">
+    <Folio n="03" nombre="Elige tu casa" />
+    <div class="plan__cabeza">
+      <h2 id="plan-titulo" data-titulo>Elige tu lugar en la <em>tercera etapa.</em></h2>
+      <p class="lead suave" data-revela>
+        {SITE.etapa.viviendas} nuevas viviendas. Las Etapas 1 y 2 ya se comercializaron: hoy eliges entre los lotes de la tercera.
+      </p>
+    </div>
+
+    <div class="plan__niveles" role="tablist" aria-label="Nivel del plano">
+      <button class="chip" type="button" role="tab" id="tab-nivel-1" aria-controls="nivel-1" aria-selected="true" tabindex="0" data-nivel="1">
+        <span class="num">1</span> Todo el residencial
+      </button>
+      <button class="chip" type="button" role="tab" id="tab-nivel-2" aria-controls="nivel-2" aria-selected="false" tabindex="-1" data-nivel="2">
+        <span class="num">2</span> Tercera etapa · lotes
+      </button>
+    </div>
+
+    <!-- Nivel 1: plan maestro completo -->
+    <div class="plan__nivel" id="nivel-1" role="tabpanel" aria-labelledby="tab-nivel-1" data-panel-attr>
+      <div class="plan__render">
+        <div class="plan__imagen">
+        <Picture src={render} alt="Render del plan maestro de Puerta Magnolia con sus calles, lotes, áreas verdes y casa club" widths={[640, 960, 1280, 1593]} sizes="(min-width: 1440px) 1300px, 92vw" formats={['avif', 'webp']} quality={70} loading="lazy" />
+        <svg class="plan__capa" viewBox="0 0 1593 1059" aria-hidden="false">
+          <defs>
+            <mask id="mascara-etapa">
+              <rect width="1593" height="1059" fill="white" />
+              {zonasEtapa3.map((p) => <polygon points={p} fill="black" />)}
+            </mask>
+          </defs>
+          <rect width="1593" height="1059" fill="#0D3B3E" opacity="0.45" mask="url(#mascara-etapa)" />
+          <a href="#nivel-2" class="plan__zona" data-ir-nivel="2" aria-label={`Ver los ${SITE.etapa.viviendas} lotes de la tercera etapa`}>
+            {zonasEtapa3.map((p) => <polygon points={p} />)}
+          </a>
+        </svg>
+        <p class="plan__marca plan__marca--vendido etiqueta">Etapas 1 y 2 · comercializadas</p>
+        </div>
+        <div class="plan__tarjeta plan__tarjeta--etapa">
+          <p class="etiqueta">Tercera etapa</p>
+          <p class="plan__tarjeta-n"><span class="num">{SITE.etapa.viviendas}</span> viviendas</p>
+          <p>Desde {mxn(2990000)}</p>
+          <button type="button" class="btn btn--sm" data-ir-nivel="2">Ver lotes <Icono nombre="flecha" /></button>
+        </div>
+      </div>
+      <p class="plan__nota">Render ilustrativo del plan maestro. La zona resaltada es aproximada.</p>
+    </div>
+
+    <!-- Nivel 2: sembrado de la tercera etapa -->
+    <div class="plan__nivel" id="nivel-2" role="tabpanel" aria-labelledby="tab-nivel-2" data-panel-attr data-oculto-js>
+      {DISPONIBILIDAD_ES_EJEMPLO && (
+        <p class="plan__aviso" role="note">
+          <span class="pendiente">Disponibilidad de EJEMPLO</span>
+          El modelo de cada lote viene del sembrado oficial. Qué lotes siguen libres te lo confirma un asesor.
+        </p>
+      )}
+
+      <div class="plan__filtros" role="group" aria-label="Filtrar lotes">
+        <button type="button" class="chip" aria-pressed="true" data-filtro="todos">Todos</button>
+        {MODELOS.map((m) => (
+          <button type="button" class="chip" aria-pressed="false" data-filtro={m.id}>
+            <i class="plan__punto" style={`background:${m.color}`}></i>{m.nombre}
+          </button>
+        ))}
+        <label class="plan__solo chip">
+          <input type="checkbox" data-solo-disponibles /> Solo disponibles
+        </label>
+      </div>
+
+      <div class="plan__layout">
+        <div class="plan__mapa-wrap">
+          <div class="plan__mapa" data-mapa>
+            <svg viewBox={PLANO.viewBox} role="group" aria-label="Sembrado de la tercera etapa: toca un lote para ver su información">
+              <defs>
+                <pattern id="rayado" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+                  <rect width="6" height="6" fill="#F5F1E8" />
+                  <line x1="0" y1="0" x2="0" y2="6" stroke="currentColor" stroke-width="3.2" />
+                </pattern>
+              </defs>
+              {PLANO.contornos.map((d) => <path d={d} class="plan__contorno" />)}
+              {PLANO.areasVerdes.map((a) => <path d={a.d} class="plan__verde" />)}
+              {LOTES.map((l) => {
+                const m = modeloPorId(l.modelo);
+                const [cx, cy] = centro(l.puntos);
+                return (
+                  <g
+                    class="lote" tabindex="0" role="button"
+                    data-lote={l.id} data-modelo={l.modelo} data-estado={l.estado}
+                    style={`--c:${m.color};color:${m.color}`}
+                    aria-label={`Lote ${l.id}, modelo ${m.nombre}, ${ESTADO[l.estado].toLowerCase()}${DISPONIBILIDAD_ES_EJEMPLO ? ' (ejemplo)' : ''}`}
+                    aria-pressed="false"
+                  >
+                    <polygon points={l.puntos.map((p) => p.join(',')).join(' ')} />
+                    <text x={cx} y={cy} text-anchor="middle" dominant-baseline="central" aria-hidden="true">{String(l.numero).padStart(2, '0')}</text>
+                  </g>
+                );
+              })}
+              <text x="400" y="625" class="plan__rotulo" aria-hidden="true">Área verde</text>
+            </svg>
+          </div>
+          <button type="button" class="plan__acercar enlace" data-acercar aria-pressed="false"><Icono nombre="lupa" /> Acercar plano</button>
+        </div>
+
+        <aside class="plan__lado" aria-live="polite">
+          <div class="plan__sel" data-seleccion hidden>
+            <p class="etiqueta acento" data-sel-id></p>
+            <p class="plan__sel-modelo" data-sel-modelo></p>
+            <dl class="plan__sel-datos">
+              <div><dt>Construcción</dt><dd data-sel-m2></dd></div>
+              <div><dt>Desde</dt><dd data-sel-precio></dd></div>
+              <div><dt>Estado</dt><dd data-sel-estado></dd></div>
+            </dl>
+            <div class="plan__sel-ctas">
+              <a class="btn" href="#" data-sel-apartar target="_blank" rel="noopener">Apartar este lote</a>
+              <a class="btn btn--linea" href="#" data-sel-ver>Ver el modelo</a>
+            </div>
+          </div>
+          <div class="plan__vacio" data-seleccion-vacia>
+            <p class="t-h4">Toca un lote del plano.</p>
+            <p class="suave">Verás su modelo, metros, precio desde y cómo apartarlo.</p>
+          </div>
+
+          <ul class="plan__leyenda" role="list" aria-label="Leyenda">
+            {MODELOS.map((m) => (
+              <li>
+                <i class="plan__punto" style={`background:${m.color}`}></i>
+                <span><b>{m.nombre}</b> · {fmtM2(m.m2)}</span>
+                <span class="suave">{resumen[m.id].total} lotes</span>
+              </li>
+            ))}
+            <li>
+              <svg class="plan__muestra" viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" fill="#F5F1E8" /><path d="M-2 6 6 -2M-2 14 14 -2M6 16 16 6" stroke="#124F53" stroke-width="2.4" /></svg>
+              <span>Apartado (rayado)</span><span class="suave">ejemplo</span>
+            </li>
+            <li>
+              <svg class="plan__muestra" viewBox="0 0 14 14" aria-hidden="true"><rect width="14" height="14" fill="#B9B2A6" /></svg>
+              <span>Vendido (gris)</span><span class="suave">ejemplo</span>
+            </li>
+          </ul>
+        </aside>
+      </div>
+
+      <details class="plan__lista">
+        <summary>Ver los {LOTES.length} lotes como lista</summary>
+        <div class="plan__tabla" tabindex="0" role="region" aria-label="Lista de lotes">
+          <table>
+            <thead><tr><th scope="col">Lote</th><th scope="col">Modelo</th><th scope="col">m²</th><th scope="col">Desde</th><th scope="col">Estado{DISPONIBILIDAD_ES_EJEMPLO && ' (ejemplo)'}</th><th scope="col"><span class="sr-only">Acción</span></th></tr></thead>
+            <tbody>
+              {datosLotes.map((l) => (
+                <tr data-fila-lote={l.id} data-modelo={l.modelo} data-estado={l.estado}>
+                  <td>{l.id}</td><td>{l.nombre}</td><td>{l.m2}</td><td>{mxn(l.precio)}</td><td>{ESTADO[l.estado]}</td>
+                  <td><button type="button" class="enlace" data-elegir-lote={l.id} disabled={l.estado === 'vendido'}>Elegir</button></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
+      <p class="plan__nota">Esquema basado en el sembrado de la tercera etapa (SEM-03, enero 2026). No es a escala.</p>
+    </div>
+  </div>
+  <script type="application/json" data-lotes set:html={JSON.stringify(datosLotes)} />
+</section>
+
+<style>
+  .plan__cabeza { display: grid; gap: 1.5rem; margin-bottom: 2rem; }
+  @media (min-width: 1000px) { .plan__cabeza { grid-template-columns: 7fr 4fr; align-items: end; gap: 4rem; } }
+  .plan__niveles { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+  .plan__niveles .num { color: inherit; font-size: 1.1rem; }
+  :global(html.js) .plan__nivel[data-oculto-js] { display: none; }
+  .plan__nota { font-size: var(--t-xs); color: var(--c-suave); margin-top: 0.75rem; }
+
+  /* Nivel 1 */
+  .plan__render { position: relative; }
+  .plan__imagen { position: relative; }
+  .plan__render :global(img) { width: 100%; height: auto; }
+  .plan__capa { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .plan__zona polygon {
+    fill: rgba(184, 117, 79, 0.18); stroke: var(--pm-terracota); stroke-width: 4;
+    vector-effect: non-scaling-stroke; cursor: pointer;
+    transition: fill 0.4s var(--ease);
+    animation: latido 2.6s var(--ease-io) infinite;
+  }
+  .plan__zona:hover polygon, .plan__zona:focus-visible polygon { fill: rgba(184, 117, 79, 0.42); }
+  @keyframes latido { 50% { stroke-width: 7; } }
+  .plan__tarjeta {
+    background: var(--pm-marfil); color: var(--pm-grafito);
+    padding: 1rem 1.25rem; border-radius: var(--radio);
+    display: grid; gap: 0.35rem; justify-items: start;
+    margin-top: 1rem;
+  }
+  .plan__tarjeta .etiqueta { color: var(--pm-terracota-texto); }
+  .plan__tarjeta-n { font-family: var(--f-titular); font-size: 1.75rem; line-height: 1; color: var(--pm-petroleo); }
+  .plan__tarjeta-n .num { font-size: 2.5rem; color: var(--pm-terracota-texto); }
+  .plan__tarjeta .btn { margin-top: 0.5rem; --b-fondo: var(--pm-petroleo); --b-texto: var(--pm-marfil); --b-borde: var(--pm-petroleo); }
+  .plan__marca { display: none; }
+  @media (min-width: 900px) {
+    .plan__tarjeta--etapa { position: absolute; right: 2%; top: 4%; margin: 0; min-width: 220px; }
+    .plan__marca { display: block; position: absolute; left: 14%; top: 30%; background: rgba(13, 59, 62, 0.85); color: var(--pm-marfil); padding: 0.4rem 0.75rem; border-radius: 999px; }
+  }
+
+  /* Nivel 2 */
+  .plan__aviso { display: flex; flex-wrap: wrap; gap: 0.5rem 0.75rem; align-items: center; font-size: var(--t-sm); color: var(--c-suave); margin-bottom: 1.25rem; }
+  .plan__filtros { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
+  .plan__filtros .chip { border-color: var(--c-linea); }
+  .plan__punto { display: inline-block; width: 12px; height: 12px; border-radius: 50%; border: 1px solid var(--pm-marfil); flex: none; }
+  .plan__muestra { width: 14px; height: 14px; border-radius: 2px; }
+  .plan__solo input { width: 18px; height: 18px; accent-color: var(--pm-terracota); }
+
+  .plan__layout { display: grid; gap: 1.5rem; }
+  @media (min-width: 1000px) { .plan__layout { grid-template-columns: minmax(0, 1.6fr) minmax(280px, 1fr); align-items: start; } }
+  .plan__mapa { background: var(--pm-marfil); border-radius: var(--radio); overflow: auto; max-height: 82svh; overscroll-behavior: contain; }
+  .plan__mapa svg { width: 100%; height: auto; transition: width 0.4s var(--ease); }
+  .plan__mapa.es-cerca svg { width: 220%; max-width: none; }
+  .plan__acercar { margin-top: 0.75rem; font-size: 0.875rem; }
+  .plan__acercar :global(svg) { width: 18px; }
+  @media (min-width: 1000px) { .plan__acercar { display: none; } }
+
+  .plan__contorno { fill: #EDE6D8; stroke: var(--pm-terracota); stroke-width: 2.5; }
+  .plan__verde { fill: #C9D7CF; }
+  .plan__rotulo { font: 600 13px var(--f-texto); fill: #3E5B57; letter-spacing: 0.08em; text-transform: uppercase; }
+  .lote { cursor: pointer; outline: none; }
+  .lote polygon { fill: var(--c); stroke: var(--pm-marfil); stroke-width: 1.4; transition: opacity 0.3s var(--ease), fill 0.3s; }
+  .lote text { font: 600 10.5px var(--f-texto); fill: var(--pm-marfil); pointer-events: none; }
+  .lote[data-estado='apartado'] polygon { fill: url(#rayado); }
+  .lote[data-modelo='jazmin'] text, .lote[data-estado='apartado'] text { fill: var(--pm-grafito); }
+  .lote[data-estado='vendido'] polygon { fill: #B9B2A6; }
+  .lote[data-estado='vendido'] text { fill: #4A4F4B; }
+  .lote:hover polygon, .lote:focus-visible polygon { stroke: var(--pm-grafito); stroke-width: 2.5; }
+  .lote[aria-pressed='true'] polygon { stroke: var(--pm-terracota); stroke-width: 4; }
+  .lote.atenuado { opacity: 0.18; }
+
+  .plan__lado { display: grid; gap: 1.5rem; }
+  .plan__sel, .plan__vacio { border: 1px solid var(--c-linea); border-radius: var(--radio); padding: 1.25rem; display: grid; gap: 0.75rem; }
+  .plan__sel[hidden], .plan__vacio[hidden] { display: none; }
+  .plan__sel-modelo { font-family: var(--f-titular); font-size: 2.75rem; line-height: 1; }
+  .plan__sel-datos { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; border-top: 1px solid var(--c-linea); padding-top: 0.75rem; }
+  .plan__sel-datos dt { font-size: var(--t-xs); color: var(--c-suave); text-transform: uppercase; letter-spacing: 0.08em; }
+  .plan__sel-datos dd { margin: 0; font-weight: 600; }
+  .plan__sel-ctas { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+  .plan__leyenda { display: grid; gap: 0.5rem; margin: 0; font-size: var(--t-sm); }
+  .plan__leyenda li { display: grid; grid-template-columns: auto 1fr auto; gap: 0.6rem; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid var(--c-linea); }
+
+  .plan__lista { margin-top: 2rem; border-top: 1px solid var(--c-linea); }
+  .plan__lista summary { cursor: pointer; padding: 1rem 0; font-weight: 600; min-height: 44px; }
+  .plan__tabla { max-height: 420px; overflow: auto; }
+  .plan__tabla table { width: 100%; border-collapse: collapse; font-size: var(--t-sm); min-width: 520px; }
+  .plan__tabla th, .plan__tabla td { text-align: left; padding: 0.6rem 0.5rem; border-bottom: 1px solid var(--c-linea); }
+  .plan__tabla thead th { position: sticky; top: 0; background: var(--pm-petroleo); }
+  .plan__tabla tr[hidden] { display: none; }
+  .plan__tabla button:disabled { opacity: 0.45; border-color: transparent; }
+</style>
+
+<script>
+  import { mxn } from '../../data/site';
+  type L = { id: string; manzana: number; numero: number; modelo: string; nombre: string; m2: number; precio: number; estado: string };
+  const sec = document.querySelector<HTMLElement>('[data-plan]');
+  if (sec) {
+    const datos: L[] = JSON.parse(sec.querySelector('[data-lotes]')!.textContent!);
+    const porId = new Map(datos.map((d) => [d.id, d]));
+    const lotes = [...sec.querySelectorAll<SVGGElement>('.lote')];
+    const filas = [...sec.querySelectorAll<HTMLTableRowElement>('[data-fila-lote]')];
+    const filtros = [...sec.querySelectorAll<HTMLButtonElement>('[data-filtro]')];
+    const solo = sec.querySelector<HTMLInputElement>('[data-solo-disponibles]')!;
+    const sel = sec.querySelector<HTMLElement>('[data-seleccion]')!;
+    const vacio = sec.querySelector<HTMLElement>('[data-seleccion-vacia]')!;
+    const ESTADO: Record<string, string> = { disponible: 'Disponible', apartado: 'Apartado', vendido: 'Vendido' };
+
+    // niveles
+    const irNivel = (n: string) => {
+      const tab = sec.querySelector<HTMLElement>(`[data-nivel="${n}"]`)!;
+      tab.click();
+    };
+    sec.querySelector('[role="tablist"]')!.addEventListener('tab-cambio', () => {
+      window.dispatchEvent(new Event('pm-relayout'));
+    });
+    sec.querySelectorAll<HTMLElement>('[data-ir-nivel]').forEach((b) => b.addEventListener('click', (e) => {
+      e.preventDefault(); irNivel(b.dataset.irNivel!);
+      sec.querySelector('#nivel-2')!.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }));
+
+    // filtros
+    let filtro = 'todos';
+    const aplicar = () => {
+      lotes.forEach((g) => {
+        const ok = (filtro === 'todos' || g.dataset.modelo === filtro) && (!solo.checked || g.dataset.estado === 'disponible');
+        g.classList.toggle('atenuado', !ok);
+      });
+      filas.forEach((f) => {
+        f.hidden = !((filtro === 'todos' || f.dataset.modelo === filtro) && (!solo.checked || f.dataset.estado === 'disponible'));
+      });
+    };
+    filtros.forEach((b) => b.addEventListener('click', () => {
+      filtro = b.dataset.filtro!;
+      filtros.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      aplicar();
+    }));
+    solo.addEventListener('change', aplicar);
+
+    // selección
+    const elegir = (id: string) => {
+      const d = porId.get(id); if (!d) return;
+      lotes.forEach((g) => g.setAttribute('aria-pressed', String(g.dataset.lote === id)));
+      sel.hidden = false; vacio.hidden = true;
+      sel.querySelector('[data-sel-id]')!.textContent = `Manzana ${d.manzana} · Lote ${String(d.numero).padStart(2, '0')}`;
+      sel.querySelector('[data-sel-modelo]')!.textContent = d.nombre;
+      sel.querySelector('[data-sel-m2]')!.textContent = `${d.m2.toFixed(2)} m²`;
+      sel.querySelector('[data-sel-precio]')!.textContent = mxn(d.precio);
+      sel.querySelector('[data-sel-estado]')!.textContent = `${ESTADO[d.estado]} (ejemplo)`;
+      const ap = sel.querySelector<HTMLAnchorElement>('[data-sel-apartar]')!;
+      const msg = `Hola, me interesa el lote ${d.id} (manzana ${d.manzana}, lote ${d.numero}), modelo ${d.nombre}, en la tercera etapa de Puerta Magnolia. ¿Sigue disponible para apartarlo con $10,000?`;
+      ap.href = `https://wa.me/523322157297?text=${encodeURIComponent(msg)}`;
+      ap.textContent = d.estado === 'vendido' ? 'Preguntar por lotes similares' : 'Apartar este lote';
+      sel.querySelector<HTMLAnchorElement>('[data-sel-ver]')!.href = `/modelos/${d.modelo}`;
+      const lote = document.querySelector<HTMLInputElement>('#f-lote');
+      if (lote) lote.value = d.id;
+      const modelo = document.querySelector<HTMLSelectElement>('#f-modelo');
+      if (modelo) modelo.value = d.modelo;
+      if (matchMedia('(max-width: 999px)').matches) sel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    };
+    lotes.forEach((g) => {
+      g.addEventListener('click', () => elegir(g.dataset.lote!));
+      g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); elegir(g.dataset.lote!); } });
+    });
+    sec.querySelectorAll<HTMLButtonElement>('[data-elegir-lote]').forEach((b) => b.addEventListener('click', () => {
+      elegir(b.dataset.elegirLote!);
+      sec.querySelector('[data-mapa]')!.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }));
+
+    // acercar en móvil
+    const acercar = sec.querySelector<HTMLButtonElement>('[data-acercar]')!;
+    acercar.addEventListener('click', () => {
+      const on = acercar.getAttribute('aria-pressed') !== 'true';
+      acercar.setAttribute('aria-pressed', String(on));
+      sec.querySelector('[data-mapa]')!.classList.toggle('es-cerca', on);
+      acercar.lastChild!.textContent = on ? ' Alejar plano' : ' Acercar plano';
+    });
+  }
+</script>

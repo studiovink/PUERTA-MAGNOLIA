@@ -1,0 +1,87 @@
+---
+import { MODELOS, COMUN, fmtM2 } from '../../data/modelos';
+import { mxn } from '../../data/site';
+
+type Fila = { label: string; valores: string[]; resalta?: boolean[] };
+const si = (b: boolean) => (b ? 'Sí' : '—');
+const filas: Fila[] = [
+  { label: 'Construcción', valores: MODELOS.map((m) => fmtM2(m.m2)) },
+  { label: 'Lote', valores: MODELOS.map(() => COMUN.lote) },
+  { label: 'Niveles', valores: MODELOS.map(() => String(COMUN.niveles)) },
+  { label: 'Recámaras', valores: MODELOS.map(() => String(COMUN.recamaras)) },
+  { label: 'Baños', valores: MODELOS.map(() => String(COMUN.banos)) },
+  { label: 'Recámara principal con baño y vestidor', valores: MODELOS.map(() => 'Sí') },
+  { label: 'Oficina', valores: MODELOS.map((m) => si(m.oficina)), resalta: MODELOS.map((m) => m.oficina) },
+  { label: 'Sala de TV', valores: MODELOS.map((m) => si(m.salaTv)), resalta: MODELOS.map((m) => m.salaTv) },
+  { label: 'Jardín', valores: MODELOS.map((m) => m.jardin), resalta: MODELOS.map((m) => m.jardin !== 'Jardín') },
+  { label: 'Sala, comedor y cocina con barra', valores: MODELOS.map(() => 'Sí') },
+  { label: 'Área de lavado', valores: MODELOS.map(() => 'Sí') },
+  { label: 'Estacionamientos', valores: MODELOS.map(() => String(COMUN.estacionamientos)) },
+  { label: 'Precio desde', valores: MODELOS.map((m) => mxn(m.precio)) },
+];
+const igual = (f: Fila) => f.valores.every((v) => v === f.valores[0]);
+---
+<section class="comp tema-claro seccion" id="comparador" aria-labelledby="comp-titulo">
+  <div class="contenedor">
+    <div class="comp__cabeza">
+      <div>
+        <p class="etiqueta acento" data-revela>Comparador</p>
+        <h2 id="comp-titulo" class="t-h3" data-titulo>Los tres modelos, <em>lado a lado.</em></h2>
+      </div>
+      <button type="button" class="chip" aria-pressed="false" data-solo-dif>Mostrar solo lo que cambia</button>
+    </div>
+
+    <div class="comp__tabla" role="region" aria-labelledby="comp-titulo" tabindex="0">
+      <table>
+        <caption class="sr-only">Comparación de los modelos Violeta, Gardenia y Jazmín</caption>
+        <thead>
+          <tr>
+            <td></td>
+            {MODELOS.map((m) => (
+              <th scope="col"><a href={`/modelos/${m.id}`}>{m.nombre}</a></th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {filas.map((f) => (
+            <tr data-fila-igual={igual(f) ? '' : undefined} class:list={{ cambia: !igual(f), precio: f.label === 'Precio desde' }}>
+              <th scope="row">{f.label}</th>
+              {f.valores.map((v, i) => (
+                <td class:list={{ resalta: f.resalta?.[i] }}>{v}</td>
+              ))}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+    <p class="comp__nota suave">Precios en MXN, sujetos a cambios y disponibilidad. En <span class="resalta-txt">terracota</span>, lo que cada modelo suma.</p>
+  </div>
+</section>
+
+<style>
+  .comp__cabeza { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1.25rem; margin-bottom: 2rem; }
+  .comp__cabeza h2 { margin-top: 0.75rem; }
+  .comp__tabla { overflow-x: auto; border-top: 1px solid var(--pm-petroleo); }
+  table { width: 100%; min-width: 560px; border-collapse: collapse; font-variant-numeric: lining-nums tabular-nums; }
+  th, td { padding: 0.95rem 0.75rem; text-align: left; border-bottom: 1px solid var(--c-linea); vertical-align: top; }
+  thead th { font-family: var(--f-titular); font-weight: 500; font-size: clamp(1.5rem, 1rem + 2vw, 2.5rem); color: var(--pm-petroleo); padding-top: 1.25rem; }
+  thead th a { text-decoration: none; }
+  thead th a:hover { text-decoration: underline; }
+  tbody th { font-weight: 500; font-size: var(--t-sm); color: var(--c-suave); width: 30%; position: sticky; left: 0; background: var(--c-fondo); }
+  tbody td { font-size: 1rem; }
+  tr.cambia td { font-weight: 600; }
+  td.resalta { color: var(--c-acento); }
+  td.resalta::before { content: '+ '; }
+  tr.precio td { font-family: var(--f-titular); font-size: 1.5rem; font-weight: 500; color: var(--pm-petroleo); }
+  tr[hidden] { display: none; }
+  @media (max-width: 599px) {
+    table { min-width: 0; table-layout: fixed; }
+    th, td { padding: 0.7rem 0.3rem; font-size: 0.8125rem; }
+    tbody th { width: 34%; font-size: 0.75rem; position: static; }
+    thead th { font-size: 1.3rem; }
+    tr.precio td { font-size: 1rem; }
+    tbody td { font-size: 0.8125rem; }
+  }
+  .comp__nota { margin-top: 1rem; font-size: var(--t-sm); }
+  .resalta-txt { color: var(--c-acento); font-weight: 600; }
+</style>

@@ -1,0 +1,73 @@
+---
+import Capitulo from '../Capitulo.astro';
+import Folio from '../Folio.astro';
+import Foto from '../Foto.astro';
+import conjunto from '../../assets/fotos/conjunto-casas.jpg';
+import calle from '../../assets/fotos/calle-interior.webp';
+import juegos from '../../assets/fotos/juegos-familia.webp';
+import alberca from '../../assets/fotos/alberca-familia.webp';
+import { SITE } from '../../data/site';
+---
+<Capitulo
+  id="proyecto" n="01" titulo="El proyecto"
+  foto={conjunto}
+  alt="Conjunto de casas de Puerta Magnolia con fachadas blancas, piedra y acentos ocres al atardecer"
+  posicion="50% 60%"
+>
+  <Fragment slot="izq">
+    <p class="etiqueta acento">Puerta Magnolia Residencial</p>
+    <p class="t-h3">Un proyecto que <em>crecerá</em> junto contigo.</p>
+  </Fragment>
+  <Fragment slot="der">
+    <dl class="datos">
+      <div><dt>{SITE.etapa.nombre}</dt><dd><span class="num">{SITE.etapa.viviendas}</span> nuevas viviendas</dd></div>
+      <div><dt>Etapas 1 y 2</dt><dd>Ya comercializadas</dd></div>
+      <div><dt>Zona</dt><dd>Nueva zona de Galerías Sur</dd></div>
+      <div><dt>Respaldo</dt><dd><span class="num">{SITE.experiencia}</span> años construyendo</dd></div>
+    </dl>
+  </Fragment>
+</Capitulo>
+
+<section class="collage tema-claro seccion" aria-labelledby="collage-titulo">
+  <div class="contenedor collage__grid">
+    <div class="collage__texto">
+      <Folio n="01" nombre="El proyecto" />
+      <h2 id="collage-titulo" class="t-h2" data-titulo>Espacios pensados para <em>convivir</em>, no solo para pasar.</h2>
+      <div class="texto suave" data-revela>
+        <p>Un lugar orgulloso de crear tiempo de calidad en familia: alberca, casa club, terraza de eventos, juegos infantiles y un parque lineal con áreas verdes, a unos pasos de tu puerta.</p>
+        <p>Al sur de Guadalajara, rodeado de comercios, escuelas y servicios.</p>
+      </div>
+      <a class="enlace" href="#amenidades" data-revela>Ver amenidades</a>
+    </div>
+    <div class="collage__f1">
+      <Foto src={calle} alt="Calle interior de Puerta Magnolia con casas de dos niveles y fachadas ocres" sizes="(min-width: 1000px) 26vw, 60vw" arco marco ratio="3 / 4" posicion="50% 70%" />
+    </div>
+    <div class="collage__f2" data-parallax="14">
+      <Foto src={juegos} alt="Familia jugando en el área de juegos infantiles del residencial" sizes="(min-width: 1000px) 20vw, 45vw" ratio="4 / 5" />
+    </div>
+    <div class="collage__f3" data-parallax="22">
+      <Foto src={alberca} alt="Niños jugando en la alberca con su familia bajo una sombrilla" sizes="(min-width: 1000px) 16vw, 40vw" arco ratio="3 / 4" />
+    </div>
+  </div>
+</section>
+
+<style>
+  .datos { display: grid; border-top: 1px solid var(--c-linea); }
+  .datos div { padding: 0.8rem 0; border-bottom: 1px solid var(--c-linea); display: grid; gap: 0.1rem; }
+  .datos dt { font-size: var(--t-xs); font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: var(--c-acento); }
+  .datos dd { margin: 0; font-family: var(--f-titular); font-size: 1.5rem; line-height: 1.2; color: var(--c-titular); }
+  .datos .num { font-size: 2rem; }
+
+  .collage__grid { display: grid; gap: 1.5rem; grid-template-columns: repeat(6, 1fr); }
+  .collage__texto { grid-column: 1 / -1; display: grid; gap: 1.5rem; align-content: start; justify-items: start; }
+  .collage__f1 { grid-column: 1 / 5; }
+  .collage__f2 { grid-column: 4 / 7; margin-top: -30%; position: relative; z-index: 1; }
+  .collage__f3 { grid-column: 2 / 5; margin-top: -10%; }
+  @media (min-width: 1000px) {
+    .collage__grid { grid-template-columns: repeat(12, 1fr); gap: 2rem; align-items: start; }
+    .collage__texto { grid-column: 1 / 6; grid-row: 1 / 3; position: sticky; top: calc(var(--header-h) + 2rem); }
+    .collage__f1 { grid-column: 7 / 11; grid-row: 1; }
+    .collage__f2 { grid-column: 10 / 13; grid-row: 1; margin-top: 55%; }
+    .collage__f3 { grid-column: 6 / 9; grid-row: 2; margin-top: -14%; }
+  }
+</style>

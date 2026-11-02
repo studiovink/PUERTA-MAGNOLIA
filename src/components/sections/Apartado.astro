@@ -1,0 +1,40 @@
+---
+import Logo from '../Logo.astro';
+import { SITE, WA_APARTAR, mxn } from '../../data/site';
+---
+<section class="apa tema-claro" id="apartado" aria-labelledby="apa-titulo">
+  <div class="contenedor">
+    <div class="apa__marco">
+      <Logo variante="isotipo" decorativo class="apa__marca" />
+      <p class="etiqueta acento" data-revela>Paso 3 · Aparta</p>
+      <h2 id="apa-titulo" class="apa__titulo" data-titulo>Aparta tu casa con <em>{mxn(SITE.apartado)}.</em></h2>
+      <p class="lead suave" data-revela>Eliges tu lote en la tercera etapa con precio de preventa. Sujeto a disponibilidad.</p>
+      <div class="apa__ctas" data-revela>
+        <a class="btn" href={WA_APARTAR} target="_blank" rel="noopener" data-magnetico>Apartar por WhatsApp</a>
+        <a class="btn btn--linea" href="#elige-tu-casa">Ver lotes de la etapa</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .apa { padding-block: calc(var(--sec-y) * 0.7); }
+  .apa__marco {
+    position: relative; isolation: isolate;
+    border: 1px solid var(--pm-terracota);
+    border-radius: 50vw 50vw 0 0 / 22vw 22vw 0 0;
+    padding: clamp(5rem, 14vw, 10rem) clamp(1.25rem, 6vw, 6rem) clamp(2.5rem, 6vw, 5rem);
+    display: grid; gap: 1.25rem; justify-items: center; text-align: center;
+  }
+  .apa__marco::before {
+    content: ''; position: absolute; inset: 12px; z-index: -1;
+    border: 1px solid var(--pm-arena); border-radius: inherit;
+  }
+  .apa__marco :global(.apa__marca) {
+    position: absolute; z-index: -1; top: 50%; left: 50%; transform: translate(-50%, -50%);
+    width: min(52%, 380px); color: var(--pm-petroleo); opacity: 0.05;
+  }
+  .apa__titulo { font-size: var(--t-h1); max-width: 12ch; }
+  .apa__ctas { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.75rem; margin-top: 0.75rem; }
+  .apa .lead { margin-inline: auto; }
+</style>

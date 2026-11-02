@@ -1,0 +1,11 @@
+---
+// Folio de sección con el isotipo de la puerta (recurso del brochure).
+import Logo from './Logo.astro';
+interface Props { n: string; nombre: string }
+const { n, nombre } = Astro.props;
+---
+<div class="folio etiqueta">
+  <Logo variante="isotipo" decorativo />
+  <span class="folio__n">{n}</span>
+  <span>{nombre}</span>
+</div>

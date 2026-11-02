@@ -1,0 +1,178 @@
+---
+import Folio from '../Folio.astro';
+import Foto from '../Foto.astro';
+import Icono from '../Icono.astro';
+import PlantaVisor from '../PlantaVisor.astro';
+import Pasos from '../Pasos.astro';
+import { MODELOS, COMUN, fmtM2 } from '../../data/modelos';
+import { mxn, waLink, SITE } from '../../data/site';
+---
+<section class="modelos tema-arena seccion" id="modelos" aria-labelledby="modelos-titulo">
+  <div class="contenedor">
+    <Folio n="02" nombre="Modelos" />
+    <div class="modelos__cabeza">
+      <h2 id="modelos-titulo" data-titulo>Elige el modelo que se ajusta a <em>cómo vive</em> tu familia.</h2>
+      <p class="lead suave" data-revela>
+        Tres casas de dos niveles en lote de {COMUN.lote}, todas con 3 recámaras, 2.5 baños, jardín y 2 estacionamientos. Cambia lo que cada familia necesita de más.
+      </p>
+    </div>
+
+    <Pasos activo={1} />
+
+    <div class="modelos__tabs" role="tablist" aria-label="Modelos de casa" data-revela>
+      {MODELOS.map((m, i) => (
+        <button
+          type="button" role="tab" class="modelos__tab"
+          id={`tab-modelo-${m.id}`}
+          aria-controls={`modelo-${m.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          data-modelo-tab={m.id}
+        >
+          <span class="modelos__tab-nombre">{m.nombre}</span>
+          <span class="modelos__tab-dato">{fmtM2(m.m2)} · desde {mxn(m.precio)}</span>
+        </button>
+      ))}
+    </div>
+
+    {MODELOS.map((m, i) => (
+      <div
+        class="modelo" id={`modelo-${m.id}`} role="tabpanel"
+        aria-labelledby={`tab-modelo-${m.id}`}
+        data-modelo-panel={m.id}
+        data-panel-attr
+        data-oculto-js={i !== 0 ? '' : undefined}
+      >
+        <div class="modelo__foto">
+          <Foto
+            src={m.fachada} alt={m.fachadaAlt} arco marco
+            sizes="(min-width: 1100px) 34vw, (min-width: 700px) 45vw, 88vw"
+            ratio="2 / 3" posicion="50% 62%"
+          />
+        </div>
+
+        <div class="modelo__info">
+          <p class="etiqueta acento">Modelo {String(i + 1).padStart(2, '0')}</p>
+          <h3 class="modelo__nombre">{m.nombre}</h3>
+          <p class="modelo__frase">{m.frase}</p>
+
+          <dl class="modelo__datos">
+            <div><dt>Construcción</dt><dd>{fmtM2(m.m2)}</dd></div>
+            <div><dt>Lote</dt><dd>{COMUN.lote}</dd></div>
+            <div><dt>Recámaras</dt><dd>{COMUN.recamaras}</dd></div>
+            <div><dt>Baños</dt><dd>{COMUN.banos}</dd></div>
+            <div><dt>Niveles</dt><dd>{COMUN.niveles}</dd></div>
+            <div><dt>Estacionamientos</dt><dd>{COMUN.estacionamientos}</dd></div>
+          </dl>
+
+          <div class="modelo__suma">
+            <p class="etiqueta">{m.suma.length ? 'Lo que suma este modelo' : 'Todo lo esencial'}</p>
+            {m.suma.length ? (
+              <ul role="list">{m.suma.map((s) => <li><span class="num">+</span> {s}</li>)}</ul>
+            ) : (
+              <p class="suave">La base de los tres modelos, en {fmtM2(m.m2)}.</p>
+            )}
+          </div>
+
+          <p class="modelo__precio">
+            <span class="etiqueta suave">Precio desde</span>
+            <span class="modelo__monto precio">{mxn(m.precio)}</span>
+          </p>
+        </div>
+
+        <div class="modelo__plantas">
+          <p class="modelo__paso etiqueta"><span class="num">2</span> Mira sus plantas</p>
+          <PlantaVisor modelo={m} />
+        </div>
+
+        <div class="modelo__accion">
+          <p class="modelo__paso etiqueta"><span class="num">3</span> Agenda o aparta</p>
+          <div class="modelo__ctas">
+            <a class="btn" href="#contacto" data-elige-modelo={m.id}>Quiero conocerla</a>
+            <a class="btn btn--linea" href={waLink(`Hola, quiero apartar una casa modelo ${m.nombre} en Puerta Magnolia con ${mxn(SITE.apartado)}. ¿Qué lotes tienen disponibles?`)} target="_blank" rel="noopener">
+              Apartar con {mxn(SITE.apartado)}
+            </a>
+            <a class="enlace" href={`/modelos/${m.id}`}>Ficha completa <Icono nombre="flecha" /></a>
+          </div>
+        </div>
+      </div>
+    ))}
+
+    <p class="modelos__incluye suave" data-revela>
+      Todos incluyen: {COMUN.incluye.join(' · ')}.
+    </p>
+  </div>
+</section>
+
+<style>
+  .modelos__cabeza { display: grid; gap: 1.5rem; margin-bottom: clamp(2rem, 4vw, 3.5rem); }
+  @media (min-width: 1000px) {
+    .modelos__cabeza { grid-template-columns: 7fr 4fr; align-items: end; gap: 4rem; }
+  }
+
+  .modelos__tabs {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border-block: 1px solid var(--c-linea);
+    margin-block: clamp(2rem, 4vw, 3rem);
+  }
+  .modelos__tab {
+    display: grid; gap: 0.25rem; text-align: left;
+    padding: 1rem 0.75rem 1rem 0;
+    border-right: 1px solid var(--c-linea);
+    position: relative;
+    min-height: 64px;
+  }
+  .modelos__tab:not(:first-child) { padding-left: 0.75rem; }
+  .modelos__tab:last-child { border-right: 0; }
+  .modelos__tab::after {
+    content: ''; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
+    background: var(--pm-terracota); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.6s var(--ease);
+  }
+  .modelos__tab[aria-selected='true']::after { transform: scaleX(1); }
+  .modelos__tab-nombre { font-family: var(--f-titular); font-size: clamp(1.5rem, 1rem + 2.6vw, 3rem); line-height: 1; color: var(--pm-petroleo); }
+  .modelos__tab[aria-selected='false'] .modelos__tab-nombre { color: #5E6A64; }
+  .modelos__tab-dato { font-size: 0.75rem; color: var(--c-suave); display: none; }
+  @media (min-width: 640px) { .modelos__tab-dato { display: block; font-size: 0.8125rem; } }
+
+  .modelo {
+    display: grid; gap: 2rem 3rem;
+    grid-template-columns: 1fr;
+    grid-template-areas: 'foto' 'info' 'plantas' 'accion';
+    padding-bottom: clamp(2rem, 5vw, 4rem);
+  }
+  :global(html.js) .modelo[data-oculto-js] { display: none; }
+  .modelo__foto { grid-area: foto; max-width: 520px; width: 88%; }
+  .modelo__info { grid-area: info; display: grid; gap: 1.1rem; align-content: start; }
+  .modelo__plantas { grid-area: plantas; }
+  .modelo__accion { grid-area: accion; }
+  .modelo__nombre { font-size: clamp(3.5rem, 2rem + 6vw, 7rem); line-height: 0.9; }
+  .modelo__frase { font-family: var(--f-titular); font-style: italic; font-size: var(--t-h4); line-height: 1.2; color: var(--c-acento); }
+  .modelo__datos { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--c-linea); }
+  .modelo__datos div { padding: 0.75rem 0; border-bottom: 1px solid var(--c-linea); }
+  .modelo__datos dt { font-size: var(--t-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-suave); }
+  .modelo__datos dd { margin: 0; font-family: var(--f-titular); font-size: 1.5rem; line-height: 1.2; color: var(--pm-petroleo); }
+  .modelo__suma ul { margin: 0.5rem 0 0; display: grid; gap: 0.25rem; }
+  .modelo__suma li { font-family: var(--f-titular); font-size: var(--t-h4); color: var(--pm-petroleo); }
+  .modelo__suma .etiqueta { color: var(--c-acento); }
+  .modelo__precio { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0.75rem; }
+  .modelo__monto { font-family: var(--f-titular); font-size: clamp(2.25rem, 1.6rem + 2vw, 3.5rem); line-height: 1; color: var(--pm-petroleo); }
+  .modelo__paso { display: flex; align-items: center; gap: 0.6rem; margin-bottom: 1rem; color: var(--c-acento); }
+  .modelo__paso .num { font-size: 1.5rem; letter-spacing: 0; }
+  .modelo__ctas { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem 1.25rem; }
+  .modelo__ctas .enlace :global(svg) { width: 18px; }
+  .modelos__incluye { font-size: var(--t-sm); border-top: 1px solid var(--c-linea); padding-top: 1.25rem; }
+
+  @media (min-width: 760px) {
+    .modelo__datos { grid-template-columns: repeat(3, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .modelo {
+      grid-template-columns: 5fr 4fr 5fr;
+      grid-template-areas: 'foto info plantas' 'foto accion accion';
+      align-items: start;
+    }
+    .modelo__foto { width: 100%; }
+    .modelo__accion { align-self: end; border-top: 1px solid var(--c-linea); padding-top: 1.5rem; }
+  }
+</style>

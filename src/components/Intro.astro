@@ -1,0 +1,69 @@
+---
+// Entrada: las dos hojas de la puerta se abren y revelan el hero.
+// Máx. 1.5 s, botón para saltar, una sola vez por sesión, nunca con reduced-motion ni sin JS.
+import Logo from './Logo.astro';
+---
+<div class="intro" data-intro aria-hidden="true">
+  <div class="intro__hoja intro__hoja--izq"><div class="intro__puerta"><Logo variante="isotipo" decorativo /></div></div>
+  <div class="intro__hoja intro__hoja--der"><div class="intro__puerta"><Logo variante="isotipo" decorativo /></div></div>
+  <button class="intro__saltar etiqueta" type="button" data-intro-saltar tabindex="-1">Saltar</button>
+</div>
+<script is:inline>
+  (function () {
+    var d = document.documentElement;
+    var ok = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    try { if (sessionStorage.getItem('pm-intro')) ok = false; else sessionStorage.setItem('pm-intro', '1'); } catch (e) {}
+    if (!ok) return;
+    d.classList.add('con-intro');
+    var el = document.querySelector('[data-intro]');
+    var fin = function () { d.classList.remove('con-intro'); if (el) el.remove(); window.dispatchEvent(new Event('pm-intro-fin')); };
+    var t = setTimeout(fin, matchMedia('(max-width: 899px)').matches ? 920 : 1500);
+    var saltar = function () { clearTimeout(t); fin(); };
+    if (el) el.addEventListener('click', saltar);
+    addEventListener('keydown', saltar, { once: true });
+  })();
+</script>
+<style>
+  .intro { display: none; }
+  :global(html.con-intro) .intro {
+    display: block; position: fixed; inset: 0; z-index: 150;
+    perspective: 1600px; pointer-events: auto;
+  }
+  .intro__hoja {
+    position: absolute; top: 0; bottom: 0; width: 50.2%;
+    background: var(--pm-petroleo); overflow: hidden;
+    transform-style: preserve-3d; backface-visibility: hidden;
+  }
+  .intro__hoja--izq { left: 0; transform-origin: left center; animation: abre-izq 0.95s cubic-bezier(0.65, 0, 0.35, 1) 0.45s forwards; }
+  .intro__hoja--der { right: 0; transform-origin: right center; animation: abre-der 0.95s cubic-bezier(0.65, 0, 0.35, 1) 0.45s forwards; }
+  :global(html.con-intro) .intro { animation: intro-sale 0.25s linear 1.2s forwards; }
+  .intro__puerta { animation: puerta-entra 0.45s ease-out both; }
+  /* celular: entrada más breve para no retrasar la foto principal */
+  @media (max-width: 899px) {
+    .intro__hoja--izq, .intro__hoja--der { animation-duration: 0.6s; animation-delay: 0.2s; }
+    :global(html.con-intro) .intro { animation-delay: 0.7s; animation-duration: 0.2s; }
+    .intro__puerta { animation-duration: 0.2s; }
+  }
+  @keyframes abre-izq { to { transform: rotateY(-105deg); } }
+  @keyframes abre-der { to { transform: rotateY(105deg); } }
+  @keyframes intro-sale { to { opacity: 0; visibility: hidden; } }
+  @keyframes puerta-entra { from { opacity: 0; } }
+  /* el isotipo completo cruza las dos hojas; cada una muestra su mitad */
+  .intro__puerta {
+    position: absolute; top: 50%; width: clamp(84px, 14vw, 128px);
+    color: var(--pm-marfil);
+    transform: translateY(-50%);
+  }
+  .intro__hoja--izq .intro__puerta { right: 0; transform: translate(50%, -50%); }
+  .intro__hoja--der .intro__puerta { left: 0; transform: translate(-50%, -50%); }
+  .intro__puerta :global(.logo) { width: 100%; }
+  .intro__hoja::after {
+    content: ''; position: absolute; inset: 14px; border: 1px solid rgba(184, 117, 79, 0.7); pointer-events: none;
+  }
+  .intro__hoja--izq::after { right: 0; border-right: 0; }
+  .intro__hoja--der::after { left: 0; border-left: 0; }
+  .intro__saltar {
+    position: absolute; right: var(--gutter); bottom: calc(var(--gutter) + 8px); z-index: 2;
+    color: var(--pm-marfil); padding: 0.75rem 0.25rem; border-bottom: 1px solid currentColor;
+  }
+</style>

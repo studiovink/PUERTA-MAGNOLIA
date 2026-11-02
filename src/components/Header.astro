@@ -1,0 +1,209 @@
+---
+import Logo from './Logo.astro';
+import Icono from './Icono.astro';
+import { NAV, SITE, WA_DEFAULT } from '../data/site';
+
+interface Props { sobreOscuro?: boolean }
+const { sobreOscuro = true } = Astro.props;
+---
+<header class="header" data-header data-sobre-oscuro={sobreOscuro ? '' : undefined}>
+  <div class="header__fila">
+    <a href="/" class="header__logo" aria-label="Puerta Magnolia, ir al inicio">
+      <Logo variante="horizontal" decorativo />
+    </a>
+
+    <nav class="header__nav" aria-label="Principal">
+      <ul role="list">
+        {NAV.map((n) => <li><a href={n.href} data-nav={n.id}>{n.label}</a></li>)}
+      </ul>
+    </nav>
+
+    <div class="header__acciones">
+      <a class="header__tel" href={`tel:${SITE.telefonoIntl}`}>
+        <Icono nombre="telefono" /><span>{SITE.telefono}</span>
+      </a>
+      <a class="btn btn--sm btn--linea header__elige" href="/#elige-tu-casa">Elige tu casa</a>
+      <a class="btn btn--sm header__cta" href="/#contacto" data-magnetico>Agenda tu visita</a>
+      <button class="header__menu" type="button" aria-expanded="false" aria-controls="menu-movil" data-menu-abrir>
+        <span class="header__menu-txt">Menú</span>
+        <span class="header__menu-lineas" aria-hidden="true"><i></i><i></i></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="menu tema-oscuro" id="menu-movil" data-menu hidden>
+  <nav aria-label="Menú móvil" class="menu__nav">
+    <ol role="list">
+      {NAV.map((n, i) => (
+        <li><a href={n.href} data-menu-link><span class="menu__n num">0{i + 1}</span>{n.label}</a></li>
+      ))}
+      <li><a href="/#elige-tu-casa" data-menu-link><span class="menu__n num">06</span>Elige tu casa</a></li>
+    </ol>
+  </nav>
+  <div class="menu__pie">
+    <a class="btn" href="/#contacto" data-menu-link>Agenda tu visita</a>
+    <a class="btn btn--linea" href={WA_DEFAULT} target="_blank" rel="noopener"><Icono nombre="whatsapp" />WhatsApp</a>
+    <p class="menu__datos">
+      <a href={`tel:${SITE.telefonoIntl}`}>{SITE.telefono}</a><br />
+      <a href={`mailto:${SITE.correo}`}>{SITE.correo}</a>
+    </p>
+  </div>
+</div>
+
+<!-- Barra de acción del pulgar (móvil) -->
+<div class="barra" aria-label="Acciones rápidas" role="region">
+  <a class="barra__cta" href="/#contacto">Agenda tu visita</a>
+  <a class="barra__wa" href={WA_DEFAULT} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <Icono nombre="whatsapp" /><span>WhatsApp</span>
+  </a>
+</div>
+
+<!-- WhatsApp flotante (escritorio) -->
+<a class="wa-flotante" href={WA_DEFAULT} target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp al 33 2215 7297" data-magnetico>
+  <Icono nombre="whatsapp" />
+</a>
+
+<style>
+  .header {
+    position: fixed; inset: 0 0 auto 0; z-index: 90;
+    height: var(--header-h);
+    color: var(--pm-petroleo);
+    background: var(--pm-marfil);
+    border-bottom: 1px solid var(--pm-arena);
+    transition: background-color 0.45s var(--ease), color 0.45s var(--ease), border-color 0.45s var(--ease);
+  }
+  .header[data-sobre-oscuro]:not(.es-solido) { background: transparent; color: var(--pm-marfil); border-color: transparent; }
+  .header__fila {
+    height: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter);
+    display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+  }
+  .header__logo { display: block; color: inherit; flex: none; }
+  .header__logo :global(.logo) { width: 84px; }
+
+  .header__nav { display: none; }
+  .header__nav ul { display: flex; gap: 0.25rem; margin: 0; }
+  .header__nav a {
+    display: inline-flex; align-items: center; min-height: 40px; padding: 0.4rem 0.9rem;
+    border-radius: 999px; font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    transition: background-color 0.3s var(--ease);
+  }
+  .header__nav a:hover, .header__nav a[aria-current='true'] { background: rgba(18, 79, 83, 0.08); }
+  .header[data-sobre-oscuro]:not(.es-solido) .header__nav ul { background: var(--pm-marfil); color: var(--pm-petroleo); border-radius: 999px; padding: 4px; }
+
+  .header__acciones { display: flex; align-items: center; gap: 0.5rem; }
+  .header__tel { display: none; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 600; text-decoration: none; padding: 0.4rem 0.6rem; }
+  .header__tel :global(svg) { width: 16px; height: 16px; }
+  .header__elige, .header__cta { display: none; }
+  .header[data-sobre-oscuro]:not(.es-solido) .header__cta { --b-fondo: var(--pm-marfil); --b-texto: var(--pm-petroleo); --b-borde: var(--pm-marfil); }
+  .header[data-sobre-oscuro]:not(.es-solido) .header__elige { --b-texto: var(--pm-marfil); }
+
+  .header__menu {
+    display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0 0.25rem 0 0.75rem;
+    font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em;
+  }
+  .header__menu-lineas { display: grid; gap: 6px; width: 26px; }
+  .header__menu-lineas i { display: block; height: 1px; background: currentColor; transition: transform 0.4s var(--ease); }
+  .header__menu[aria-expanded='true'] .header__menu-lineas i:first-child { transform: translateY(3.5px) rotate(20deg); }
+  .header__menu[aria-expanded='true'] .header__menu-lineas i:last-child { transform: translateY(-3.5px) rotate(-20deg); }
+
+  @media (min-width: 900px) {
+    .header__cta { display: inline-flex; }
+  }
+  @media (min-width: 1180px) {
+    .header__nav { display: block; }
+    .header__menu { display: none; }
+    .header__elige { display: inline-flex; }
+  }
+  @media (min-width: 1380px) {
+    .header__tel { display: inline-flex; }
+  }
+
+  /* Menú móvil */
+  .menu {
+    position: fixed; inset: 0; z-index: 85;
+    padding: calc(var(--header-h) + 1.5rem) var(--gutter) calc(var(--barra-movil-h) + 1.5rem);
+    display: flex; flex-direction: column; justify-content: space-between; gap: 2rem;
+    overflow-y: auto;
+  }
+  .menu[hidden] { display: none; }
+  .menu__nav ol { margin: 0; }
+  .menu__nav li { border-bottom: 1px solid var(--c-linea); }
+  .menu__nav a {
+    display: flex; align-items: baseline; gap: 1rem; padding: 0.7rem 0;
+    font-family: var(--f-titular); font-size: clamp(2rem, 9vw, 3rem); line-height: 1.1; text-decoration: none;
+  }
+  .menu__n { font-size: 1rem; color: var(--pm-terracota-claro); }
+  .menu__pie { display: grid; gap: 0.75rem; }
+  .menu__datos { margin-top: 0.75rem; color: var(--c-suave); font-size: var(--t-sm); line-height: 1.9; }
+  .menu__datos a { text-decoration: none; }
+  body:has(.menu:not([hidden])) .header { background: var(--pm-petroleo); color: var(--pm-marfil); border-color: transparent; }
+
+  /* Barra inferior móvil */
+  .barra {
+    position: fixed; inset: auto 0 0 0; z-index: 80;
+    display: grid; grid-template-columns: 1fr auto;
+    height: calc(var(--barra-movil-h) + env(safe-area-inset-bottom));
+    padding: 8px var(--gutter) calc(8px + env(safe-area-inset-bottom));
+    gap: 8px;
+    background: var(--pm-marfil);
+    border-top: 1px solid var(--pm-arena);
+  }
+  .barra a {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+    border-radius: 999px; font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+  }
+  .barra__cta { background: var(--pm-petroleo); color: var(--pm-marfil); }
+  .barra__wa { border: 1px solid var(--pm-petroleo); color: var(--pm-petroleo); padding-inline: 1rem; }
+  .barra__wa :global(svg) { width: 20px; height: 20px; }
+  @media (min-width: 900px) { .barra { display: none; } }
+
+  .wa-flotante {
+    display: none;
+    position: fixed; right: 24px; bottom: 24px; z-index: 80;
+    width: 58px; height: 58px; border-radius: 50%;
+    align-items: center; justify-content: center;
+    background: var(--pm-petroleo); color: var(--pm-marfil);
+    border: 1px solid var(--pm-marfil);
+    outline: 1px solid var(--pm-petroleo);
+    transition: transform 0.4s var(--ease);
+  }
+  .wa-flotante :global(svg) { width: 26px; height: 26px; }
+  .wa-flotante:hover { transform: scale(1.06); }
+  @media (min-width: 900px) { .wa-flotante { display: inline-flex; } }
+</style>
+
+<script>
+  const header = document.querySelector<HTMLElement>('[data-header]')!;
+  const menu = document.querySelector<HTMLElement>('[data-menu]')!;
+  const boton = document.querySelector<HTMLButtonElement>('[data-menu-abrir]')!;
+
+  // Fondo sólido al salir del hero
+  const marcarSolido = () => header.classList.toggle('es-solido', window.scrollY > 24);
+  marcarSolido();
+  window.addEventListener('scroll', marcarSolido, { passive: true });
+
+  // Menú móvil
+  const abrir = (si: boolean) => {
+    boton.setAttribute('aria-expanded', String(si));
+    menu.hidden = !si;
+    document.documentElement.style.overflow = si ? 'hidden' : '';
+    if (si) menu.querySelector<HTMLElement>('a')?.focus();
+  };
+  boton.addEventListener('click', () => abrir(boton.getAttribute('aria-expanded') !== 'true'));
+  menu.querySelectorAll('[data-menu-link]').forEach((a) => a.addEventListener('click', () => abrir(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !menu.hidden) { abrir(false); boton.focus(); }
+  });
+
+  // Sección activa en el menú
+  const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav]');
+  const ids = [...links].map((l) => l.dataset.nav!);
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((en) => {
+      if (!en.isIntersecting) return;
+      links.forEach((l) => l.setAttribute('aria-current', String(l.dataset.nav === en.target.id)));
+    });
+  }, { rootMargin: '-45% 0px -50% 0px' });
+  ids.forEach((id) => { const el = document.getElementById(id); if (el) io.observe(el); });
+</script>

@@ -1,0 +1,5 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist", "Puerta_Magnolia_Web", "Puerta_Magnolia_Recursos"]
+}

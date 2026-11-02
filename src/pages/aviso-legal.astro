@@ -1,0 +1,20 @@
+---
+import Base from '../layouts/Base.astro';
+import { AVISO_LEGAL, SITE } from '../data/site';
+---
+<Base titulo="Aviso legal · Puerta Magnolia Residencial" descripcion="Aviso legal sobre imágenes, precios y condiciones comerciales de Puerta Magnolia Residencial." ruta="/aviso-legal" headerOscuro={false}>
+  <article class="legal tema-claro">
+    <div class="contenedor">
+      <p class="etiqueta acento">Información legal</p>
+      <h1 class="t-h2">Aviso legal</h1>
+      <div class="texto">
+        <p>{AVISO_LEGAL}</p>
+        <p>Desarrollo: {SITE.nombre}. Contacto: <a href={`mailto:${SITE.correo}`}>{SITE.correo}</a> · {SITE.telefono}.</p>
+      </div>
+    </div>
+  </article>
+</Base>
+<style>
+  .legal { padding: calc(var(--header-h) + 4rem) 0 6rem; }
+  .legal h1 { margin: 1rem 0 2rem; }
+</style>

@@ -1,0 +1,114 @@
+---
+import Capitulo from '../Capitulo.astro';
+import Folio from '../Folio.astro';
+import Foto from '../Foto.astro';
+import casaClubAlberca from '../../assets/fotos/casa-club-alberca.jpg';
+import alberca from '../../assets/fotos/alberca-aerea.webp';
+import salaClub from '../../assets/fotos/sala-casa-club.jpg';
+import terraza from '../../assets/fotos/terraza-casa-club.jpg';
+import juegos from '../../assets/fotos/juegos-infantiles.jpg';
+import parque from '../../assets/fotos/parque-lineal-andador.webp';
+
+const AMENIDADES = [
+  { id: 'alberca', nombre: 'Alberca', texto: 'Fin de semana sin salir a buscarlo.', foto: alberca, alt: 'Alberca de Puerta Magnolia vista desde arriba, con camastros y personas tomando el sol', pos: '50% 50%' },
+  { id: 'casa-club', nombre: 'Casa club', texto: 'Una amplia zona para reunir a los tuyos sin salir del residencial.', foto: salaClub, alt: 'Sala de la casa club con sillones de madera bajo la escalera y muro de piedra', pos: '50% 60%' },
+  { id: 'terraza', nombre: 'Terraza de eventos', texto: 'Tu próxima celebración, en casa.', foto: terraza, alt: 'Terraza de eventos de la casa club con mesas, sillas y vista a las casas', pos: '50% 55%' },
+  { id: 'juegos', nombre: 'Juegos infantiles', texto: 'El lugar favorito de los más pequeños.', foto: juegos, alt: 'Juegos infantiles sobre pasto frente a la casa club al atardecer', pos: '50% 60%' },
+  { id: 'parque', nombre: 'Parque lineal y áreas verdes', texto: 'Áreas abiertas que le dan aire a tu rutina y valor a tu entorno, con pet park, pérgolas y área de picnic.', foto: parque, alt: 'Andador del parque lineal con pasto, árboles jóvenes y cerros al fondo', pos: '50% 60%' },
+];
+---
+<Capitulo
+  id="amenidades" n="04" titulo="Amenidades" tema="claro"
+  foto={casaClubAlberca}
+  alt="Casa club de dos niveles con alberca al atardecer en Puerta Magnolia"
+  posicion="50% 62%"
+>
+  <Fragment slot="izq">
+    <p class="etiqueta acento">Vida en comunidad</p>
+    <p class="t-h3">Un lugar orgulloso de crear tiempo de <em>calidad</em> en familia.</p>
+  </Fragment>
+  <Fragment slot="der">
+    <ol class="am-indice" role="list">
+      {AMENIDADES.map((a, i) => <li><span class="num">0{i + 1}</span> {a.nombre}</li>)}
+    </ol>
+  </Fragment>
+</Capitulo>
+
+<section class="am tema-oscuro seccion" aria-labelledby="am-titulo">
+  <div class="contenedor">
+    <Folio n="04" nombre="Amenidades" />
+    <h2 id="am-titulo" class="am__titulo" data-titulo>Espacios pensados para convivir, <em>no solo para pasar.</em></h2>
+
+    <div class="am__grid">
+      <div class="am__tabs" role="tablist" aria-label="Amenidades" aria-orientation="vertical">
+        {AMENIDADES.map((a, i) => (
+          <button
+            class="am__tab" type="button" role="tab"
+            id={`tab-am-${a.id}`} aria-controls={`am-${a.id}`}
+            aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}
+          >
+            <span class="num">0{i + 1}</span>
+            <span class="am__tab-nombre">{a.nombre}</span>
+          </button>
+        ))}
+      </div>
+
+      <div class="am__paneles">
+        {AMENIDADES.map((a, i) => (
+          <div class="am__panel" id={`am-${a.id}`} role="tabpanel" aria-labelledby={`tab-am-${a.id}`} data-panel-attr data-oculto-js={i !== 0 ? '' : undefined}>
+            <div class="am__foto">
+              <Foto src={a.foto} alt={a.alt} sizes="(min-width: 1000px) 40vw, 90vw" arco ratio="4 / 5" posicion={a.pos} revela={i === 0} />
+            </div>
+            <div class="am__texto">
+              <p class="etiqueta acento">0{i + 1} · {a.nombre}</p>
+              <p class="t-h3">{a.texto}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+    <p class="am__nota">Algunas amenidades pueden encontrarse en proceso de construcción o proyecto.</p>
+  </div>
+</section>
+
+<style>
+  .am-indice { display: grid; margin: 0; border-top: 1px solid var(--c-linea); }
+  .am-indice li { padding: 0.65rem 0; border-bottom: 1px solid var(--c-linea); font-family: var(--f-titular); font-size: 1.375rem; display: flex; gap: 0.75rem; align-items: baseline; }
+  .am-indice .num { font-size: 1rem; }
+
+  .am__titulo { max-width: 16ch; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .am__grid { display: grid; gap: 2rem; }
+  .am__tabs { display: flex; gap: 0.5rem; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 0.5rem; margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); scrollbar-width: none; }
+  .am__tabs::-webkit-scrollbar { display: none; }
+  .am__tab {
+    flex: none; scroll-snap-align: start;
+    display: flex; align-items: baseline; gap: 0.6rem;
+    min-height: 48px; padding: 0.6rem 1.1rem;
+    border: 1px solid var(--c-linea); border-radius: 999px;
+    text-align: left;
+    transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
+  }
+  .am__tab .num { color: var(--pm-terracota-claro); font-size: 1.125rem; }
+  .am__tab-nombre { font-weight: 600; font-size: 0.9375rem; }
+  .am__tab[aria-selected='true'] { background: var(--pm-marfil); color: var(--pm-petroleo); border-color: var(--pm-marfil); }
+  .am__tab[aria-selected='true'] .num { color: var(--pm-terracota-texto); }
+
+  .am__paneles { display: grid; }
+  .am__panel { grid-area: 1 / 1; display: grid; gap: 1.5rem; animation: entra 0.7s var(--ease); }
+  :global(html.js) .am__panel[data-oculto-js] { display: none; }
+  @keyframes entra { from { opacity: 0; transform: translateY(12px); } }
+  .am__foto { max-width: 560px; }
+  .am__texto { display: grid; gap: 1rem; max-width: 30ch; }
+  .am__nota { margin-top: 2.5rem; font-size: var(--t-xs); color: var(--c-suave); }
+
+  @media (min-width: 1000px) {
+    .am__grid { grid-template-columns: minmax(0, 4fr) minmax(0, 8fr); gap: 4rem; align-items: start; }
+    .am__tabs { flex-direction: column; overflow: visible; margin: 0; padding: 0; gap: 0; border-top: 1px solid var(--c-linea); }
+    .am__tab { border: 0; border-bottom: 1px solid var(--c-linea); border-radius: 0; padding: 1.25rem 0; gap: 1rem; background: none !important; color: var(--c-suave) !important; }
+    .am__tab-nombre { font-family: var(--f-titular); font-weight: 500; font-size: clamp(1.5rem, 1rem + 1.2vw, 2.25rem); line-height: 1.1; }
+    .am__tab[aria-selected='true'] { color: var(--pm-marfil) !important; }
+    .am__tab[aria-selected='true'] .num { color: var(--pm-terracota-claro); }
+    .am__tab:hover { color: var(--pm-marfil) !important; }
+    .am__panel { grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr); align-items: end; gap: 3rem; }
+  }
+</style>

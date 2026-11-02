@@ -1,0 +1,82 @@
+---
+// Plantas baja/alta con cambio de nivel y ampliación (zoom) en un diálogo.
+import { getImage } from 'astro:assets';
+import type { Modelo } from '../data/modelos';
+import Icono from './Icono.astro';
+
+interface Props { modelo: Modelo; uid?: string }
+const { modelo, uid = modelo.id } = Astro.props;
+const niveles = [
+  { id: 'baja', label: 'Planta baja', img: modelo.plantas.baja },
+  { id: 'alta', label: 'Planta alta', img: modelo.plantas.alta },
+] as const;
+const imgs = await Promise.all(
+  niveles.map(async (n) => ({
+    ...n,
+    web: await getImage({ src: n.img, format: 'webp', width: n.img.width, quality: 85 }),
+  })),
+);
+---
+<div class="visor" data-visor>
+  <div class="visor__barra">
+    <div class="visor__niveles" role="tablist" aria-label={`Niveles del modelo ${modelo.nombre}`}>
+      {imgs.map((n, i) => (
+        <button
+          class="chip" type="button" role="tab"
+          id={`tab-${uid}-${n.id}`}
+          aria-controls={`panel-${uid}-${n.id}`}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          tabindex={i === 0 ? 0 : -1}
+          data-visor-tab={n.id}
+        >{n.label}</button>
+      ))}
+    </div>
+    <button class="visor__ampliar enlace" type="button" data-visor-ampliar>
+      <Icono nombre="lupa" /> Ampliar
+    </button>
+  </div>
+  <div class="visor__lienzo">
+    {imgs.map((n, i) => (
+      <div
+        class="visor__panel" role="tabpanel"
+        id={`panel-${uid}-${n.id}`}
+        aria-labelledby={`tab-${uid}-${n.id}`}
+        hidden={i !== 0}
+        data-visor-panel={n.id}
+      >
+        <button class="visor__img" type="button" data-visor-zoom={n.web.src} data-alt={`${n.label} del modelo ${modelo.nombre}`} aria-label={`Ampliar ${n.label.toLowerCase()} del modelo ${modelo.nombre}`}>
+          <img
+            src={n.web.src}
+            width={n.img.width}
+            height={n.img.height}
+            alt={`${n.label} del modelo ${modelo.nombre}: distribución con mobiliario de referencia`}
+            loading="lazy"
+            decoding="async"
+          />
+        </button>
+      </div>
+    ))}
+  </div>
+  <p class="visor__nota">Planos de referencia del brochure; medidas y distribución finales según contrato.</p>
+</div>
+
+<style>
+  .visor { display: grid; gap: 1rem; }
+  .visor__barra { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; }
+  .visor__niveles { display: flex; gap: 0.5rem; }
+  .visor__ampliar { font-size: 0.875rem; }
+  .visor__ampliar :global(svg) { width: 18px; height: 18px; }
+  .visor__lienzo {
+    background: var(--pm-marfil);
+    border: 1px solid var(--c-linea);
+    border-radius: var(--radio);
+    padding: clamp(1rem, 3vw, 2rem);
+    display: grid; place-items: center;
+    min-height: 320px;
+  }
+  .visor__panel { width: 100%; display: grid; place-items: center; }
+  .visor__panel[hidden] { display: none; }
+  .visor__img { cursor: zoom-in; display: block; }
+  .visor__img img { max-height: min(62vh, 560px); width: auto; object-fit: contain; }
+  .visor__nota { font-size: var(--t-xs); color: var(--c-suave); }
+</style>

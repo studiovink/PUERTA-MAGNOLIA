@@ -1,0 +1,112 @@
+---
+import Folio from '../Folio.astro';
+import Foto from '../Foto.astro';
+import Icono from '../Icono.astro';
+import cocina from '../../assets/fotos/interior-cocina-barra.webp';
+import comedor from '../../assets/fotos/interior-comedor.webp';
+import sala from '../../assets/fotos/interior-sala.webp';
+import salaDet from '../../assets/fotos/interior-sala-detalle.webp';
+import recamara from '../../assets/fotos/interior-recamara-principal.webp';
+import recamara2 from '../../assets/fotos/interior-recamara-secundaria.webp';
+import bano from '../../assets/fotos/interior-bano.webp';
+import jardin from '../../assets/fotos/interior-jardin-terraza.webp';
+
+const FOTOS = [
+  { src: cocina, alt: 'Cocina con barra, gabinetes de madera y bancos altos en la casa muestra', t: 'Cocina con barra' },
+  { src: sala, alt: 'Sala con sillón claro, mesa de centro redonda de madera y cuadros abstractos', t: 'Sala' },
+  { src: comedor, alt: 'Comedor de madera para seis personas junto a un ventanal con cortinas blancas', t: 'Comedor' },
+  { src: recamara, alt: 'Recámara principal con muro verde claro, cama matrimonial y cuadros', t: 'Recámara principal' },
+  { src: jardin, alt: 'Jardín trasero con pasto, mesa y sillas negras junto al ventanal', t: 'Jardín' },
+  { src: recamara2, alt: 'Recámara con cabecera gris tapizada y colcha rosa', t: 'Recámara' },
+  { src: bano, alt: 'Baño con lavabo sobre mueble de madera y espejo', t: 'Baño' },
+  { src: salaDet, alt: 'Detalle de la sala con sillón gris y cuadros de formas orgánicas', t: 'Detalle de sala' },
+];
+---
+<section class="int tema-claro seccion" id="interiores" aria-labelledby="int-titulo">
+  <div class="contenedor int__cabeza">
+    <Folio n="05" nombre="Casa muestra" />
+    <div class="int__fila">
+      <h2 id="int-titulo" data-titulo>Así se vive <em>por dentro.</em></h2>
+      <div class="int__ctrl" data-carrusel-ctrl>
+        <button type="button" class="int__flecha" data-carrusel-prev aria-label="Foto anterior"><Icono nombre="flecha" /></button>
+        <button type="button" class="int__flecha" data-carrusel-sig aria-label="Foto siguiente"><Icono nombre="flecha" /></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="int__carrusel" data-carrusel data-arrastra>
+    <ul class="int__pista" role="list" data-carrusel-pista tabindex="0" aria-label="Fotos de la casa muestra; desliza para ver más">
+      {FOTOS.map((f, i) => (
+        <li class:list={['int__item', { 'int__item--arco': i % 3 === 0 }]}>
+          <Foto src={f.src} alt={f.alt} sizes="(min-width: 1000px) 28vw, 74vw" ratio="2 / 3" arco={i % 3 === 0} revela={i < 3} widths={[360, 540, 720, 960]} />
+          <p class="int__pie"><span class="num">0{i + 1}</span> {f.t}</p>
+        </li>
+      ))}
+    </ul>
+    <!-- se mueve con el puntero (escritorio) -->
+    <div class="int__cursor" aria-hidden="true" data-cursor>Arrastra</div>
+  </div>
+  <p class="contenedor int__nota">Casa muestra. Acabados, mobiliario y decoración de referencia; pueden variar según el modelo.</p>
+</section>
+
+<style>
+  .int__fila { display: flex; justify-content: space-between; align-items: end; gap: 1.5rem; }
+  .int__ctrl { display: none; gap: 0.5rem; }
+  .int__flecha { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--pm-petroleo); color: var(--pm-petroleo); display: grid; place-items: center; transition: background-color 0.3s, color 0.3s; }
+  .int__flecha:hover { background: var(--pm-petroleo); color: var(--pm-marfil); }
+  .int__flecha :global(svg) { width: 22px; }
+  [data-carrusel-prev] :global(svg) { transform: scaleX(-1); }
+  @media (min-width: 900px) { .int__ctrl { display: flex; } }
+
+  .int__carrusel { position: relative; margin-top: clamp(2rem, 4vw, 3.5rem); }
+  .int__pista {
+    display: flex; gap: 1rem; margin: 0;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    padding-inline: var(--gutter); scroll-padding-inline: var(--gutter);
+    scrollbar-width: none;
+  }
+  .int__pista::-webkit-scrollbar { display: none; }
+  .int__item { flex: 0 0 74vw; max-width: 420px; scroll-snap-align: start; }
+  .int__item:nth-child(even) { margin-top: 3rem; }
+  .int__pie { margin-top: 0.75rem; font-size: var(--t-sm); display: flex; gap: 0.5rem; align-items: baseline; }
+  .int__pie .num { font-size: 1.1rem; }
+  .int__nota { margin-top: 1.5rem; font-size: var(--t-xs); color: var(--c-suave); }
+  @media (min-width: 1000px) {
+    .int__item { flex-basis: 28vw; }
+    .int__pista { padding-inline: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); cursor: grab; }
+    .int__pista.arrastrando { cursor: grabbing; scroll-snap-type: none; }
+    .int__pista.arrastrando :global(img) { pointer-events: none; }
+  }
+  .int__cursor {
+    position: fixed; left: 0; top: 0; z-index: 70; pointer-events: none;
+    width: 96px; height: 96px; border-radius: 50%;
+    display: grid; place-items: center;
+    background: var(--pm-petroleo); color: var(--pm-marfil);
+    font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em;
+    opacity: 0; transform: translate(-50%, -50%) scale(0.4);
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  .int__cursor.visible { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+</style>
+
+<script>
+  // Arrastre con el mouse + cursor "Arrastra" (solo puntero fino). En táctil es scroll nativo.
+  const car = document.querySelector<HTMLElement>('[data-arrastra]');
+  if (car && matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    const pista = car.querySelector<HTMLElement>('[data-carrusel-pista]')!;
+    const cursor = car.querySelector<HTMLElement>('[data-cursor]')!;
+    let abajo = false, x0 = 0, s0 = 0, movido = false;
+    pista.addEventListener('pointerenter', () => cursor.classList.add('visible'));
+    pista.addEventListener('pointerleave', () => { cursor.classList.remove('visible'); abajo = false; pista.classList.remove('arrastrando'); });
+    pista.addEventListener('pointermove', (e) => {
+      cursor.style.left = `${e.clientX}px`; cursor.style.top = `${e.clientY}px`;
+      if (!abajo) return;
+      const dx = e.clientX - x0;
+      if (Math.abs(dx) > 3) movido = true;
+      pista.scrollLeft = s0 - dx;
+    });
+    pista.addEventListener('pointerdown', (e) => { abajo = true; movido = false; x0 = e.clientX; s0 = pista.scrollLeft; pista.classList.add('arrastrando'); });
+    addEventListener('pointerup', () => { if (abajo) { abajo = false; pista.classList.remove('arrastrando'); } });
+    pista.addEventListener('click', (e) => { if (movido) e.preventDefault(); }, true);
+  }
+</script>

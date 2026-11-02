@@ -1,0 +1,177 @@
+---
+import Folio from '../Folio.astro';
+import Foto from '../Foto.astro';
+import Icono from '../Icono.astro';
+import galerias from '../../assets/fotos/galerias-santa-anita.jpg';
+import { SITE, direccionCompleta } from '../../data/site';
+
+// Esquema de 03_mapas/Mapa_solo_transparente.svg (no a escala, sin tiempos ni distancias).
+// caja: x, y (esquina), ancho, alto · líneas de texto · conector en codo hasta el punto
+const PUNTOS = [
+  { x: 803, y: 140, lineas: ['El Palomar'], s: 'Comercios y servicios', bx: 455, by: 60, bw: 300, bh: 100 },
+  { x: 644, y: 410, lineas: ['La Rioja'], s: 'Servicios del corredor', bx: 290, by: 290, bw: 300, bh: 100 },
+  { x: 469, y: 591, lineas: ['Galerías', 'Santa Anita'], s: 'Referencia comercial', bx: 240, by: 420, bw: 230, bh: 140 },
+];
+const REFERENCIAS = [
+  { t: 'Galerías Santa Anita', d: 'Cerca del residencial, en la nueva zona de Galerías Sur.' },
+  { t: 'Av. López Mateos Sur', d: 'Acceso directo desde el residencial.' },
+  { t: 'Escuelas, comercios y servicios', d: 'Puerta Magnolia está rodeado de comercios, escuelas y servicios.' },
+  { t: 'Tiempos de traslado', d: '', pendiente: 'tiempos y distancias verificados a cada referencia' },
+];
+---
+<section class="ubi tema-arena seccion" id="ubicacion" aria-labelledby="ubi-titulo">
+  <span class="ubi__vertical titular" aria-hidden="true">Ubicación</span>
+  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:62%;top:4%"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
+  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:82%;top:10%;width:22px"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
+  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:44%;top:0%;width:16px"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
+
+  <div class="contenedor">
+    <Folio n="06" nombre="Ubicación" />
+    <div class="ubi__grid">
+      <div class="ubi__texto">
+        <h2 id="ubi-titulo" data-titulo>Vivir en el sur, <em>conectado</em> con todo.</h2>
+        <p class="lead suave" data-revela>Nueva zona de Galerías Sur, cerca de Galerías Santa Anita y con acceso directo a Av. López Mateos Sur.</p>
+
+        <div class="ubi__dir" data-revela>
+          <p class="etiqueta acento">Dirección</p>
+          <address>{direccionCompleta}</address>
+          <div class="ubi__ctas">
+            <a class="btn" href={SITE.mapsUrl} target="_blank" rel="noopener" data-magnetico><Icono nombre="mapa" />Cómo llegar</a>
+            <a class="btn btn--linea" href="#contacto">Agenda tu visita</a>
+          </div>
+        </div>
+      </div>
+
+      <figure class="ubi__mapa" data-mapa-ubi>
+        <svg viewBox="0 0 1100 1080" role="img" aria-labelledby="ubi-mapa-t ubi-mapa-d">
+          <title id="ubi-mapa-t">Mapa esquemático de la ubicación de Puerta Magnolia</title>
+          <desc id="ubi-mapa-d">Puerta Magnolia al poniente de Av. López Mateos Sur, con acceso hacia la avenida a la altura de Galerías Santa Anita. Más al norte, La Rioja y El Palomar.</desc>
+          <path d="M40 50 Q230 30 390 130 L410 350 Q230 420 70 270Z" fill="#D6C7B3" opacity=".45" />
+          <path d="M750 560 Q920 500 1030 620 L1000 940 Q850 990 700 860Z" fill="#D6C7B3" opacity=".4" />
+          <g class="ubi__via">
+            <path d="M900 -30 L620 450 L490 690 L420 900 L330 1080" stroke="#BFAE96" stroke-width="52" />
+            <path d="M900 -30 L620 450 L490 690 L420 900 L330 1080" stroke="#F5F1E8" stroke-width="37" />
+            <path d="M900 -30 L620 450 L490 690 L420 900 L330 1080" stroke="#124F53" stroke-width="10" class="ubi__trazo" pathLength="1" />
+          </g>
+          <text x="760" y="300" transform="rotate(-59 760 300)" class="ubi__via-t">Av. López Mateos Sur</text>
+          <path d="M130 625 L210 780 L490 690" fill="none" stroke="#F5F1E8" stroke-width="22" stroke-linejoin="round" />
+          <path d="M130 625 L210 780 L490 690" fill="none" stroke="#B8754F" stroke-width="10" stroke-linejoin="round" stroke-linecap="round" class="ubi__trazo ubi__trazo--acceso" pathLength="1" />
+          <text x="250" y="830" class="ubi__acc">Acceso de referencia</text>
+
+          <text x="60" y="250" class="ubi__barrio">Santa Anita</text>
+          <text x="40" y="900" class="ubi__barrio">Jardines de Santa Anita</text>
+
+          {PUNTOS.map((p, i) => {
+            const midY = p.by + p.bh / 2;
+            const borde = p.x > p.bx + p.bw ? p.bx + p.bw : p.x;
+            const conector = p.x > p.bx + p.bw ? `M${p.x} ${p.y} L${p.x} ${midY} L${borde} ${midY}` : `M${p.x} ${p.y} L${p.x} ${p.by + p.bh}`;
+            return (
+              <g class="ubi__punto" style={`--i:${i + 1}`}>
+                <path d={conector} fill="none" stroke="#124F53" stroke-width="2" />
+                <rect x={p.bx} y={p.by} width={p.bw} height={p.bh} rx="6" fill="#FFFFFF" stroke="#BFAE96" />
+                {p.lineas.map((l, j) => <text x={p.bx + 18} y={p.by + 40 + j * 34} class="ubi__p-t">{l}</text>)}
+                <text x={p.bx + 18} y={p.by + p.bh - 20} class="ubi__p-s">{p.s}</text>
+                <circle cx={p.x} cy={p.y} r="12" fill="#124F53" stroke="#F5F1E8" stroke-width="5" />
+              </g>
+            );
+          })}
+
+          <g class="ubi__pin" style="--i:0">
+            <path d="M130 690 C 92 640 60 610 60 570 a70 70 0 0 1 140 0 C200 610 168 640 130 690Z" fill="#124F53" stroke="#F5F1E8" stroke-width="6" />
+            <image href="/brand/isotipo-marfil.svg" x="100" y="525" width="60" height="87" />
+            <text x="20" y="440" class="ubi__pm">Puerta</text>
+            <text x="20" y="486" class="ubi__pm">Magnolia</text>
+          </g>
+        </svg>
+        <figcaption class="leyenda">Esquema de ubicación, no a escala. Usa “Cómo llegar” para navegar con el pin oficial.</figcaption>
+      </figure>
+    </div>
+
+    <div class="ubi__refs" data-carrusel>
+      <div class="ubi__refs-cabeza">
+        <p class="etiqueta acento">Lo que tienes cerca</p>
+        <div class="ubi__refs-ctrl">
+          <button type="button" class="ubi__flecha" data-carrusel-prev aria-label="Referencia anterior"><Icono nombre="flecha" /></button>
+          <button type="button" class="ubi__flecha" data-carrusel-sig aria-label="Referencia siguiente"><Icono nombre="flecha" /></button>
+        </div>
+      </div>
+      <ol class="ubi__pista" role="list" data-carrusel-pista tabindex="0" aria-label="Referencias de ubicación">
+        {REFERENCIAS.map((r, i) => (
+          <li class="ubi__ref">
+            <span class="ubi__ref-n num num--grande">0{i + 1}</span>
+            <p class="t-h4">{r.t}</p>
+            {r.d && <p class="suave">{r.d}</p>}
+            {r.pendiente && <p><span class="pendiente">PENDIENTE: {r.pendiente}</span></p>}
+          </li>
+        ))}
+        <li class="ubi__ref ubi__ref--foto">
+          <Foto src={galerias} alt="Exterior del centro comercial Galerías Santa Anita" sizes="(min-width: 1000px) 30vw, 80vw" ratio="4 / 3" leyenda="Galerías Santa Anita. Referencia del entorno, no es una amenidad del residencial." />
+        </li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .ubi { overflow: hidden; }
+  .ubi__vertical {
+    display: none; position: absolute; right: -0.08em; top: 50%;
+    writing-mode: vertical-rl; transform: translateY(-50%) rotate(180deg);
+    font-size: clamp(8rem, 13vw, 15rem); line-height: 0.8; color: var(--pm-petroleo); opacity: 0.09;
+    pointer-events: none; user-select: none;
+  }
+  @media (min-width: 1100px) { .ubi__vertical { display: block; } }
+  .ubi__petalo { position: absolute; width: 28px; fill: var(--pm-terracota); opacity: 0; pointer-events: none; display: none; }
+  @media (min-width: 1100px) { :global(html.anima) .ubi__petalo { display: block; } }
+
+  .ubi__grid { display: grid; gap: 2.5rem; }
+  .ubi__texto { display: grid; gap: 1.5rem; align-content: start; }
+  .ubi__dir { display: grid; gap: 0.75rem; border-top: 1px solid var(--c-linea); padding-top: 1.25rem; }
+  .ubi__dir address { font-style: normal; font-size: var(--t-lg); color: var(--pm-petroleo); }
+  .ubi__ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 0.5rem; }
+  @media (min-width: 1000px) { .ubi__grid { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; } }
+
+  .ubi__mapa { margin: 0; }
+  .ubi__mapa svg { width: 100%; height: auto; background: var(--pm-marfil); border-radius: var(--radio); }
+  .ubi__via path { fill: none; stroke-linejoin: round; }
+  .ubi__via-t { font: 700 34px var(--f-texto); fill: #124F53; letter-spacing: 0.02em; }
+  .ubi__acc { font: 500 30px var(--f-texto); fill: #96583A; }
+  .ubi__barrio { font: italic 500 40px var(--f-titular); fill: #4A4F4B; }
+  .ubi__p-t { font: 700 30px var(--f-texto); fill: #124F53; }
+  .ubi__p-s { font: 400 23px var(--f-texto); fill: #4A4F4B; }
+  .ubi__pm { font: 600 48px var(--f-titular); fill: #124F53; }
+
+  :global(html.anima) .ubi__punto, :global(html.anima) .ubi__pin { opacity: 0; transform: translateY(16px); transition: opacity 0.7s var(--ease), transform 0.9s var(--ease); transition-delay: calc(var(--i) * 0.35s + 0.5s); transform-box: fill-box; }
+  :global(html.anima) .ubi__trazo { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.6s var(--ease-io); }
+  :global(html.anima) .ubi__trazo--acceso { transition-delay: 1.2s; }
+  .ubi__mapa.visible .ubi__punto, .ubi__mapa.visible .ubi__pin { opacity: 1; transform: none; }
+  .ubi__mapa.visible .ubi__trazo { stroke-dashoffset: 0; }
+
+  .ubi__refs { margin-top: clamp(3rem, 6vw, 5rem); }
+  .ubi__refs-cabeza { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
+  .ubi__refs-ctrl { display: flex; gap: 0.5rem; }
+  .ubi__flecha { width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--pm-petroleo); color: var(--pm-petroleo); display: grid; place-items: center; }
+  .ubi__flecha :global(svg) { width: 20px; }
+  [data-carrusel-prev] :global(svg) { transform: scaleX(-1); }
+  .ubi__pista { display: flex; gap: 1rem; margin: 0; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .ubi__pista::-webkit-scrollbar { display: none; }
+  .ubi__ref {
+    flex: 0 0 min(80vw, 340px); scroll-snap-align: start;
+    background: var(--pm-marfil); border-radius: var(--radio);
+    padding: 1.5rem; display: grid; gap: 0.75rem; align-content: start;
+    border: 1px solid var(--c-linea);
+  }
+  .ubi__ref-n { font-size: clamp(3.5rem, 5vw, 5rem); line-height: 0.9; }
+  .ubi__ref .t-h4 { color: var(--pm-petroleo); }
+  .ubi__ref--foto { padding: 0; background: none; border: 0; flex-basis: min(80vw, 420px); }
+</style>
+
+<script>
+  const mapa = document.querySelector('[data-mapa-ubi]');
+  if (mapa) {
+    const io = new IntersectionObserver((es) => {
+      es.forEach((e) => { if (e.isIntersecting) { mapa.classList.add('visible'); io.disconnect(); } });
+    }, { threshold: 0.3 });
+    io.observe(mapa);
+  }
+</script>

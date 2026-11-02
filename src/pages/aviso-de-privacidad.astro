@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { SITE, direccionCompleta } from '../data/site';
+---
+<Base titulo="Aviso de privacidad · Puerta Magnolia Residencial" descripcion="Aviso de privacidad de Puerta Magnolia Residencial." ruta="/aviso-de-privacidad" headerOscuro={false} noindex>
+  <article class="legal tema-claro">
+    <div class="contenedor">
+      <p class="etiqueta acento">Información legal</p>
+      <h1 class="t-h2">Aviso de privacidad</h1>
+      <div class="texto">
+        <p><span class="pendiente">PENDIENTE: texto legal completo del aviso de privacidad (responsable, finalidades, transferencias y derechos ARCO), revisado por el área jurídica.</span></p>
+        <h2 class="t-h4">Qué datos recibimos en este sitio</h2>
+        <p>El formulario de contacto no guarda información en este sitio: arma un mensaje con tu nombre, teléfono, modelo de interés y día de visita, y lo abre en WhatsApp para que tú decidas si lo envías.</p>
+        <h2 class="t-h4">Contacto</h2>
+        <p>{SITE.nombre} · {direccionCompleta} · <a href={`mailto:${SITE.correo}`}>{SITE.correo}</a> · {SITE.telefono}</p>
+      </div>
+    </div>
+  </article>
+</Base>
+<style>
+  .legal { padding: calc(var(--header-h) + 4rem) 0 6rem; }
+  .legal h1 { margin: 1rem 0 2rem; }
+  .legal h2 { margin-top: 2rem; margin-bottom: 0.5rem; }
+</style>

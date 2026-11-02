@@ -1,0 +1,41 @@
+---
+// Índice lateral de capítulos (escritorio): siempre sabes dónde estás y puedes saltar.
+const CAPS = [
+  { id: 'inicio', t: 'Inicio' },
+  { id: 'proyecto', t: 'El proyecto' },
+  { id: 'modelos', t: 'Modelos' },
+  { id: 'elige-tu-casa', t: 'Elige tu casa' },
+  { id: 'amenidades', t: 'Amenidades' },
+  { id: 'ubicacion', t: 'Ubicación' },
+  { id: 'respaldo', t: 'Respaldo' },
+  { id: 'por-que', t: 'Por qué aquí' },
+  { id: 'contacto', t: 'Contacto' },
+];
+---
+<nav class="indice" aria-label="Capítulos de la página" data-indice>
+  <ol role="list">
+    {CAPS.map((c, i) => (
+      <li><a href={`/#${c.id}`}><span class="indice__t">{c.t}</span><span class="indice__n">{String(i).padStart(2, '0')}</span></a></li>
+    ))}
+  </ol>
+</nav>
+
+<style>
+  .indice { display: none; }
+  @media (min-width: 1280px) {
+    .indice { display: block; position: fixed; right: 10px; top: 50%; transform: translateY(-50%); z-index: 60; }
+  }
+  ol { margin: 0; display: grid; gap: 6px; padding: 0; }
+  a { display: flex; align-items: center; justify-content: flex-end; text-decoration: none; height: 24px; width: 24px; position: relative; }
+  .indice__n { width: 7px; height: 7px; border-radius: 50%; background: var(--pm-marfil); border: 1px solid var(--pm-petroleo); font-size: 0; transition: transform 0.3s var(--ease), background-color 0.3s; margin-right: 8px; }
+  .indice__t {
+    position: absolute; right: calc(100% + 4px); white-space: nowrap;
+    background: var(--pm-petroleo); color: var(--pm-marfil);
+    font-size: 0.75rem; font-weight: 600; padding: 0.3rem 0.6rem; border-radius: 999px;
+    opacity: 0; transform: translateX(6px); pointer-events: none;
+    transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
+  }
+  a:hover .indice__t, a:focus-visible .indice__t { opacity: 1; transform: none; }
+  a[aria-current] .indice__n { background: var(--pm-terracota); border-color: var(--pm-marfil); transform: scale(1.6); }
+  a:hover .indice__n { transform: scale(1.4); }
+</style>

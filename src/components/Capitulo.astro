@@ -1,0 +1,85 @@
+---
+// Apertura de capítulo (patrón de Ever, más legible):
+// escritorio → foto a pantalla completa con título gigante; al hacer scroll la foto
+// se encoge a un arco y aparecen los textos a los lados (pin + scrub, sin bloquear la rueda).
+// móvil / reduced-motion → título, foto en arco y textos apilados.
+import type { ImageMetadata } from 'astro';
+import Foto from './Foto.astro';
+
+interface Props {
+  id: string;
+  n: string;
+  titulo: string;
+  foto: ImageMetadata;
+  alt: string;
+  posicion?: string;
+  tema?: 'oscuro' | 'claro' | 'arena';
+  ilustrativa?: boolean;
+}
+const { id, n, titulo, foto, alt, posicion = '50% 50%', tema = 'claro', ilustrativa = false } = Astro.props;
+---
+<section class={`cap tema-${tema}`} id={id} data-capitulo aria-labelledby={`${id}-titulo`}>
+  <div class="cap__escena">
+    <div class="cap__foto" data-capitulo-foto>
+      <Foto src={foto} alt={alt} sizes="100vw" revela={false} posicion={posicion} widths={[480, 720, 960, 1280, 1600, 1920]} />
+    </div>
+    <div class="cap__titulo" data-capitulo-titulo>
+      <span class="cap__n num" aria-hidden="true">{n}</span>
+      <h2 id={`${id}-titulo`} class="cap__h" data-titulo="letras">{titulo}</h2>
+    </div>
+    <div class="cap__izq" data-capitulo-texto><slot name="izq" /></div>
+    <div class="cap__der" data-capitulo-texto><slot name="der" /></div>
+    {ilustrativa && <p class="cap__ilus etiqueta">Imagen ilustrativa</p>}
+  </div>
+</section>
+
+<style>
+  .cap { position: relative; overflow: hidden; }
+  .cap__escena {
+    display: grid; gap: 1.75rem;
+    padding: var(--sec-y) var(--gutter) calc(var(--sec-y) * 0.6);
+    max-width: var(--max); margin-inline: auto;
+  }
+  .cap__titulo {
+    order: -1;
+    display: flex; align-items: flex-start; gap: 0.75rem;
+  }
+  .cap__h { font-size: clamp(3.25rem, 0.5rem + 13vw, 15rem); line-height: 0.85; letter-spacing: -0.03em; color: inherit; }
+  .cap__n { font-size: 1.125rem; font-style: italic; letter-spacing: 0; margin-top: 0.4em; color: var(--c-acento); }
+  .cap__foto { aspect-ratio: 4 / 5; border-radius: var(--arco); overflow: hidden; }
+  .cap__foto :global(.figura), .cap__foto :global(.foto) { height: 100%; }
+  .cap__izq, .cap__der { display: grid; gap: 1rem; align-content: start; }
+  .cap__ilus { color: var(--c-suave); }
+
+  @media (min-width: 900px) {
+    .cap__escena {
+      position: relative; height: 100svh; min-height: 640px; max-width: none;
+      padding: 0; display: block;
+    }
+    .cap__foto { position: absolute; inset: 0; aspect-ratio: auto; border-radius: 0; will-change: clip-path; }
+    .cap__titulo {
+      position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(1.5rem, 4vw, 3rem);
+      color: var(--pm-marfil); z-index: 2; pointer-events: none;
+    }
+    .cap__titulo .cap__h { color: var(--pm-marfil); }
+    .cap__titulo .cap__n { color: var(--pm-marfil); }
+    .cap__izq, .cap__der {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      width: min(29vw, 400px); z-index: 1;
+    }
+    .cap__izq { left: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); }
+    .cap__der { right: max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter))); }
+    .cap__ilus { position: absolute; left: 50%; bottom: 5%; transform: translateX(-50%); z-index: 2; }
+  }
+
+  /* Sin animación: composición estática dividida, legible */
+  @media (min-width: 900px) {
+    :global(html:not(.anima)) .cap__escena { height: auto; min-height: 0; display: grid; grid-template-columns: 1fr minmax(0, 32vw) 1fr; gap: 3rem; padding: var(--sec-y) var(--gutter); align-items: center; }
+    :global(html:not(.anima)) .cap__foto { position: relative; aspect-ratio: 4 / 5; border-radius: var(--arco); grid-column: 2; grid-row: 2; }
+    :global(html:not(.anima)) .cap__titulo { position: relative; grid-column: 1 / -1; grid-row: 1; left: auto; right: auto; bottom: auto; }
+    :global(html:not(.anima)) .cap__titulo .cap__h { color: var(--c-titular); }
+    :global(html:not(.anima)) .cap__titulo .cap__n { color: var(--c-acento); }
+    :global(html:not(.anima)) .cap__izq, :global(html:not(.anima)) .cap__der { position: static; transform: none; width: auto; grid-row: 2; }
+    :global(html:not(.anima)) .cap__ilus { position: static; transform: none; grid-column: 2; }
+  }
+</style>

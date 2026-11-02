@@ -1,0 +1,45 @@
+---
+import Folio from '../Folio.astro';
+const RAZONES = [
+  { t: 'Plusvalía temprana.', d: 'Entras en una zona en pleno crecimiento.' },
+  { t: 'Mejor ubicación.', d: 'Eliges entre los mejores lotes de la tercera etapa.' },
+  { t: 'Precio de preventa.', d: 'El mejor precio del proyecto; cada etapa sube.' },
+  { t: 'Formas de pago.', d: 'Pensadas para que des el paso sin forzar tu economía.' },
+  { t: 'Respaldo real.', d: 'Empresas que suman 75 años construyendo.' },
+];
+---
+<section class="raz tema-oscuro seccion" id="por-que" aria-labelledby="raz-titulo">
+  <div class="contenedor">
+    <Folio n="08" nombre="Por qué aquí" />
+    <div class="raz__grid">
+      <h2 id="raz-titulo" class="raz__titulo" data-titulo>Razones para invertir <em>hoy.</em></h2>
+      <ol class="raz__lista" role="list">
+        {RAZONES.map((r, i) => (
+          <li class="raz__item" data-revela>
+            <span class="raz__n num">0{i + 1}</span>
+            <div>
+              <p class="raz__t">{r.t}</p>
+              <p class="suave">{r.d}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .raz__grid { display: grid; gap: 2.5rem; }
+  @media (min-width: 1000px) {
+    .raz__grid { grid-template-columns: 5fr 7fr; gap: 4rem; align-items: start; }
+    .raz__titulo { position: sticky; top: calc(var(--header-h) + 2rem); }
+  }
+  .raz__lista { margin: 0; border-top: 1px solid var(--c-linea); }
+  .raz__item {
+    display: grid; grid-template-columns: 4.5rem 1fr; gap: 1rem; align-items: baseline;
+    padding: clamp(1.25rem, 2.5vw, 2rem) 0; border-bottom: 1px solid var(--c-linea);
+  }
+  .raz__n { font-size: clamp(2.5rem, 2rem + 2vw, 3.75rem); line-height: 0.9; color: var(--pm-terracota-claro); }
+  .raz__t { font-family: var(--f-titular); font-size: clamp(1.75rem, 1.3rem + 1.8vw, 2.75rem); line-height: 1.05; color: var(--pm-marfil); margin-bottom: 0.35rem; }
+  @media (min-width: 700px) { .raz__item { grid-template-columns: 7rem 1fr; } }
+</style>

@@ -1,0 +1,36 @@
+---
+// Logos vectoriales derivados de 02_Identidad/Logos_SVG (optimizados, sin deformar).
+// Se sirven como archivos cacheables (/brand/*.svg) y se pintan con `mask` para
+// tomar el color de `currentColor`. La proporción sale del viewBox original.
+// variante "centrado-marfil" = versión bicolor para fondos oscuros (<img>).
+interface Props {
+  variante?: 'centrado' | 'centrado-marfil' | 'horizontal' | 'isotipo';
+  class?: string;
+  titulo?: string;
+  decorativo?: boolean;
+}
+const { variante = 'horizontal', class: cls = '', titulo = 'Puerta Magnolia Residencial', decorativo = false } = Astro.props;
+const RATIO = { centrado: '980 / 1130', 'centrado-marfil': '980 / 1130', horizontal: '1200 / 555', isotipo: '310 / 450' } as const;
+const archivo = { centrado: 'logo-centrado', 'centrado-marfil': 'logo-centrado-marfil', horizontal: 'logo-horizontal', isotipo: 'isotipo' }[variante];
+---
+{variante === 'centrado-marfil' ? (
+  <img class={`logo logo--centrado ${cls}`} src={`/brand/${archivo}.svg`} alt={decorativo ? '' : titulo} width="980" height="1130" loading="lazy" decoding="async" />
+) : (
+  <span
+    class={`logo logo--${variante} ${cls}`}
+    style={`--logo-url:url(/brand/${archivo}.svg);aspect-ratio:${RATIO[variante]}`}
+    role={decorativo ? undefined : 'img'}
+    aria-label={decorativo ? undefined : titulo}
+    aria-hidden={decorativo ? 'true' : undefined}
+  ></span>
+)}
+
+<style is:global>
+  span.logo {
+    display: block;
+    background-color: currentColor;
+    -webkit-mask: var(--logo-url) center / contain no-repeat;
+    mask: var(--logo-url) center / contain no-repeat;
+  }
+  span.logo--isotipo { width: 1em; }
+</style>

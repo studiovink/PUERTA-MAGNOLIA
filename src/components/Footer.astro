@@ -1,0 +1,88 @@
+---
+import Logo from './Logo.astro';
+import { SITE, AVISO_LEGAL, direccionCompleta, NAV } from '../data/site';
+const anio = new Date().getFullYear();
+---
+<footer class="pie tema-oscuro">
+  <div class="pie__marquee" aria-hidden="true">
+    <div class="pie__pista" data-marquee>
+      {Array.from({ length: 4 }).map(() => (
+        <span>Puerta Magnolia <em>·</em> Donde tu familia crece <em>·</em> </span>
+      ))}
+    </div>
+  </div>
+
+  <div class="contenedor pie__grid">
+    <div class="pie__marca">
+      <Logo variante="centrado-marfil" class="pie__logo" />
+    </div>
+
+    <div class="pie__col">
+      <p class="etiqueta acento">Visítanos</p>
+      <address>
+        {SITE.direccion.calle}<br />{SITE.direccion.colonia}<br />{SITE.direccion.cp} {SITE.direccion.ciudad}, {SITE.direccion.estado}
+      </address>
+      <a class="enlace" href={SITE.mapsUrl} target="_blank" rel="noopener">Cómo llegar</a>
+      <p class="pie__horario"><span class="pendiente">PENDIENTE: horario de la oficina de ventas</span></p>
+    </div>
+
+    <div class="pie__col">
+      <p class="etiqueta acento">Contacto</p>
+      <p><a href={`tel:${SITE.telefonoIntl}`}>{SITE.telefono}</a></p>
+      <p><a href={`mailto:${SITE.correo}`}>{SITE.correo}</a></p>
+      <p class="pie__redes">
+        <a href={SITE.instagram} target="_blank" rel="noopener">Instagram</a>
+        <a href={SITE.facebook} target="_blank" rel="noopener">Facebook</a>
+      </p>
+    </div>
+
+    <nav class="pie__col" aria-label="Pie de página">
+      <p class="etiqueta acento">Explora</p>
+      <ul role="list">
+        {NAV.map((n) => <li><a href={n.href}>{n.label}</a></li>)}
+        <li><a href="/#elige-tu-casa">Elige tu casa</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <div class="contenedor pie__legal">
+    <p class="pie__aviso">{AVISO_LEGAL}</p>
+    <p class="pie__meta">
+      <span>© {anio} {SITE.nombre}. {direccionCompleta}.</span>
+      <span><a href="/aviso-de-privacidad">Aviso de privacidad</a> · <a href="/aviso-legal">Aviso legal</a></span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .pie { padding-top: clamp(3rem, 6vw, 5rem); padding-bottom: 2rem; overflow: hidden; }
+  .pie__marquee { border-block: 1px solid var(--c-linea); padding-block: clamp(0.75rem, 2vw, 1.5rem); margin-bottom: clamp(3rem, 6vw, 5rem); }
+  .pie__pista {
+    display: flex; width: max-content; white-space: nowrap;
+    font-family: var(--f-titular); font-size: clamp(3rem, 9vw, 8.5rem); line-height: 1; color: var(--pm-marfil);
+    animation: marquee 48s linear infinite;
+  }
+  .pie__pista em { color: var(--pm-terracota); font-style: normal; padding-inline: 0.2em; }
+  @keyframes marquee { to { transform: translateX(-50%); } }
+  @media (prefers-reduced-motion: reduce) { .pie__pista { animation: none; } }
+
+  .pie__grid { display: grid; gap: 2.5rem; grid-template-columns: 1fr; }
+  .pie__marca { color: var(--pm-marfil); --logo-acento: var(--pm-terracota-claro); }
+  .pie__marca :global(.pie__logo) { width: min(220px, 60vw); height: auto; }
+  .pie__col { display: grid; gap: 0.6rem; align-content: start; font-size: var(--t-sm); }
+  .pie__col address { font-style: normal; line-height: 1.7; }
+  .pie__col a { text-decoration: none; }
+  .pie__col a:hover { text-decoration: underline; }
+  .pie__col ul { display: grid; gap: 0.4rem; margin: 0; }
+  .pie__col .enlace { justify-self: start; text-decoration: none; }
+  .pie__redes { display: flex; gap: 1.25rem; }
+  .pie__legal { margin-top: clamp(3rem, 6vw, 5rem); padding-top: 1.5rem; border-top: 1px solid var(--c-linea); display: grid; gap: 1.25rem; }
+  .pie__aviso { font-size: 0.8125rem; line-height: 1.6; color: var(--c-suave); max-width: 120ch; }
+  .pie__meta { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.75rem; font-size: 0.8125rem; color: var(--c-suave); }
+  @media (min-width: 760px) {
+    .pie__grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (min-width: 1100px) {
+    .pie__grid { grid-template-columns: 1.3fr 1fr 1fr 0.8fr; }
+  }
+</style>

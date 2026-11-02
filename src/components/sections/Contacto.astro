@@ -1,0 +1,146 @@
+---
+import Folio from '../Folio.astro';
+import Icono from '../Icono.astro';
+import Foto from '../Foto.astro';
+import fachada from '../../assets/fotos/fachada-gardenia.webp';
+import { MODELOS } from '../../data/modelos';
+import { SITE } from '../../data/site';
+
+interface Props { modelo?: string; titulo?: string }
+const { modelo = '', titulo } = Astro.props;
+---
+<section class="con tema-oscuro seccion" id="contacto" aria-labelledby="con-titulo">
+  <div class="contenedor con__grid">
+    <div class="con__intro">
+      <Folio n="10" nombre="Contacto" />
+      <h2 id="con-titulo" class="t-h2" data-titulo>{titulo ?? 'Ven a conocerla'} <em>en persona.</em></h2>
+      <p class="lead suave" data-revela>Déjanos tus datos y elige el día. Se abre WhatsApp con tu mensaje listo para enviar.</p>
+      <ul class="con__datos" role="list" data-revela>
+        <li><a href={`tel:${SITE.telefonoIntl}`}><Icono nombre="telefono" />{SITE.telefono}</a></li>
+        <li><a href={`mailto:${SITE.correo}`}><Icono nombre="correo" />{SITE.correo}</a></li>
+        <li><a href={SITE.mapsUrl} target="_blank" rel="noopener"><Icono nombre="mapa" />Cómo llegar</a></li>
+        <li>
+          {SITE.brochureUrl ? (
+            <a href={SITE.brochureUrl} download><Icono nombre="descarga" />Descargar brochure</a>
+          ) : (
+            <span class="con__brochure"><Icono nombre="descarga" />Brochure <span class="pendiente">PENDIENTE: PDF final</span></span>
+          )}
+        </li>
+      </ul>
+      <div class="con__foto" aria-hidden="true">
+        <Foto src={fachada} alt="" sizes="20vw" arco ratio="3 / 4" widths={[240, 360, 480]} />
+      </div>
+    </div>
+
+    <form class="form" data-form-wa novalidate>
+      <p class="form__paso etiqueta"><span class="num">3</span> Agenda tu visita</p>
+      <div class="campo">
+        <label for="f-nombre">Nombre</label>
+        <input id="f-nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="e-nombre" />
+        <p class="campo__error" id="e-nombre" aria-live="polite"></p>
+      </div>
+      <div class="campo">
+        <label for="f-tel">Teléfono</label>
+        <input id="f-tel" name="telefono" type="tel" inputmode="tel" autocomplete="tel" required aria-describedby="e-tel" placeholder="10 dígitos" />
+        <p class="campo__error" id="e-tel" aria-live="polite"></p>
+      </div>
+      <div class="campo campo--doble">
+        <div>
+          <label for="f-modelo">Modelo de interés</label>
+          <select id="f-modelo" name="modelo">
+            <option value="" selected={!modelo}>Aún no lo sé</option>
+            {MODELOS.map((m) => <option value={m.id} selected={modelo === m.id}>{m.nombre}</option>)}
+          </select>
+        </div>
+        <div>
+          <label for="f-dia">Día de visita</label>
+          <input id="f-dia" name="dia" type="date" required aria-describedby="e-dia" />
+          <p class="campo__error" id="e-dia" aria-live="polite"></p>
+        </div>
+      </div>
+      <input type="hidden" id="f-lote" name="lote" />
+      <button class="btn form__enviar" type="submit" data-magnetico><Icono nombre="whatsapp" />Enviar por WhatsApp</button>
+      <p class="form__nota">Al enviar se abre WhatsApp con tus datos. Consulta el <a href="/aviso-de-privacidad">aviso de privacidad</a>.</p>
+    </form>
+  </div>
+</section>
+
+<style>
+  .con__grid { display: grid; gap: 3rem; }
+  @media (min-width: 1000px) { .con__grid { grid-template-columns: 6fr 5fr; gap: 5rem; align-items: start; } }
+  .con__intro { display: grid; gap: 1.5rem; align-content: start; position: relative; }
+  .con__datos { display: grid; margin: 0; border-top: 1px solid var(--c-linea); }
+  .con__datos li { border-bottom: 1px solid var(--c-linea); }
+  .con__datos a, .con__brochure { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; padding: 0.9rem 0; text-decoration: none; min-height: 48px; }
+  .con__datos a:hover { color: var(--pm-terracota-claro); }
+  .con__datos :global(svg) { width: 20px; height: 20px; color: var(--pm-terracota-claro); }
+  .con__foto { display: none; }
+  @media (min-width: 1000px) { .con__foto { display: block; width: 180px; margin-top: 1rem; } }
+
+  .form {
+    background: var(--pm-marfil); color: var(--pm-grafito);
+    border-radius: var(--radio);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    display: grid; gap: 1.25rem;
+    --c-linea: var(--pm-arena); --c-titular: var(--pm-petroleo);
+  }
+  .form__paso { display: flex; align-items: center; gap: 0.5rem; color: var(--pm-terracota-texto); }
+  .form__paso .num { font-size: 1.6rem; color: var(--pm-terracota-texto); }
+  .campo { display: grid; gap: 0.4rem; }
+  .campo--doble { grid-template-columns: 1fr; gap: 1.25rem; }
+  .campo--doble > div { display: grid; gap: 0.4rem; }
+  @media (min-width: 560px) { .campo--doble { grid-template-columns: 1fr 1fr; } }
+  label { font-size: var(--t-sm); font-weight: 600; color: var(--pm-petroleo); }
+  input, select {
+    width: 100%; min-height: 52px; padding: 0.75rem 0.9rem;
+    border: 1px solid #A89A86; border-radius: var(--radio);
+    background: var(--pm-blanco); color: var(--pm-grafito);
+    font-size: 1rem;
+  }
+  input:focus-visible, select:focus-visible { outline: 2px solid var(--pm-terracota-texto); outline-offset: 1px; border-color: var(--pm-petroleo); }
+  input[aria-invalid='true'] { border-color: #A3341F; }
+  .campo__error { font-size: var(--t-sm); color: #A3341F; min-height: 0; }
+  .campo__error:empty { display: none; }
+  .form__enviar { --b-fondo: var(--pm-petroleo) !important; --b-texto: var(--pm-marfil) !important; --b-borde: var(--pm-petroleo) !important; width: 100%; min-height: 56px; font-size: 1rem; }
+  .form__nota { font-size: var(--t-xs); color: var(--pm-texto-suave); }
+</style>
+
+<script>
+  const form = document.querySelector<HTMLFormElement>('[data-form-wa]');
+  if (form) {
+    const $ = <T extends HTMLElement>(s: string) => form.querySelector<T>(s)!;
+    const dia = $<HTMLInputElement>('#f-dia');
+    const hoy = new Date();
+    dia.min = new Date(hoy.getTime() - hoy.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
+
+    const err = (input: HTMLInputElement, msg: string) => {
+      input.setAttribute('aria-invalid', msg ? 'true' : 'false');
+      form.querySelector(`#${input.getAttribute('aria-describedby')}`)!.textContent = msg;
+      return !msg;
+    };
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const nombre = $<HTMLInputElement>('#f-nombre');
+      const tel = $<HTMLInputElement>('#f-tel');
+      const digitos = tel.value.replace(/\D/g, '');
+      const ok = [
+        err(nombre, nombre.value.trim().length < 2 ? 'Escribe tu nombre.' : ''),
+        err(tel, digitos.length < 10 ? 'Escribe un teléfono de 10 dígitos.' : ''),
+        err(dia, !dia.value ? 'Elige un día para tu visita.' : dia.value < dia.min ? 'Elige un día a partir de hoy.' : ''),
+      ].every(Boolean);
+      if (!ok) { form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus(); return; }
+
+      const sel = $<HTMLSelectElement>('#f-modelo');
+      const lote0 = $<HTMLInputElement>('#f-lote').value;
+      const extraLote = lote0 ? ` (lote ${lote0} de la tercera etapa)` : '';
+      const interes = sel.value ? `Me interesa el modelo ${sel.selectedOptions[0].text}${extraLote}` : `Todavía no elijo modelo${extraLote}`;
+      const fecha = new Date(`${dia.value}T12:00:00`).toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long' });
+      const msg = [
+        `Hola, soy ${nombre.value.trim()}.`,
+        `${interes} y me gustaría visitar Puerta Magnolia el ${fecha}.`,
+        `Mi teléfono es ${tel.value.trim()}.`,
+      ].join(' ');
+      window.open(`https://wa.me/523322157297?text=${encodeURIComponent(msg)}`, '_blank', 'noopener');
+    });
+  }
+</script>

@@ -1,0 +1,61 @@
+---
+// Imagen responsiva AVIF/WebP con remate opcional en arco y marco desplazado.
+import { Picture } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+
+interface Props {
+  src: ImageMetadata;
+  alt: string;
+  sizes: string;
+  widths?: number[];
+  arco?: boolean;
+  marco?: boolean;
+  ratio?: string;
+  posicion?: string;
+  prioridad?: boolean;
+  revela?: boolean;
+  class?: string;
+  leyenda?: string;
+  ilustrativa?: boolean;
+  calidad?: number;
+}
+const {
+  src, alt, sizes, arco = false, marco = false, ratio, posicion = '50% 50%',
+  prioridad = false, revela = true, class: cls = '', leyenda, ilustrativa = false, calidad = 72,
+} = Astro.props;
+const base = [360, 540, 720, 960, 1280, 1600, 1920];
+const widths = (Astro.props.widths ?? base).filter((w) => w <= src.width).concat(src.width > 1920 ? [] : [src.width]);
+const unicos = [...new Set(widths)].sort((a, b) => a - b);
+---
+<figure class:list={['figura', cls]}>
+  <div
+    class:list={['foto', { arco, marco, 'marco--arco': marco && arco }]}
+    style={`${ratio ? `aspect-ratio:${ratio};` : ''}--pos:${posicion}`}
+    data-foto={revela ? '' : undefined}
+  >
+    <Picture
+      src={src}
+      alt={alt}
+      widths={unicos}
+      sizes={sizes}
+      formats={['avif', 'webp']}
+      quality={calidad}
+      loading={prioridad ? 'eager' : 'lazy'}
+      fetchpriority={prioridad ? 'high' : 'auto'}
+      decoding={prioridad ? 'sync' : 'async'}
+      style={`object-position:${posicion}`}
+    />
+  </div>
+  {(leyenda || ilustrativa) && (
+    <figcaption class="leyenda">
+      {ilustrativa && <b>Imagen ilustrativa</b>}
+      {leyenda && <span>{leyenda}</span>}
+    </figcaption>
+  )}
+</figure>
+<style>
+  .figura { margin: 0; }
+  .foto { width: 100%; height: 100%; }
+  .foto :global(picture) { display: block; width: 100%; height: 100%; }
+  .foto :global(img) { width: 100%; height: 100%; object-fit: cover; }
+</style>

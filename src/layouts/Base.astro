@@ -1,0 +1,90 @@
+---
+import '@fontsource/cormorant-garamond/latin-500.css';
+import '@fontsource/cormorant-garamond/latin-500-italic.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource-variable/dm-sans/index.css';
+import '../styles/global.css';
+import cormorant500 from '@fontsource/cormorant-garamond/files/cormorant-garamond-latin-500-normal.woff2?url';
+
+import { getImage } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import Intro from '../components/Intro.astro';
+import ogFoto from '../assets/fotos/fachada-frontal.jpg';
+import { SITE } from '../data/site';
+
+interface Props {
+  titulo: string;
+  descripcion: string;
+  ruta?: string;
+  jsonld?: object[];
+  intro?: boolean;
+  headerOscuro?: boolean;
+  noindex?: boolean;
+  /** imagen LCP para precargar en AVIF */
+  lcp?: { src: ImageMetadata; sizes: string; widths: number[]; quality?: number };
+}
+const { titulo, descripcion, ruta = '/', jsonld = [], intro = false, headerOscuro = true, noindex = false, lcp } = Astro.props;
+const lcpImgs = lcp ? await Promise.all(lcp.widths.map((w) => getImage({ src: lcp.src, width: w, format: 'avif', quality: lcp.quality ?? 72 }))) : [];
+const lcpSrcset = lcpImgs.map((im, i) => `${im.src} ${lcp!.widths[i]}w`).join(', ');
+const canonica = new URL(ruta, SITE.url).href.replace(/\/$/, ruta === '/' ? '/' : '');
+const og = await getImage({ src: ogFoto, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 78 });
+const ogUrl = new URL(og.src, SITE.url).href;
+---
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{titulo}</title>
+    <meta name="description" content={descripcion} />
+    <link rel="canonical" href={canonica} />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#124F53" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/icon-32.png" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+
+    {lcp && <link rel="preload" as="image" type="image/avif" imagesrcset={lcpSrcset} imagesizes={lcp.sizes} fetchpriority="high" />}
+    <link rel="preload" href={cormorant500} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/brand/logo-horizontal.svg" as="image" type="image/svg+xml" crossorigin />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:site_name" content={SITE.nombre} />
+    <meta property="og:title" content={titulo} />
+    <meta property="og:description" content={descripcion} />
+    <meta property="og:url" content={canonica} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Fachadas de las casas de Puerta Magnolia Residencial al atardecer" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    {jsonld.map((j) => <script type="application/ld+json" set:html={JSON.stringify(j)} />)}
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+      if (!matchMedia('(prefers-reduced-motion: reduce)').matches) document.documentElement.classList.add('anima');
+      // red de seguridad: si el JS de animación no carga, mostrar todo
+      setTimeout(function () { if (!window.__pm) document.documentElement.classList.remove('anima', 'con-intro'); }, 4000);
+    </script>
+  </head>
+  <body>
+    <a class="saltar" href="#contenido">Saltar al contenido</a>
+    {intro && <Intro />}
+    <Header sobreOscuro={headerOscuro} />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+    <script>
+      import '../scripts/ui';
+      import '../scripts/movimiento';
+    </script>
+  </body>
+</html>
