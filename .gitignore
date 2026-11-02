@@ -1,0 +1,11 @@
+# Material fuente original (se optimiza a src/assets)
+Puerta_Magnolia_Web/
+Puerta_Magnolia_Recursos/
+
+node_modules/
+dist/
+.astro/
+.vercel/
+.env
+.env.*
+.DS_Store
