@@ -88,12 +88,16 @@ function capitulos(mm: gsap.MatchMedia) {
       const texto = sec.querySelectorAll<HTMLElement>('[data-capitulo-texto]');
       if (!marco) return;
       const tl = gsap.timeline({
-        scrollTrigger: { trigger: sec, start: 'top top', end: '+=110%', scrub: 0.6, pin: true, anticipatePin: 1 },
+        scrollTrigger: { trigger: sec, start: 'top top', end: '+=110%', scrub: 0.6, pin: true, anticipatePin: 1, invalidateOnRefresh: true },
       });
       tl.fromTo(marco,
-        { clipPath: 'inset(0% 0% 0% 0% round 0px 0px 0px 0px)' },
-        { clipPath: 'inset(14% 34% 10% 34% round 999px 999px 0px 0px)', ease: 'power2.inOut', duration: 1 })
-        .fromTo(marco.querySelector('img'), { scale: 1.08 }, { scale: 1, ease: 'none', duration: 1 }, 0)
+        { clipPath: 'inset(0% 0% 0% 0% round 6px 6px 6px 6px)' },
+        { clipPath: () => {
+            // el arco final mide ~420 px de ancho, sin importar el tamaño del marco
+            const lado = Math.max(0, (1 - Math.min(420, marco.offsetWidth) / marco.offsetWidth) / 2) * 100;
+            return `inset(6% ${lado.toFixed(2)}% 3% ${lado.toFixed(2)}% round 999px 999px 0px 0px)`;
+          }, ease: 'power2.inOut', duration: 1 })
+        .fromTo(marco.querySelector('img'), { scale: 1.04 }, { scale: 1, ease: 'none', duration: 1 }, 0)
         .to(titulo, { yPercent: 60, opacity: 0.0, ease: 'power1.in', duration: 0.6 }, 0.15)
         .fromTo(texto, { opacity: 0, y: 30 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.4 }, 0.55);
     });

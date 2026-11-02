@@ -28,25 +28,25 @@
   --f-titular: 'Cormorant Garamond', 'Cormorant', Georgia, 'Times New Roman', serif;
   --f-texto: 'DM Sans Variable', 'DM Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
-  --t-xs: 0.75rem;
-  --t-sm: 0.875rem;
-  --t-base: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
-  --t-lg: clamp(1.125rem, 1.05rem + 0.4vw, 1.3125rem);
-  --t-h4: clamp(1.5rem, 1.3rem + 0.9vw, 2rem);
-  --t-h3: clamp(1.875rem, 1.5rem + 1.8vw, 3rem);
-  --t-h2: clamp(2.5rem, 1.7rem + 4vw, 5.25rem);
+  --t-xs: 0.875rem;
+  --t-sm: 1rem;
+  --t-base: clamp(1.0625rem, 1rem + 0.3vw, 1.1875rem);
+  --t-lg: clamp(1.1875rem, 1.1rem + 0.5vw, 1.5rem);
+  --t-h4: clamp(1.625rem, 1.4rem + 1vw, 2.25rem);
+  --t-h3: clamp(2rem, 1.6rem + 2vw, 3.25rem);
+  --t-h2: clamp(2.75rem, 1.8rem + 4.4vw, 5.75rem);
   --t-h1: clamp(3rem, 1.6rem + 6.6vw, 8.5rem);
   --t-mega: clamp(4rem, 0.5rem + 15vw, 17rem);
 
   /* Espacio y forma */
-  --gutter: clamp(1.25rem, 0.8rem + 2.2vw, 3rem);
+  --gutter: clamp(1.5rem, 1rem + 2.4vw, 3.5rem);
   --max: 1440px;
-  --sec-y: clamp(5rem, 3.5rem + 7vw, 11rem);
-  --radio: 4px;
+  --sec-y: clamp(5.5rem, 4rem + 8vw, 12rem);
+  --radio: 6px;
   --arco: 999px 999px 0 0;
   --linea: 1px solid currentColor;
 
-  --header-h: 68px;
+  --header-h: 76px;
   --barra-movil-h: 64px;
 
   /* Movimiento */
@@ -120,13 +120,13 @@ em, .it { font-style: italic; font-weight: 400; }
 
 .etiqueta {
   font-family: var(--f-texto);
-  font-size: var(--t-xs);
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   line-height: 1.4;
 }
-.lead { font-size: var(--t-lg); line-height: 1.55; max-width: 38ch; }
+.lead { font-size: var(--t-lg); line-height: 1.5; max-width: 40ch; }
 .texto { max-width: 60ch; }
 .texto p + p { margin-top: 1em; }
 .suave { color: var(--c-suave); }
@@ -191,7 +191,7 @@ em, .it { font-style: italic; font-weight: 400; }
   margin-bottom: clamp(2rem, 4vw, 3.5rem);
 }
 .folio .logo { width: 13px; flex: none; }
-.folio__n { font-family: var(--f-titular); font-size: 1.125rem; font-style: italic; letter-spacing: 0; text-transform: none; font-weight: 500; }
+.folio__n { font-family: var(--f-titular); font-size: 1.375rem; font-style: italic; letter-spacing: 0; text-transform: none; font-weight: 500; }
 
 /* ---------- Botones ---------- */
 .btn {
@@ -199,14 +199,14 @@ em, .it { font-style: italic; font-weight: 400; }
   --b-texto: var(--pm-marfil);
   --b-borde: var(--pm-petroleo);
   display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
-  min-height: 48px;
-  padding: 0.8rem 1.5rem;
+  min-height: 52px;
+  padding: 0.9rem 1.7rem;
   border-radius: 999px;
   border: 1px solid var(--b-borde);
   background: var(--b-fondo);
   color: var(--b-texto);
   font-family: var(--f-texto);
-  font-size: 0.9375rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: 0.01em;
   line-height: 1.2;
@@ -223,7 +223,7 @@ em, .it { font-style: italic; font-weight: 400; }
 .tema-oscuro .btn:not(.btn--linea):hover { --b-fondo: var(--pm-blanco); }
 .tema-oscuro .btn--linea { --b-texto: var(--pm-marfil); }
 .tema-oscuro .btn--linea:hover { --b-fondo: var(--pm-marfil); --b-texto: var(--pm-petroleo); }
-.btn--sm { min-height: 40px; padding: 0.55rem 1.1rem; font-size: 0.875rem; }
+.btn--sm { min-height: 44px; padding: 0.6rem 1.25rem; font-size: 0.9375rem; }
 .btn svg { width: 1.05em; height: 1.05em; flex: none; }
 .btn[aria-disabled='true'] { opacity: 0.55; pointer-events: none; }
 
@@ -237,9 +237,9 @@ em, .it { font-style: italic; font-weight: 400; }
 
 .chip {
   display: inline-flex; align-items: center; gap: 0.5rem;
-  min-height: 44px; padding: 0.5rem 1rem;
+  min-height: 46px; padding: 0.55rem 1.15rem;
   border: 1px solid var(--c-linea); border-radius: 999px;
-  font-size: 0.875rem; font-weight: 500;
+  font-size: 0.9375rem; font-weight: 500;
   transition: background-color 0.3s var(--ease), color 0.3s var(--ease), border-color 0.3s var(--ease);
 }
 .chip[aria-pressed='true'], .chip[aria-selected='true'] { background: var(--c-titular); color: var(--c-fondo); border-color: var(--c-titular); }
@@ -265,7 +265,7 @@ em, .it { font-style: italic; font-weight: 400; }
 
 .pendiente {
   display: inline-block;
-  font-family: var(--f-texto); font-size: 0.8125rem; font-weight: 600; font-style: normal;
+  font-family: var(--f-texto); font-size: 0.875rem; font-weight: 600; font-style: normal;
   letter-spacing: 0; line-height: 1.4;
   color: #6B2E12; background: #F6DFC9;
   border: 1px dashed #96583A; border-radius: 3px;

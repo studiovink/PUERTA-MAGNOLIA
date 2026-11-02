@@ -2,24 +2,24 @@
 import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import Icono from '../Icono.astro';
-import cocina from '../../assets/fotos/interior-cocina-barra.webp';
+import cocina from '../../assets/fotos/interior-cocina.jpg';
 import comedor from '../../assets/fotos/interior-comedor.webp';
-import sala from '../../assets/fotos/interior-sala.webp';
-import salaDet from '../../assets/fotos/interior-sala-detalle.webp';
+import sala from '../../assets/fotos/interior-sala-muestra.jpg';
+import salaCuadros from '../../assets/fotos/interior-sala.webp';
 import recamara from '../../assets/fotos/interior-recamara-principal.webp';
 import recamara2 from '../../assets/fotos/interior-recamara-secundaria.webp';
 import bano from '../../assets/fotos/interior-bano.webp';
 import jardin from '../../assets/fotos/interior-jardin-terraza.webp';
 
 const FOTOS = [
-  { src: cocina, alt: 'Cocina con barra, gabinetes de madera y bancos altos en la casa muestra', t: 'Cocina con barra' },
-  { src: sala, alt: 'Sala con sillón claro, mesa de centro redonda de madera y cuadros abstractos', t: 'Sala' },
+  { src: cocina, alt: 'Cocina con barra desayunadora, cubierta negra, parrilla y bancos altos en la casa muestra', t: 'Cocina con barra' },
+  { src: sala, alt: 'Sala con sillón en L color claro, mesa de centro de madera y ventanal con cortinas', t: 'Sala' },
   { src: comedor, alt: 'Comedor de madera para seis personas junto a un ventanal con cortinas blancas', t: 'Comedor' },
   { src: recamara, alt: 'Recámara principal con muro verde claro, cama matrimonial y cuadros', t: 'Recámara principal' },
   { src: jardin, alt: 'Jardín trasero con pasto, mesa y sillas negras junto al ventanal', t: 'Jardín' },
   { src: recamara2, alt: 'Recámara con cabecera gris tapizada y colcha rosa', t: 'Recámara' },
   { src: bano, alt: 'Baño con lavabo sobre mueble de madera y espejo', t: 'Baño' },
-  { src: salaDet, alt: 'Detalle de la sala con sillón gris y cuadros de formas orgánicas', t: 'Detalle de sala' },
+  { src: salaCuadros, alt: 'Rincón de la sala con mesa de centro redonda de madera y cuadros abstractos', t: 'Detalle de sala' },
 ];
 ---
 <section class="int tema-claro seccion" id="interiores" aria-labelledby="int-titulo">
@@ -82,7 +82,7 @@ const FOTOS = [
     width: 96px; height: 96px; border-radius: 50%;
     display: grid; place-items: center;
     background: var(--pm-petroleo); color: var(--pm-marfil);
-    font-size: 0.8125rem; font-weight: 600; letter-spacing: 0.06em;
+    font-size: 0.9375rem; font-weight: 600; letter-spacing: 0.06em;
     opacity: 0; transform: translate(-50%, -50%) scale(0.4);
     transition: opacity 0.3s var(--ease), transform 0.3s var(--ease);
   }

@@ -3,14 +3,14 @@ import Capitulo from '../Capitulo.astro';
 import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import casaClubAlberca from '../../assets/fotos/casa-club-alberca.jpg';
-import alberca from '../../assets/fotos/alberca-aerea.webp';
+import alberca from '../../assets/fotos/alberca-vista.jpg';
 import salaClub from '../../assets/fotos/sala-casa-club.jpg';
 import terraza from '../../assets/fotos/terraza-casa-club.jpg';
 import juegos from '../../assets/fotos/juegos-infantiles.jpg';
 import parque from '../../assets/fotos/parque-lineal-andador.webp';
 
 const AMENIDADES = [
-  { id: 'alberca', nombre: 'Alberca', texto: 'Fin de semana sin salir a buscarlo.', foto: alberca, alt: 'Alberca de Puerta Magnolia vista desde arriba, con camastros y personas tomando el sol', pos: '50% 50%' },
+  { id: 'alberca', nombre: 'Alberca', texto: 'Fin de semana sin salir a buscarlo.', foto: alberca, alt: 'Alberca de Puerta Magnolia junto a la casa club de dos niveles, con cielo despejado', pos: '50% 60%' },
   { id: 'casa-club', nombre: 'Casa club', texto: 'Una amplia zona para reunir a los tuyos sin salir del residencial.', foto: salaClub, alt: 'Sala de la casa club con sillones de madera bajo la escalera y muro de piedra', pos: '50% 60%' },
   { id: 'terraza', nombre: 'Terraza de eventos', texto: 'Tu próxima celebración, en casa.', foto: terraza, alt: 'Terraza de eventos de la casa club con mesas, sillas y vista a las casas', pos: '50% 55%' },
   { id: 'juegos', nombre: 'Juegos infantiles', texto: 'El lugar favorito de los más pequeños.', foto: juegos, alt: 'Juegos infantiles sobre pasto frente a la casa club al atardecer', pos: '50% 60%' },
@@ -89,7 +89,7 @@ const AMENIDADES = [
     transition: background-color 0.35s var(--ease), color 0.35s var(--ease);
   }
   .am__tab .num { color: var(--pm-terracota-claro); font-size: 1.125rem; }
-  .am__tab-nombre { font-weight: 600; font-size: 0.9375rem; }
+  .am__tab-nombre { font-weight: 600; font-size: 1.0625rem; }
   .am__tab[aria-selected='true'] { background: var(--pm-marfil); color: var(--pm-petroleo); border-color: var(--pm-marfil); }
   .am__tab[aria-selected='true'] .num { color: var(--pm-terracota-texto); }
 

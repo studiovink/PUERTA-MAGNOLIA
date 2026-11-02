@@ -24,6 +24,11 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
         <a class="btn" href="#contacto" data-magnetico>Agenda tu visita</a>
         <a class="btn btn--linea" href="#modelos">Ver modelos <Icono nombre="flecha" /></a>
       </div>
+      <ul class="hero__datos" role="list" data-hero-in>
+        <li><span class="hero__dato-n">3</span><span>modelos de casa</span></li>
+        <li><span class="hero__dato-n">3</span><span>recámaras en todos</span></li>
+        <li><span class="hero__dato-n">{SITE.etapa.viviendas}</span><span>viviendas en la tercera etapa</span></li>
+      </ul>
     </div>
 
     <div class="hero__ovalo" data-hero-in>
@@ -38,7 +43,7 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
         alt="Fachadas de las casas de Puerta Magnolia al atardecer, con volúmenes ocres, piedra y jardines al frente"
         sizes="(min-width: 900px) 58vw, calc(100vw - 40px)"
         widths={HERO_WIDTHS}
-        calidad={60}
+        calidad={68}
         prioridad
         revela={false}
         posicion="42% 55%"
@@ -59,14 +64,18 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
     padding-top: var(--header-h);
   }
   .hero__panel { padding: clamp(2rem, 6vw, 3rem) var(--gutter) 2rem; position: relative; }
-  .hero__texto { display: grid; gap: 1.25rem; max-width: 40rem; }
-  .hero__titulo { font-size: clamp(3rem, 1.2rem + 7.4vw, 7.25rem); line-height: 0.95; color: var(--pm-marfil); }
+  .hero__texto { display: grid; gap: 1.5rem; max-width: 42rem; }
+  .hero__titulo { font-size: clamp(3.1rem, 1.2rem + 7.6vw, 7.5rem); line-height: 0.94; letter-spacing: -0.025em; color: var(--pm-marfil); }
   .hero__titulo em { color: var(--pm-terracota-claro); }
   .hero__sub { color: var(--c-suave); max-width: 36ch; }
   .hero__precio { display: flex; align-items: baseline; gap: 0.75rem; border-top: 1px solid var(--c-linea); padding-top: 1rem; }
   .hero__precio .etiqueta { color: var(--c-suave); }
   .hero__monto { font-family: var(--f-titular); font-size: clamp(2rem, 1.6rem + 1.6vw, 3rem); line-height: 1; color: var(--pm-marfil); }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .hero__datos { display: grid; grid-template-columns: repeat(3, 1fr); margin: 0.5rem 0 0; border-top: 1px solid var(--c-linea); }
+  .hero__datos li { display: grid; gap: 0.2rem; padding: 1rem 0.75rem 0 0; font-size: 0.9375rem; line-height: 1.3; color: var(--c-suave); }
+  .hero__datos li + li { padding-left: 0.9rem; border-left: 1px solid var(--c-linea); }
+  .hero__dato-n { font-family: var(--f-titular); font-size: 2.25rem; line-height: 1; color: var(--pm-terracota-claro); }
   .hero__ovalo { display: none; }
 
   .hero__foto { position: relative; height: min(78svh, 620px); overflow: hidden; margin-inline: var(--gutter); border-radius: var(--arco); }
@@ -94,7 +103,7 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
       display: flex; flex-direction: column; justify-content: flex-end;
       padding: calc(var(--header-h) + 3rem) clamp(2rem, 4vw, 4rem) clamp(2.5rem, 5vw, 4.5rem) max(var(--gutter), calc((100vw - var(--max)) / 2 + var(--gutter)));
     }
-    .hero__titulo { font-size: clamp(3.5rem, 1rem + 5.2vw, 7.25rem); }
+    .hero__titulo { font-size: clamp(3.75rem, 1rem + 5.4vw, 7.5rem); }
     .hero__foto { height: auto; margin: 0; border-radius: 0; }
     .hero__est { left: auto; right: 6rem; bottom: 2rem; }
     .hero__bajar { right: 2rem; bottom: 1.5rem; width: 60px; height: 60px; }
@@ -107,5 +116,11 @@ const HERO_WIDTHS = [360, 540, 720, 960, 1280, 1448];
   }
   @media (min-width: 900px) and (max-height: 760px) {
     .hero__ovalo { display: none; }
+  }
+  /* pantallas de escritorio bajas: el titular se ajusta y los datos se ocultan para no recortarse */
+  @media (min-width: 900px) and (max-height: 980px) {
+    .hero__titulo { font-size: clamp(3.5rem, 0.5rem + 4.6vw, 6.5rem); }
+    .hero__texto { gap: 1.2rem; }
+    .hero__datos { display: none; }
   }
 </style>

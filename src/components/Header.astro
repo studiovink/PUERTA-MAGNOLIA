@@ -79,20 +79,20 @@ const { sobreOscuro = true } = Astro.props;
     display: flex; align-items: center; justify-content: space-between; gap: 1rem;
   }
   .header__logo { display: block; color: inherit; flex: none; }
-  .header__logo :global(.logo) { width: 84px; }
+  .header__logo :global(.logo) { width: 104px; }
 
   .header__nav { display: none; }
   .header__nav ul { display: flex; gap: 0.25rem; margin: 0; }
   .header__nav a {
     display: inline-flex; align-items: center; min-height: 40px; padding: 0.4rem 0.9rem;
-    border-radius: 999px; font-size: 0.875rem; font-weight: 500; text-decoration: none;
+    border-radius: 999px; font-size: 1rem; font-weight: 500; text-decoration: none;
     transition: background-color 0.3s var(--ease);
   }
   .header__nav a:hover, .header__nav a[aria-current='true'] { background: rgba(18, 79, 83, 0.08); }
   .header[data-sobre-oscuro]:not(.es-solido) .header__nav ul { background: var(--pm-marfil); color: var(--pm-petroleo); border-radius: 999px; padding: 4px; }
 
   .header__acciones { display: flex; align-items: center; gap: 0.5rem; }
-  .header__tel { display: none; align-items: center; gap: 0.4rem; font-size: 0.875rem; font-weight: 600; text-decoration: none; padding: 0.4rem 0.6rem; }
+  .header__tel { display: none; align-items: center; gap: 0.4rem; font-size: 1rem; font-weight: 600; text-decoration: none; padding: 0.4rem 0.6rem; }
   .header__tel :global(svg) { width: 16px; height: 16px; }
   .header__elige, .header__cta { display: none; }
   .header[data-sobre-oscuro]:not(.es-solido) .header__cta { --b-fondo: var(--pm-marfil); --b-texto: var(--pm-petroleo); --b-borde: var(--pm-marfil); }
@@ -100,7 +100,7 @@ const { sobreOscuro = true } = Astro.props;
 
   .header__menu {
     display: inline-flex; align-items: center; gap: 0.6rem; min-height: 44px; padding: 0 0.25rem 0 0.75rem;
-    font-size: 0.875rem; font-weight: 600; letter-spacing: 0.04em;
+    font-size: 1rem; font-weight: 600; letter-spacing: 0.04em;
   }
   .header__menu-lineas { display: grid; gap: 6px; width: 26px; }
   .header__menu-lineas i { display: block; height: 1px; background: currentColor; transition: transform 0.4s var(--ease); }
@@ -151,7 +151,7 @@ const { sobreOscuro = true } = Astro.props;
   }
   .barra a {
     display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
-    border-radius: 999px; font-weight: 600; font-size: 0.9375rem; text-decoration: none;
+    border-radius: 999px; font-weight: 600; font-size: 1.0625rem; text-decoration: none;
   }
   .barra__cta { background: var(--pm-petroleo); color: var(--pm-marfil); }
   .barra__wa { border: 1px solid var(--pm-petroleo); color: var(--pm-petroleo); padding-inline: 1rem; }

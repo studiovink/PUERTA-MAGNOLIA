@@ -43,7 +43,7 @@ const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) /
     <div class="plan__nivel" id="nivel-1" role="tabpanel" aria-labelledby="tab-nivel-1" data-panel-attr>
       <div class="plan__render">
         <div class="plan__imagen">
-        <Picture src={render} alt="Render del plan maestro de Puerta Magnolia con sus calles, lotes, áreas verdes y casa club" widths={[640, 960, 1280, 1593]} sizes="(min-width: 1440px) 1300px, 92vw" formats={['avif', 'webp']} quality={70} loading="lazy" />
+        <Picture src={render} alt="Render del plan maestro de Puerta Magnolia con sus calles, lotes, áreas verdes y casa club" widths={[640, 960, 1280, 1593]} sizes="(min-width: 1100px) 1000px, 92vw" formats={['avif', 'webp']} quality={70} loading="lazy" />
         <svg class="plan__capa" viewBox="0 0 1593 1059" aria-hidden="false">
           <defs>
             <mask id="mascara-etapa">
@@ -194,7 +194,8 @@ const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) /
 
   /* Nivel 1 */
   .plan__render { position: relative; }
-  .plan__imagen { position: relative; }
+  /* el render mide 1593 px: no se muestra a más de ~1000 px para que no se vea estirado */
+  .plan__imagen { position: relative; max-width: 1000px; }
   .plan__render :global(img) { width: 100%; height: auto; }
   .plan__capa { position: absolute; inset: 0; width: 100%; height: 100%; }
   .plan__zona polygon {
@@ -217,7 +218,8 @@ const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) /
   .plan__tarjeta .btn { margin-top: 0.5rem; --b-fondo: var(--pm-petroleo); --b-texto: var(--pm-marfil); --b-borde: var(--pm-petroleo); }
   .plan__marca { display: none; }
   @media (min-width: 900px) {
-    .plan__tarjeta--etapa { position: absolute; right: 2%; top: 4%; margin: 0; min-width: 220px; }
+    .plan__render { display: grid; grid-template-columns: minmax(0, 1000px) minmax(240px, 300px); gap: 2rem; align-items: start; }
+    .plan__tarjeta--etapa { margin: 0; padding: 1.5rem; }
     .plan__marca { display: block; position: absolute; left: 14%; top: 30%; background: rgba(13, 59, 62, 0.85); color: var(--pm-marfil); padding: 0.4rem 0.75rem; border-radius: 999px; }
   }
 
@@ -234,7 +236,7 @@ const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) /
   .plan__mapa { background: var(--pm-marfil); border-radius: var(--radio); overflow: auto; max-height: 82svh; overscroll-behavior: contain; }
   .plan__mapa svg { width: 100%; height: auto; transition: width 0.4s var(--ease); }
   .plan__mapa.es-cerca svg { width: 220%; max-width: none; }
-  .plan__acercar { margin-top: 0.75rem; font-size: 0.875rem; }
+  .plan__acercar { margin-top: 0.75rem; font-size: 1rem; }
   .plan__acercar :global(svg) { width: 18px; }
   @media (min-width: 1000px) { .plan__acercar { display: none; } }
 

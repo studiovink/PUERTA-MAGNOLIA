@@ -132,8 +132,8 @@ import { mxn, waLink, SITE } from '../../data/site';
   .modelos__tab[aria-selected='true']::after { transform: scaleX(1); }
   .modelos__tab-nombre { font-family: var(--f-titular); font-size: clamp(1.5rem, 1rem + 2.6vw, 3rem); line-height: 1; color: var(--pm-petroleo); }
   .modelos__tab[aria-selected='false'] .modelos__tab-nombre { color: #5E6A64; }
-  .modelos__tab-dato { font-size: 0.75rem; color: var(--c-suave); display: none; }
-  @media (min-width: 640px) { .modelos__tab-dato { display: block; font-size: 0.8125rem; } }
+  .modelos__tab-dato { font-size: 0.875rem; color: var(--c-suave); display: none; }
+  @media (min-width: 640px) { .modelos__tab-dato { display: block; font-size: 0.9375rem; } }
 
   .modelo {
     display: grid; gap: 2rem 3rem;
@@ -151,7 +151,7 @@ import { mxn, waLink, SITE } from '../../data/site';
   .modelo__datos { display: grid; grid-template-columns: repeat(2, 1fr); border-top: 1px solid var(--c-linea); }
   .modelo__datos div { padding: 0.75rem 0; border-bottom: 1px solid var(--c-linea); }
   .modelo__datos dt { font-size: var(--t-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-suave); }
-  .modelo__datos dd { margin: 0; font-family: var(--f-titular); font-size: 1.5rem; line-height: 1.2; color: var(--pm-petroleo); }
+  .modelo__datos dd { margin: 0; font-family: var(--f-titular); font-size: 1.75rem; line-height: 1.2; color: var(--pm-petroleo); }
   .modelo__suma ul { margin: 0.5rem 0 0; display: grid; gap: 0.25rem; }
   .modelo__suma li { font-family: var(--f-titular); font-size: var(--t-h4); color: var(--pm-petroleo); }
   .modelo__suma .etiqueta { color: var(--c-acento); }
@@ -173,6 +173,7 @@ import { mxn, waLink, SITE } from '../../data/site';
       align-items: start;
     }
     .modelo__foto { width: 100%; }
+    .modelo__datos { grid-template-columns: repeat(2, 1fr); }
     .modelo__accion { align-self: end; border-top: 1px solid var(--c-linea); padding-top: 1.5rem; }
   }
 </style>

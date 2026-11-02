@@ -64,17 +64,25 @@ if (dlg) {
     dlg.querySelector('[data-zoom-nivel]')!.textContent = `${Math.round(escala * 100)} %`;
   };
   const abrir = (src: string, alt: string) => {
+    img.onload = () => { img.style.maxHeight = `${img.naturalHeight}px`; img.style.maxWidth = `${img.naturalWidth}px`; };
     img.src = src; img.alt = alt; titulo.textContent = alt;
     escala = 1; aplicar();
     dlg.showModal();
     (window as any).__lenis?.stop();
   };
   dlg.addEventListener('close', () => (window as any).__lenis?.start());
-  dlg.querySelector('[data-zoom-mas]')!.addEventListener('click', () => { escala = Math.min(3, escala + 0.5); aplicar(); });
-  dlg.querySelector('[data-zoom-menos]')!.addEventListener('click', () => { escala = Math.max(1, escala - 0.5); aplicar(); });
+  // tope: nunca más grande que la resolución real de la planta (evita que se pixele)
+  const escalaMax = () => {
+    const ancho = matchMedia('(min-width: 700px)').matches;
+    const base = ancho ? lienzo.clientHeight - 32 : lienzo.clientWidth - 32;
+    const nativo = ancho ? img.naturalHeight : img.naturalWidth;
+    return Math.max(1, Math.min(3, nativo / Math.max(base, 1)));
+  };
+  dlg.querySelector('[data-zoom-mas]')!.addEventListener('click', () => { escala = Math.min(escalaMax(), escala + 0.25); aplicar(); });
+  dlg.querySelector('[data-zoom-menos]')!.addEventListener('click', () => { escala = Math.max(1, escala - 0.25); aplicar(); });
   dlg.querySelector('[data-zoom-cerrar]')!.addEventListener('click', () => dlg.close());
   dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
-  lienzo.addEventListener('dblclick', () => { escala = escala > 1 ? 1 : 2; aplicar(); });
+  lienzo.addEventListener('dblclick', () => { escala = escala > 1 ? 1 : escalaMax(); aplicar(); });
 
   document.addEventListener('click', (e) => {
     const t = e.target as HTMLElement;

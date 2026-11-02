@@ -74,13 +74,16 @@ const igual = (f: Fila) => f.valores.every((v) => v === f.valores[0]);
   td.resalta::before { content: '+ '; }
   tr.precio td { font-family: var(--f-titular); font-size: 1.5rem; font-weight: 500; color: var(--pm-petroleo); }
   tr[hidden] { display: none; }
+  /* Celular: cada fila muestra su nombre arriba y los 3 valores debajo, sin encimarse */
   @media (max-width: 599px) {
-    table { min-width: 0; table-layout: fixed; }
-    th, td { padding: 0.7rem 0.3rem; font-size: 0.8125rem; }
-    tbody th { width: 34%; font-size: 0.75rem; position: static; }
-    thead th { font-size: 1.3rem; }
-    tr.precio td { font-size: 1rem; }
-    tbody td { font-size: 0.8125rem; }
+    table, thead, tbody { display: block; min-width: 0; }
+    thead tr, tbody tr { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 0.5rem; }
+    thead td { display: none; }
+    thead th { font-size: 1.5rem; padding: 1rem 0 0.75rem; border-bottom: 1px solid var(--pm-petroleo); }
+    tbody tr { border-bottom: 1px solid var(--c-linea); padding: 0.75rem 0; }
+    tbody th { grid-column: 1 / -1; width: auto; position: static; padding: 0 0 0.35rem; border: 0; font-size: 0.875rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    tbody td { padding: 0; border: 0; font-size: 1rem; }
+    tr.precio td { font-size: 1.25rem; }
   }
   .comp__nota { margin-top: 1rem; font-size: var(--t-sm); }
   .resalta-txt { color: var(--c-acento); font-weight: 600; }
