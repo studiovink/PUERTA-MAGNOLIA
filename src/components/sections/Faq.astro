@@ -1,13 +1,11 @@
 ---
-import Folio from '../Folio.astro';
 import Icono from '../Icono.astro';
 import { FAQ } from '../../data/faq';
 ---
 <section class="faq tema-arena seccion" id="preguntas" aria-labelledby="faq-titulo">
   <div class="contenedor faq__grid">
     <div>
-      <Folio n="09" nombre="Preguntas frecuentes" />
-      <h2 id="faq-titulo" class="t-h2" data-titulo>Lo que más nos <em>preguntan.</em></h2>
+      <h2 id="faq-titulo" class="t-h2" data-titulo>Lo que más nos preguntan.</h2>
     </div>
     <div class="faq__lista">
       {FAQ.map((f) => (

@@ -2,7 +2,6 @@
 import Base from '../../layouts/Base.astro';
 import Foto from '../../components/Foto.astro';
 import Icono from '../../components/Icono.astro';
-import Pasos from '../../components/Pasos.astro';
 import PlantaVisor from '../../components/PlantaVisor.astro';
 import ZoomDialog from '../../components/ZoomDialog.astro';
 import Contacto from '../../components/sections/Contacto.astro';
@@ -43,14 +42,12 @@ const extras = m.suma.length ? ` con ${m.suma.join(' y ').toLowerCase()}` : '';
           <li aria-current="page">{m.nombre}</li>
         </ol>
       </nav>
-      <Pasos activo={2} modelo={m.id} />
 
       <header class="ficha__hero">
         <div class="ficha__foto">
           <Foto src={m.fachada} alt={m.fachadaAlt} arco marco prioridad revela={false} sizes="(min-width: 1000px) 38vw, 90vw" ratio="2 / 3" posicion="50% 62%" />
         </div>
         <div class="ficha__info">
-          <p class="etiqueta acento" data-hero-in>Modelo {String(i + 1).padStart(2, '0')} · Tercera etapa</p>
           <h1 class="ficha__nombre" data-titulo="letras">{m.nombre}</h1>
           <p class="ficha__frase" data-hero-in>{m.frase}</p>
           <dl class="ficha__datos" data-hero-in>
@@ -74,8 +71,7 @@ const extras = m.suma.length ? ` con ${m.suma.join(' y ').toLowerCase()}` : '';
   <section class="tema-arena seccion" id="plantas" aria-labelledby="plantas-t">
     <div class="contenedor ficha__plantas">
       <div class="ficha__plantas-txt">
-        <p class="etiqueta acento"><span class="num">2</span> Plantas y fotos</p>
-        <h2 id="plantas-t" class="t-h2" data-titulo>Así se <em>distribuye.</em></h2>
+        <h2 id="plantas-t" class="t-h2" data-titulo>Así se distribuye.</h2>
         <div>
           <p class="etiqueta">{m.suma.length ? 'Lo que suma este modelo' : 'Todo lo esencial'}</p>
           {m.suma.length ? (
@@ -94,7 +90,7 @@ const extras = m.suma.length ? ` con ${m.suma.join(' y ').toLowerCase()}` : '';
 
   <section class="tema-claro seccion" aria-labelledby="muestra-t">
     <div class="contenedor">
-      <h2 id="muestra-t" class="t-h3" data-titulo>La casa muestra, <em>por dentro.</em></h2>
+      <h2 id="muestra-t" class="t-h3" data-titulo>La casa muestra, por dentro.</h2>
       <div class="ficha__galeria">
         <Foto src={cocina} alt="Cocina con barra y bancos altos en la casa muestra" sizes="(min-width: 900px) 24vw, 45vw" ratio="2 / 3" arco />
         <Foto src={sala} alt="Sala con sillón claro y mesa de centro de madera en la casa muestra" sizes="(min-width: 900px) 24vw, 45vw" ratio="2 / 3" />
@@ -107,7 +103,7 @@ const extras = m.suma.length ? ` con ${m.suma.join(' y ').toLowerCase()}` : '';
 
   <section class="tema-arena otros" aria-labelledby="otros-t">
     <div class="contenedor">
-      <h2 id="otros-t" class="etiqueta acento">Compara con</h2>
+      <h2 id="otros-t" class="t-h3">Otros modelos</h2>
       <ul role="list" class="otros__lista">
         {otros.map((o) => (
           <li>
@@ -118,7 +114,6 @@ const extras = m.suma.length ? ` con ${m.suma.join(' y ').toLowerCase()}` : '';
             </a>
           </li>
         ))}
-        <li><a href="/#comparador"><span class="otros__n titular">Ver comparador</span><span class="suave">Los tres modelos lado a lado</span><Icono nombre="flecha" /></a></li>
       </ul>
     </div>
   </section>

@@ -1,5 +1,4 @@
 ---
-import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import Icono from '../Icono.astro';
 import galerias from '../../assets/fotos/galerias-santa-anita.jpg';
@@ -20,16 +19,11 @@ const REFERENCIAS = [
 ];
 ---
 <section class="ubi tema-arena seccion" id="ubicacion" aria-labelledby="ubi-titulo">
-  <span class="ubi__vertical titular" aria-hidden="true">Ubicación</span>
-  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:62%;top:4%"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
-  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:82%;top:10%;width:22px"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
-  <svg class="ubi__petalo" data-petalo viewBox="0 0 40 60" aria-hidden="true" style="left:44%;top:0%;width:16px"><path d="M20 0C34 14 38 38 20 60 2 38 6 14 20 0Z" /></svg>
 
   <div class="contenedor">
-    <Folio n="06" nombre="Ubicación" />
     <div class="ubi__grid">
       <div class="ubi__texto">
-        <h2 id="ubi-titulo" data-titulo>Vivir en el sur, <em>conectado</em> con todo.</h2>
+        <h2 id="ubi-titulo" data-titulo>Vivir en el sur, conectado con todo.</h2>
         <p class="lead suave" data-revela>Nueva zona de Galerías Sur, cerca de Galerías Santa Anita y con acceso directo a Av. López Mateos Sur.</p>
 
         <div class="ubi__dir" data-revela>
@@ -89,7 +83,7 @@ const REFERENCIAS = [
 
     <div class="ubi__refs" data-carrusel>
       <div class="ubi__refs-cabeza">
-        <p class="etiqueta acento">Lo que tienes cerca</p>
+        <h3 class="t-h4">Lo que tienes cerca</h3>
         <div class="ubi__refs-ctrl">
           <button type="button" class="ubi__flecha" data-carrusel-prev aria-label="Referencia anterior"><Icono nombre="flecha" /></button>
           <button type="button" class="ubi__flecha" data-carrusel-sig aria-label="Referencia siguiente"><Icono nombre="flecha" /></button>
@@ -98,7 +92,6 @@ const REFERENCIAS = [
       <ol class="ubi__pista" role="list" data-carrusel-pista tabindex="0" aria-label="Referencias de ubicación">
         {REFERENCIAS.map((r, i) => (
           <li class="ubi__ref">
-            <span class="ubi__ref-n num num--grande">0{i + 1}</span>
             <p class="t-h4">{r.t}</p>
             {r.d && <p class="suave">{r.d}</p>}
             {r.pendiente && <p><span class="pendiente">PENDIENTE: {r.pendiente}</span></p>}

@@ -1,20 +1,14 @@
 ---
 import { Image } from 'astro:assets';
-import Folio from '../Folio.astro';
 import fonurba from '../../assets/brand/fonurba.png';
 import lodela from '../../assets/brand/lodela.png';
 import { SITE } from '../../data/site';
 ---
 <section class="resp tema-claro seccion" id="respaldo" aria-labelledby="resp-titulo">
   <div class="contenedor">
-    <Folio n="07" nombre="Quién lo construye" />
     <div class="resp__grid">
-      <div class="resp__cifra" aria-hidden="true">
-        <span class="resp__n num num--grande">{SITE.experiencia}</span>
-        <span class="resp__u titular">años</span>
-      </div>
       <div class="resp__texto">
-        <h2 id="resp-titulo" class="t-h2" data-titulo>Respaldo <em>real.</em></h2>
+        <h2 id="resp-titulo" class="t-h2" data-titulo>Quién lo construye</h2>
         <p class="lead suave" data-revela>Puerta Magnolia lo desarrollan dos empresas que suman {SITE.experiencia} años de experiencia en construcción.</p>
       </div>
     </div>
@@ -35,12 +29,11 @@ import { SITE } from '../../data/site';
 </section>
 
 <style>
-  .resp__grid { display: grid; gap: 1.5rem; align-items: end; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+  .resp__grid { display: grid; gap: 1.5rem; margin-bottom: clamp(2.5rem, 5vw, 4rem); max-width: 56rem; }
   .resp__cifra { display: flex; align-items: baseline; gap: 0.5rem; line-height: 0.8; }
   .resp__n { font-size: clamp(8rem, 4rem + 22vw, 22rem); letter-spacing: -0.04em; }
   .resp__u { font-size: var(--t-h3); color: var(--pm-petroleo); font-style: italic; }
   .resp__texto { display: grid; gap: 1.25rem; }
-  @media (min-width: 1000px) { .resp__grid { grid-template-columns: 7fr 5fr; gap: 4rem; } }
 
   .resp__socios { display: grid; gap: 1.5rem; }
   @media (min-width: 760px) { .resp__socios { grid-template-columns: 1fr 1fr; gap: 2rem; } }

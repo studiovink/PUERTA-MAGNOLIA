@@ -1,6 +1,5 @@
 ---
 import { Picture } from 'astro:assets';
-import Folio from '../Folio.astro';
 import Icono from '../Icono.astro';
 import render from '../../assets/planos/plan-maestro.png';
 import { LOTES, PLANO, DISPONIBILIDAD_ES_EJEMPLO, resumenPorModelo } from '../../data/lotes';
@@ -22,9 +21,8 @@ const centro = (pts: [number, number][]) => [pts.reduce((a, p) => a + p[0], 0) /
 ---
 <section class="plan tema-oscuro seccion" id="elige-tu-casa" aria-labelledby="plan-titulo" data-plan>
   <div class="contenedor">
-    <Folio n="03" nombre="Elige tu casa" />
     <div class="plan__cabeza">
-      <h2 id="plan-titulo" data-titulo>Elige tu lugar en la <em>tercera etapa.</em></h2>
+      <h2 id="plan-titulo" data-titulo>Elige tu lugar en la tercera etapa.</h2>
       <p class="lead suave" data-revela>
         {SITE.etapa.viviendas} nuevas viviendas. Las Etapas 1 y 2 ya se comercializaron: hoy eliges entre los lotes de la tercera.
       </p>

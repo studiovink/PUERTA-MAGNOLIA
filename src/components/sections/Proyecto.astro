@@ -1,6 +1,5 @@
 ---
 import Capitulo from '../Capitulo.astro';
-import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import conjunto from '../../assets/fotos/proyecto-conjunto.jpg';
 import calle from '../../assets/fotos/calle-interior.webp';
@@ -15,10 +14,6 @@ import { SITE } from '../../data/site';
   posicion="55% 55%"
   ilustrativa
 >
-  <Fragment slot="izq">
-    <p class="etiqueta acento">Puerta Magnolia Residencial</p>
-    <p class="t-h3">Un proyecto que <em>crecerá</em> junto contigo.</p>
-  </Fragment>
   <Fragment slot="der">
     <dl class="datos">
       <div><dt>{SITE.etapa.nombre}</dt><dd><span class="num">{SITE.etapa.viviendas}</span> nuevas viviendas</dd></div>
@@ -32,8 +27,7 @@ import { SITE } from '../../data/site';
 <section class="collage tema-claro seccion" aria-labelledby="collage-titulo">
   <div class="contenedor collage__grid">
     <div class="collage__texto">
-      <Folio n="01" nombre="El proyecto" />
-      <h2 id="collage-titulo" class="t-h2" data-titulo>Espacios pensados para <em>convivir</em>, no solo para pasar.</h2>
+      <h2 id="collage-titulo" class="t-h2" data-titulo>Un proyecto que crecerá junto contigo.</h2>
       <div class="texto suave" data-revela>
         <p>Un lugar orgulloso de crear tiempo de calidad en familia: alberca, casa club, terraza de eventos, juegos infantiles y un parque lineal con áreas verdes, a unos pasos de tu puerta.</p>
         <p>Al sur de Guadalajara, rodeado de comercios, escuelas y servicios.</p>

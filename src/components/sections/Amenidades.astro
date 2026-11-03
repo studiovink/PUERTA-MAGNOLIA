@@ -1,6 +1,5 @@
 ---
 import Capitulo from '../Capitulo.astro';
-import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import casaClubAlberca from '../../assets/fotos/amenidades-casa-club.jpg';
 import alberca from '../../assets/fotos/alberca-vista.jpg';
@@ -25,20 +24,18 @@ const AMENIDADES = [
   ilustrativa
 >
   <Fragment slot="izq">
-    <p class="etiqueta acento">Vida en comunidad</p>
-    <p class="t-h3">Un lugar orgulloso de crear tiempo de <em>calidad</em> en familia.</p>
+    <p class="t-h3">Un lugar orgulloso de crear tiempo de calidad en familia.</p>
   </Fragment>
   <Fragment slot="der">
     <ol class="am-indice" role="list">
-      {AMENIDADES.map((a, i) => <li><span class="num">0{i + 1}</span> {a.nombre}</li>)}
+      {AMENIDADES.map((a) => <li>{a.nombre}</li>)}
     </ol>
   </Fragment>
 </Capitulo>
 
 <section class="am tema-oscuro seccion" aria-labelledby="am-titulo">
   <div class="contenedor">
-    <Folio n="04" nombre="Amenidades" />
-    <h2 id="am-titulo" class="am__titulo" data-titulo>Espacios pensados para convivir, <em>no solo para pasar.</em></h2>
+    <h2 id="am-titulo" class="am__titulo" data-titulo>Espacios pensados para convivir, no solo para pasar.</h2>
 
     <div class="am__grid">
       <div class="am__tabs" role="tablist" aria-label="Amenidades" aria-orientation="vertical">
@@ -48,7 +45,6 @@ const AMENIDADES = [
             id={`tab-am-${a.id}`} aria-controls={`am-${a.id}`}
             aria-selected={i === 0 ? 'true' : 'false'} tabindex={i === 0 ? 0 : -1}
           >
-            <span class="num">0{i + 1}</span>
             <span class="am__tab-nombre">{a.nombre}</span>
           </button>
         ))}
@@ -61,7 +57,7 @@ const AMENIDADES = [
               <Foto src={a.foto} alt={a.alt} sizes="(min-width: 1000px) 40vw, 90vw" arco ratio="4 / 5" posicion={a.pos} revela={i === 0} />
             </div>
             <div class="am__texto">
-              <p class="etiqueta acento">0{i + 1} · {a.nombre}</p>
+              <p class="am__nombre">{a.nombre}</p>
               <p class="t-h3">{a.texto}</p>
             </div>
           </div>
@@ -100,6 +96,7 @@ const AMENIDADES = [
   @keyframes entra { from { opacity: 0; transform: translateY(12px); } }
   .am__foto { max-width: 560px; }
   .am__texto { display: grid; gap: 1rem; max-width: 30ch; }
+  .am__nombre { font-weight: 600; color: var(--c-acento); }
   .am__nota { margin-top: 2.5rem; font-size: var(--t-xs); color: var(--c-suave); }
 
   @media (min-width: 1000px) {

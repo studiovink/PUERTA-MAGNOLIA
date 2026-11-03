@@ -1,5 +1,4 @@
 ---
-import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import Icono from '../Icono.astro';
 import cocina from '../../assets/fotos/interior-cocina.jpg';
@@ -24,9 +23,8 @@ const FOTOS = [
 ---
 <section class="int tema-claro seccion" id="interiores" aria-labelledby="int-titulo">
   <div class="contenedor int__cabeza">
-    <Folio n="05" nombre="Casa muestra" />
     <div class="int__fila">
-      <h2 id="int-titulo" data-titulo>Así se vive <em>por dentro.</em></h2>
+      <h2 id="int-titulo" data-titulo>Así se vive por dentro.</h2>
       <div class="int__ctrl" data-carrusel-ctrl>
         <button type="button" class="int__flecha" data-carrusel-prev aria-label="Foto anterior"><Icono nombre="flecha" /></button>
         <button type="button" class="int__flecha" data-carrusel-sig aria-label="Foto siguiente"><Icono nombre="flecha" /></button>
@@ -39,7 +37,7 @@ const FOTOS = [
       {FOTOS.map((f, i) => (
         <li class:list={['int__item', { 'int__item--arco': i % 3 === 0 }]}>
           <Foto src={f.src} alt={f.alt} sizes="(min-width: 1000px) 28vw, 74vw" ratio="2 / 3" arco={i % 3 === 0} revela={i < 3} widths={[360, 540, 720, 960]} />
-          <p class="int__pie"><span class="num">0{i + 1}</span> {f.t}</p>
+          <p class="int__pie">{f.t}</p>
         </li>
       ))}
     </ul>

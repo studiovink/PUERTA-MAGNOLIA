@@ -36,9 +36,9 @@ const { sobreOscuro = true } = Astro.props;
   <nav aria-label="Menú móvil" class="menu__nav">
     <ol role="list">
       {NAV.map((n, i) => (
-        <li><a href={n.href} data-menu-link><span class="menu__n num">0{i + 1}</span>{n.label}</a></li>
+        <li><a href={n.href} data-menu-link>{n.label}</a></li>
       ))}
-      <li><a href="/#elige-tu-casa" data-menu-link><span class="menu__n num">06</span>Elige tu casa</a></li>
+      <li><a href="/#elige-tu-casa" data-menu-link>Elige tu casa</a></li>
     </ol>
   </nav>
   <div class="menu__pie">

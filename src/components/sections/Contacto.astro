@@ -1,5 +1,4 @@
 ---
-import Folio from '../Folio.astro';
 import Icono from '../Icono.astro';
 import Foto from '../Foto.astro';
 import fachada from '../../assets/fotos/fachada-gardenia.webp';
@@ -12,8 +11,7 @@ const { modelo = '', titulo } = Astro.props;
 <section class="con tema-oscuro seccion" id="contacto" aria-labelledby="con-titulo">
   <div class="contenedor con__grid">
     <div class="con__intro">
-      <Folio n="10" nombre="Contacto" />
-      <h2 id="con-titulo" class="t-h2" data-titulo>{titulo ?? 'Ven a conocerla'} <em>en persona.</em></h2>
+      <h2 id="con-titulo" class="t-h2" data-titulo>{titulo ?? 'Ven a conocerla'} en persona.</h2>
       <p class="lead suave" data-revela>Déjanos tus datos y elige el día. Se abre WhatsApp con tu mensaje listo para enviar.</p>
       <ul class="con__datos" role="list" data-revela>
         <li><a href={`tel:${SITE.telefonoIntl}`}><Icono nombre="telefono" />{SITE.telefono}</a></li>
@@ -33,7 +31,7 @@ const { modelo = '', titulo } = Astro.props;
     </div>
 
     <form class="form" data-form-wa novalidate>
-      <p class="form__paso etiqueta"><span class="num">3</span> Agenda tu visita</p>
+      <p class="form__paso">Agenda tu visita</p>
       <div class="campo">
         <label for="f-nombre">Nombre</label>
         <input id="f-nombre" name="nombre" type="text" autocomplete="name" required aria-describedby="e-nombre" />
@@ -84,7 +82,7 @@ const { modelo = '', titulo } = Astro.props;
     display: grid; gap: 1.25rem;
     --c-linea: var(--pm-arena); --c-titular: var(--pm-petroleo);
   }
-  .form__paso { display: flex; align-items: center; gap: 0.5rem; color: var(--pm-terracota-texto); }
+  .form__paso { font-family: var(--f-titular); font-size: 1.75rem; line-height: 1.1; color: var(--pm-petroleo); }
   .form__paso .num { font-size: 1.6rem; color: var(--pm-terracota-texto); }
   .campo { display: grid; gap: 0.4rem; }
   .campo--doble { grid-template-columns: 1fr; gap: 1.25rem; }

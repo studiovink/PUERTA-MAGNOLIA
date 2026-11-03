@@ -1,23 +1,19 @@
 ---
-import Folio from '../Folio.astro';
 import Foto from '../Foto.astro';
 import Icono from '../Icono.astro';
 import PlantaVisor from '../PlantaVisor.astro';
-import Pasos from '../Pasos.astro';
 import { MODELOS, COMUN, fmtM2 } from '../../data/modelos';
 import { mxn, waLink, SITE } from '../../data/site';
 ---
 <section class="modelos tema-arena seccion" id="modelos" aria-labelledby="modelos-titulo">
   <div class="contenedor">
-    <Folio n="02" nombre="Modelos" />
     <div class="modelos__cabeza">
-      <h2 id="modelos-titulo" data-titulo>Elige el modelo que se ajusta a <em>cómo vive</em> tu familia.</h2>
+      <h2 id="modelos-titulo" data-titulo>Elige el modelo que se ajusta a cómo vive tu familia.</h2>
       <p class="lead suave" data-revela>
         Tres casas de dos niveles en lote de {COMUN.lote}, todas con 3 recámaras, 2.5 baños, jardín y 2 estacionamientos. Cambia lo que cada familia necesita de más.
       </p>
     </div>
 
-    <Pasos activo={1} />
 
     <div class="modelos__tabs" role="tablist" aria-label="Modelos de casa" data-revela>
       {MODELOS.map((m, i) => (
@@ -52,7 +48,6 @@ import { mxn, waLink, SITE } from '../../data/site';
         </div>
 
         <div class="modelo__info">
-          <p class="etiqueta acento">Modelo {String(i + 1).padStart(2, '0')}</p>
           <h3 class="modelo__nombre">{m.nombre}</h3>
           <p class="modelo__frase">{m.frase}</p>
 
@@ -81,12 +76,10 @@ import { mxn, waLink, SITE } from '../../data/site';
         </div>
 
         <div class="modelo__plantas">
-          <p class="modelo__paso etiqueta"><span class="num">2</span> Mira sus plantas</p>
           <PlantaVisor modelo={m} />
         </div>
 
         <div class="modelo__accion">
-          <p class="modelo__paso etiqueta"><span class="num">3</span> Agenda o aparta</p>
           <div class="modelo__ctas">
             <a class="btn" href="#contacto" data-elige-modelo={m.id}>Quiero conocerla</a>
             <a class="btn btn--linea" href={waLink(`Hola, quiero apartar una casa modelo ${m.nombre} en Puerta Magnolia con ${mxn(SITE.apartado)}. ¿Qué lotes tienen disponibles?`)} target="_blank" rel="noopener">
