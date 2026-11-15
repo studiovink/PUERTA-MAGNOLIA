@@ -6,6 +6,7 @@ import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
 import Marquee from './components/Marquee';
+import Opening from './components/Opening';
 import { services } from './content';
 import { initMotion } from './motion';
 
@@ -37,6 +38,7 @@ export default function App() {
   useEffect(() => initMotion(), []);
   return (
     <>
+      <Opening />
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
       <Header />
       <main id="contenido">
