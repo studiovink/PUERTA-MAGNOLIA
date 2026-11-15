@@ -1,0 +1,69 @@
+---
+import { SITE, RESIDENCIAS, url } from '../data/site';
+const total = String(RESIDENCIAS.length).padStart(2, '0');
+const regiones = [...new Set(RESIDENCIAS.map((r) => r.region))];
+const wa = SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}` : '';
+---
+
+<header class="nav">
+  <a class="brand" href={url('/')} aria-label={`${SITE.brand}, inicio`}>
+    {SITE.logo ? <img src={url(SITE.logo)} alt={SITE.brand} /> : SITE.brand}
+  </a>
+  <a class="nav-call" href={url('/#contacto')}>
+    <span>Hablemos</span>
+    <strong>Encuentra tu lugar</strong>
+  </a>
+  <a class="nav-count" href={url('/#coleccion')}>
+    <strong>{total}</strong>
+    <span>Destinos<br />seleccionados</span>
+  </a>
+  <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="menu-pane">
+    <span class="menu-toggle-label">Menú</span>
+    <i class="dots" aria-hidden="true"><b></b><b></b></i>
+  </button>
+</header>
+
+<aside class="menu-pane" id="menu-pane" aria-label="Navegación principal" hidden>
+  <div class="menu-contact">
+    <dl>
+      <div>
+        <dt>Colección</dt>
+        <dd>{SITE.descriptor}</dd>
+      </div>
+      <div>
+        <dt>Destinos</dt>
+        <dd>{regiones.map((r) => <span>{r}</span>)}</dd>
+      </div>
+      {
+        SITE.phone && (
+          <div>
+            <dt>Teléfono</dt>
+            <dd><a href={`tel:${SITE.phone.replace(/\s/g, '')}`}>{SITE.phone}</a></dd>
+          </div>
+        )
+      }
+      {
+        SITE.email && (
+          <div>
+            <dt>Correo</dt>
+            <dd><a href={`mailto:${SITE.email}`}>{SITE.email}</a></dd>
+          </div>
+        )
+      }
+      {
+        wa && (
+          <div>
+            <dt>WhatsApp</dt>
+            <dd><a href={wa} rel="noopener">Escríbenos</a></dd>
+          </div>
+        )
+      }
+    </dl>
+  </div>
+  <nav aria-label="Secciones">
+    <a href={url('/')}><span>Inicio</span></a>
+    <a href={url('/#coleccion')}><span>Residencias</span></a>
+    <a href={url('/#vision')}><span>Nuestra visión</span></a>
+    <a href={url('/#contacto')}><span>Contacto</span></a>
+  </nav>
+</aside>

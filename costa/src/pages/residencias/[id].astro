@@ -1,0 +1,95 @@
+---
+import Base from '../../layouts/Base.astro';
+import Hero from '../../components/Hero.astro';
+import Foto from '../../components/Foto.astro';
+import { SITE, RESIDENCIAS, type Residencia, galeria, full, dims, url } from '../../data/site';
+
+export function getStaticPaths() {
+  return RESIDENCIAS.map((r) => ({ params: { id: r.id }, props: { r } }));
+}
+interface Props {
+  r: Residencia;
+}
+const { r } = Astro.props;
+const fotos = galeria(r);
+const otra = RESIDENCIAS[(RESIDENCIAS.indexOf(r) + 1) % RESIDENCIAS.length];
+const [nombreA, ...nombreB] = r.title.split(' ');
+---
+
+<Base title={`${r.title}, ${r.region}`} description={r.description} portada={r}>
+  <Hero residencia={r} />
+
+  <section class="section ficha-intro" aria-labelledby="ficha-t">
+    <div class="section-head">
+      <div>
+        <p class="section-tag">{r.region}</p>
+        <h2 class="split" id="ficha-t">
+          <span class="line">{nombreA}</span>
+          <span class="line tone">{nombreB.join(' ')}</span>
+        </h2>
+      </div>
+      <div class="ficha-texto">
+        <p class="section-lead reveal">{r.texto[0]}</p>
+        <p class="ficha-segundo reveal">{r.texto[1]}</p>
+        <dl class="ficha-datos reveal">
+          <div>
+            <dt>Región</dt>
+            <dd>{r.region}</dd>
+          </div>
+          <div>
+            <dt>Materiales</dt>
+            <dd>{r.materiales.join(', ')}</dd>
+          </div>
+          <div>
+            <dt>Recorrido</dt>
+            <dd>{fotos.map((f) => f.label).join(', ')}</dd>
+          </div>
+        </dl>
+        {SITE.demo && <p class="ficha-nota reveal">Concepto visual inspirado en la región. No es un inmueble en venta; no se indican precio, superficie ni dirección.</p>}
+      </div>
+    </div>
+  </section>
+
+  <section class="section galeria" id="galeria" aria-label={`Galería de ${r.title}`}>
+    <div class="galeria-grid">
+      {
+        fotos.map((f, i) => (
+          <figure class:list={['galeria-item', 'reveal', { ancha: i === 0 }]}>
+            <button type="button" data-lightbox={i} data-full={full(f)} data-w={dims(f).width} data-h={dims(f).height} data-alt={f.alt} aria-label={`Ampliar: ${f.label}`}>
+              <Foto foto={f} sizes={i === 0 ? '100vw' : '(max-width:767px) 100vw, 50vw'} />
+            </button>
+            <figcaption>
+              <span>{String(i + 1).padStart(2, '0')}</span>
+              {f.label}
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section siguiente" aria-label="Otra residencia">
+    <a class="siguiente-link" href={url(`/residencias/${otra.id}`)}>
+      <span class="siguiente-texto">
+        <span class="section-tag">Siguiente residencia</span>
+        <span class="siguiente-nombre">{otra.title}, <span class="tone">{otra.region}</span></span>
+        <span class="link-dots">Descubrir <i class="dots" aria-hidden="true"><b></b><b></b></i></span>
+      </span>
+      <span class="property-image reveal">
+        <Foto foto={otra.hero} sizes="(max-width:767px) 100vw, 66vw" />
+      </span>
+    </a>
+  </section>
+
+  <dialog class="lightbox" aria-label={`Fotografías de ${r.title}`}>
+    <div class="lightbox-bar">
+      <p class="lightbox-count" aria-live="polite"></p>
+      <button class="lightbox-close" type="button">Cerrar <i class="dots" aria-hidden="true"><b></b><b></b></i></button>
+    </div>
+    <img class="lightbox-img" alt="" />
+    <div class="lightbox-nav">
+      <button type="button" data-dir="-1">← Anterior</button>
+      <button type="button" data-dir="1">Siguiente →</button>
+    </div>
+  </dialog>
+</Base>

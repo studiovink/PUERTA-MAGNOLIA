@@ -1,0 +1,278 @@
+[
+  {
+    "id": "01-cabos-fachada",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Fachada principal",
+    "role": "hero-desktop",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 46%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/01-cabos-fachada-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 967282
+    },
+    "light": {
+      "path": "/images/01-cabos-fachada-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 100152
+    },
+    "srcSet": "/images/01-cabos-fachada-1280.webp 1280w, /images/01-cabos-fachada-3840.webp 3840w"
+  },
+  {
+    "id": "02-punta-mita-fachada",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Fachada principal",
+    "role": "property-cover",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 46%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/02-punta-mita-fachada-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1261060
+    },
+    "light": {
+      "path": "/images/02-punta-mita-fachada-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 133384
+    },
+    "srcSet": "/images/02-punta-mita-fachada-1280.webp 1280w, /images/02-punta-mita-fachada-3840.webp 3840w"
+  },
+  {
+    "id": "03-cabos-sala",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Sala frente al mar",
+    "role": "gallery-living",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 52%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/03-cabos-sala-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1232612
+    },
+    "light": {
+      "path": "/images/03-cabos-sala-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 126902
+    },
+    "srcSet": "/images/03-cabos-sala-1280.webp 1280w, /images/03-cabos-sala-3840.webp 3840w"
+  },
+  {
+    "id": "04-punta-mita-sala",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Sala tropical",
+    "role": "gallery-living",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 52%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/04-punta-mita-sala-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1445042
+    },
+    "light": {
+      "path": "/images/04-punta-mita-sala-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 156202
+    },
+    "srcSet": "/images/04-punta-mita-sala-1280.webp 1280w, /images/04-punta-mita-sala-3840.webp 3840w"
+  },
+  {
+    "id": "05-cabos-recamara",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Recámara con vista al mar",
+    "role": "gallery-bedroom",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/05-cabos-recamara-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1044466
+    },
+    "light": {
+      "path": "/images/05-cabos-recamara-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 102904
+    },
+    "srcSet": "/images/05-cabos-recamara-1280.webp 1280w, /images/05-cabos-recamara-3840.webp 3840w"
+  },
+  {
+    "id": "06-punta-mita-recamara",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Recámara entre palmeras",
+    "role": "gallery-bedroom",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/06-punta-mita-recamara-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 942524
+    },
+    "light": {
+      "path": "/images/06-punta-mita-recamara-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 114738
+    },
+    "srcSet": "/images/06-punta-mita-recamara-1280.webp 1280w, /images/06-punta-mita-recamara-3840.webp 3840w"
+  },
+  {
+    "id": "07-cabos-bano",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Baño en travertino",
+    "role": "gallery-bathroom",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/07-cabos-bano-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 935866
+    },
+    "light": {
+      "path": "/images/07-cabos-bano-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 83294
+    },
+    "srcSet": "/images/07-cabos-bano-1280.webp 1280w, /images/07-cabos-bano-3840.webp 3840w"
+  },
+  {
+    "id": "08-punta-mita-bano",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Baño tropical",
+    "role": "gallery-bathroom",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/08-punta-mita-bano-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 929946
+    },
+    "light": {
+      "path": "/images/08-punta-mita-bano-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 106558
+    },
+    "srcSet": "/images/08-punta-mita-bano-1280.webp 1280w, /images/08-punta-mita-bano-3840.webp 3840w"
+  },
+  {
+    "id": "09-cabos-alberca-terraza",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Alberca y terraza",
+    "role": "terrace",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/09-cabos-alberca-terraza-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 988444
+    },
+    "light": {
+      "path": "/images/09-cabos-alberca-terraza-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 112746
+    },
+    "srcSet": "/images/09-cabos-alberca-terraza-1280.webp 1280w, /images/09-cabos-alberca-terraza-3840.webp 3840w"
+  },
+  {
+    "id": "10-punta-mita-alberca-terraza",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Alberca frente al Pacífico",
+    "role": "terrace",
+    "aspectRatio": "16:9",
+    "objectPosition": "50% 50%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/10-punta-mita-alberca-terraza-3840.webp",
+      "width": 3840,
+      "height": 2160,
+      "bytes": 1159034
+    },
+    "light": {
+      "path": "/images/10-punta-mita-alberca-terraza-1280.webp",
+      "width": 1280,
+      "height": 720,
+      "bytes": 135958
+    },
+    "srcSet": "/images/10-punta-mita-alberca-terraza-1280.webp 1280w, /images/10-punta-mita-alberca-terraza-3840.webp 3840w"
+  },
+  {
+    "id": "11-cabos-portada-movil",
+    "set": "casa-duna",
+    "region": "Los Cabos",
+    "scene": "Portada vertical",
+    "role": "hero-mobile",
+    "aspectRatio": "9:16",
+    "objectPosition": "50% 48%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/11-cabos-portada-movil-2160.webp",
+      "width": 2160,
+      "height": 3840,
+      "bytes": 1119366
+    },
+    "light": {
+      "path": "/images/11-cabos-portada-movil-900.webp",
+      "width": 900,
+      "height": 1600,
+      "bytes": 183036
+    },
+    "srcSet": "/images/11-cabos-portada-movil-900.webp 900w, /images/11-cabos-portada-movil-2160.webp 2160w"
+  },
+  {
+    "id": "12-punta-mita-portada-movil",
+    "set": "casa-palma",
+    "region": "Punta Mita",
+    "scene": "Portada vertical",
+    "role": "hero-mobile",
+    "aspectRatio": "9:16",
+    "objectPosition": "50% 48%",
+    "conceptual": true,
+    "full": {
+      "path": "/images/12-punta-mita-portada-movil-2160.webp",
+      "width": 2160,
+      "height": 3840,
+      "bytes": 1133660
+    },
+    "light": {
+      "path": "/images/12-punta-mita-portada-movil-900.webp",
+      "width": 900,
+      "height": 1600,
+      "bytes": 171644
+    },
+    "srcSet": "/images/12-punta-mita-portada-movil-900.webp 900w, /images/12-punta-mita-portada-movil-2160.webp 2160w"
+  }
+]

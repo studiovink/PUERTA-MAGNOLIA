@@ -1,0 +1,73 @@
+---
+import '../styles/site.css';
+import { SITE, type Residencia, srcset, url } from '../data/site';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  /** Residencia cuya portada se precarga (solo la fuente del dispositivo actual). */
+  portada?: Residencia;
+  /** La portada de inicio lleva la introducción de fotografías. */
+  intro?: boolean;
+  /** Página sin foto de portada: la navegación va sobre fondo claro. */
+  claro?: boolean;
+}
+const { title, description = SITE.description, portada, intro = false, claro = false } = Astro.props;
+const pageTitle = title ? `${title} | ${SITE.brand}` : `${SITE.brand} | ${SITE.descriptor}`;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#f1f2f4" />
+    <link rel="preload" href={url('/fonts/InstrumentSans-Variable.ttf')} as="font" type="font/ttf" crossorigin />
+    {
+      portada && (
+        <>
+          <link rel="preload" as="image" media="(min-width:768px)" imagesrcset={srcset(portada.hero)} imagesizes="100vw" fetchpriority="high" />
+          <link rel="preload" as="image" media="(max-width:767px)" imagesrcset={srcset(portada.heroMovil)} imagesizes="100vw" fetchpriority="high" />
+        </>
+      )
+    }
+    <script is:inline define:vars={{ intro }}>
+      (function () {
+        var d = document.documentElement;
+        d.classList.add('js');
+        var seen = false;
+        try { seen = sessionStorage.getItem('intro') === '1'; } catch (e) {}
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        d.classList.add(intro && !seen && !reduced ? 'is-booting' : 'is-entering');
+        // Salida de emergencia: nada puede dejar la página tapada o sin scroll.
+        window.setTimeout(function () {
+          if (!d.classList.contains('is-booting') && !d.classList.contains('is-entering')) return;
+          d.classList.remove('is-booting', 'is-entering');
+          var el = document.querySelector('.intro');
+          if (el) el.hidden = true;
+          document.querySelectorAll('main,header,footer').forEach(function (n) { n.inert = false; });
+        }, 8000);
+      })();
+    </script>
+  </head>
+  <body class:list={{ 'pagina-clara': claro }}>
+    <a class="skip-link" href="#contenido">Ir al contenido</a>
+    <slot name="intro" />
+    <Header />
+    <main id="contenido">
+      <slot />
+    </main>
+    <Footer />
+    <div class="cortina" aria-hidden="true"></div>
+    <script>
+      import '../scripts/site.ts';
+    </script>
+  </body>
+</html>

@@ -1,0 +1,89 @@
+---
+import { SITE, RESIDENCIAS, type Residencia, src, srcset, dims, url } from '../data/site';
+import Foto from './Foto.astro';
+
+interface Props {
+  residencia: Residencia;
+  /** En inicio la portada puede alternar entre residencias y Explorar lleva a la ficha. */
+  inicio?: boolean;
+}
+const { residencia: r, inicio = false } = Astro.props;
+const d = dims(r.hero);
+const meta = SITE.demo ? 'Residencia costera · Concepto visual' : r.description;
+---
+
+<section class="hero" id="inicio" aria-label={inicio ? 'Residencia destacada' : r.title} data-hero data-residencia={r.id}>
+  <picture class="hero-background">
+    <source class="hero-mobile-source" media="(max-width:767px)" srcset={srcset(r.heroMovil)} sizes="100vw" />
+    <img
+      id="hero-photo"
+      src={src(r.hero)}
+      srcset={srcset(r.hero)}
+      sizes="100vw"
+      alt={r.hero.alt}
+      width={d.width}
+      height={d.height}
+      fetchpriority="high"
+      decoding="async"
+    />
+  </picture>
+  <div class="hero-shade"></div>
+
+  {
+    inicio ? (
+      <div class="hero-side" role="group" aria-label="Cambiar residencia de portada">
+        {RESIDENCIAS.map((item, i) => (
+          <button type="button" data-switch={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <span>{String(i + 1).padStart(2, '0')}</span>
+            {item.title}
+          </button>
+        ))}
+      </div>
+    ) : (
+      <div class="hero-side">
+        <a href={url('/#coleccion')}>← La colección</a>
+      </div>
+    )
+  }
+
+  <div class="hero-copy">
+    <span class="hero-corner" aria-hidden="true"></span>
+    <h1>
+      <span class="hero-line"><span class="hero-title">{r.title},</span></span>
+      <span class="hero-line"><span class="hero-location">{r.region}</span></span>
+    </h1>
+    <p class="hero-meta">{meta}</p>
+  </div>
+
+  <div class="hero-rail">
+    <article class="profile-tile">
+      {
+        SITE.profileImage ? (
+          <img class="profile-monogram" src={url(SITE.profileImage)} alt={`Perfil de ${SITE.brand}`} />
+        ) : (
+          <span class="profile-monogram" aria-hidden="true">{SITE.brand.slice(0, 1)}</span>
+        )
+      }
+      <div>
+        <small>Tu próximo<br />horizonte</small>
+        <strong>{SITE.brand}</strong>
+        <span>{SITE.descriptor}</span>
+      </div>
+    </article>
+    <div class="photo-rail" role="group" aria-label="Espacios de la residencia">
+      {
+        r.espacios.map((e, i) => (
+          <button class="space-card" type="button" data-space={i} data-open={inicio ? undefined : i + 1} aria-pressed="false" aria-label={`Ampliar vista de ${e.label.toLowerCase()}`}>
+            <Foto foto={e} sizes="(max-width:767px) 45vw, 22vw" prioridad />
+            <span class="space-number" aria-hidden="true">{i + 1}<i></i></span>
+            <span class="space-label">{e.label}</span>
+          </button>
+        ))
+      }
+      <a class="more-card" href={inicio ? url(`/residencias/${r.id}`) : '#galeria'} data-explorar>
+        <span>{inicio ? 'Explorar' : 'Galería'}</span>
+        <i class="dots" aria-hidden="true"><b></b><b></b></i>
+      </a>
+    </div>
+  </div>
+</section>

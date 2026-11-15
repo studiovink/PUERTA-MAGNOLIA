@@ -1,0 +1,44 @@
+---
+import { SITE, RESIDENCIAS, url } from '../data/site';
+import Foto from './Foto.astro';
+
+const fondo = RESIDENCIAS[1].terraza;
+const wa = SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}` : '';
+const hayContacto = Boolean(SITE.email || SITE.phone || wa);
+const year = new Date().getFullYear();
+---
+
+<footer class="footer" id="contacto">
+  <Foto foto={fondo} sizes="100vw" alt="" class="footer-bg" />
+  <div class="footer-top">
+    <a class="brand" href={url('/')}>{SITE.brand}</a>
+    <nav aria-label="Pie de página">
+      <a href={url('/')}>Inicio</a>
+      <a href={url('/#coleccion')}>Residencias</a>
+      <a href={url('/#vision')}>Nuestra visión</a>
+      <a href={url('/#preguntas')}>Preguntas</a>
+    </nav>
+  </div>
+  <div class="footer-main">
+    <p class="footer-side">{SITE.descriptor}</p>
+    <div class="footer-cta">
+      <p class="footer-lead reveal">Un nuevo horizonte</p>
+      <h2 class="split">
+        <span class="line">Encuentra tu lugar</span>
+        <span class="line">frente al mar</span>
+      </h2>
+      <div class="footer-actions reveal">
+        <a class="link-dots" href={url('/#coleccion')}>Ver la colección <i class="dots" aria-hidden="true"><b></b><b></b></i></a>
+        {SITE.email && <a class="link-dots" href={`mailto:${SITE.email}`}>{SITE.email} <i class="dots" aria-hidden="true"><b></b><b></b></i></a>}
+        {SITE.phone && <a class="link-dots" href={`tel:${SITE.phone.replace(/\s/g, '')}`}>{SITE.phone} <i class="dots" aria-hidden="true"><b></b><b></b></i></a>}
+        {wa && <a class="link-dots" href={wa} rel="noopener">WhatsApp <i class="dots" aria-hidden="true"><b></b><b></b></i></a>}
+      </div>
+      {!hayContacto && <p class="footer-pending reveal">Los datos de contacto se publicarán aquí.</p>}
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© {year} {SITE.brand}</span>
+    {SITE.demo && <span>Colección conceptual. Las imágenes no representan inmuebles en venta.</span>}
+    <a href="#contenido">Volver arriba</a>
+  </div>
+</footer>

@@ -1,0 +1,28 @@
+---
+import { type Foto, src, srcset, dims } from '../data/site';
+
+interface Props {
+  foto: Foto;
+  /** Atributo sizes real del hueco que ocupa la imagen. */
+  sizes: string;
+  alt?: string;
+  prioridad?: boolean;
+  class?: string;
+}
+const { foto, sizes, alt, prioridad = false, class: cls } = Astro.props;
+const { width, height } = dims(foto);
+---
+
+<img
+  class={cls}
+  src={src(foto)}
+  srcset={srcset(foto)}
+  sizes={sizes}
+  alt={alt ?? foto.alt}
+  width={width}
+  height={height}
+  loading={prioridad ? 'eager' : 'lazy'}
+  fetchpriority={prioridad ? 'high' : undefined}
+  decoding="async"
+  style={foto.position ? `object-position:${foto.position}` : undefined}
+/>

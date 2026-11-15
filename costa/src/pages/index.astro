@@ -1,0 +1,185 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Foto from '../components/Foto.astro';
+import { SITE, RESIDENCIAS, FAQ, src, srcset, url } from '../data/site';
+
+const [duna, palma] = RESIDENCIAS;
+const introFotos = [duna.espacios[2], palma.espacios[0], palma.espacios[1]];
+const vistas = RESIDENCIAS.length * 6;
+---
+
+<Base portada={duna} intro>
+  <div class="intro" slot="intro" aria-hidden="true">
+    <div class="intro-stage">
+      {
+        introFotos.map((f) => (
+          <figure class="intro-card">
+            <img src={src(f)} alt="" width="1280" height="720" decoding="async" />
+          </figure>
+        ))
+      }
+      <figure class="intro-hero">
+        <picture>
+          <source media="(max-width:767px)" srcset={srcset(duna.heroMovil)} sizes="100vw" />
+          <img src={src(duna.hero)} srcset={srcset(duna.hero)} sizes="100vw" alt="" decoding="async" />
+        </picture>
+      </figure>
+    </div>
+    <button class="skip-intro" type="button">Omitir introducción</button>
+  </div>
+
+  <Hero residencia={duna} inicio />
+
+  <section class="section collection" id="coleccion" aria-labelledby="coleccion-t">
+    <div class="section-head">
+      <div>
+        <p class="section-tag">La colección</p>
+        <h2 class="split" id="coleccion-t">
+          <span class="line">Residencias</span>
+          <span class="line tone">frente al mar</span>
+        </h2>
+      </div>
+      <p class="section-lead reveal">
+        Dos maneras de habitar la costa: la calma mineral de Los Cabos y la vegetación de Punta Mita. Cada residencia se recorre completa, de la fachada a la terraza.
+      </p>
+    </div>
+    <div class="property-grid">
+      {
+        RESIDENCIAS.map((r) => (
+          <article class="property reveal">
+            <a class="property-link" href={url(`/residencias/${r.id}`)}>
+              <div class="property-caption">
+                <span class="hero-corner" aria-hidden="true" />
+                <h3 class="property-name">{r.title}, {r.region}</h3>
+                <p class="property-desc">{r.description}</p>
+                <p class="property-more">Ver residencia <i class="dots" aria-hidden="true"><b /><b /></i></p>
+              </div>
+              <div class="property-image">
+                <Foto foto={r.hero} sizes="(max-width:767px) 100vw, 50vw" />
+                {SITE.demo && <span class="badge">Concepto <i /></span>}
+              </div>
+            </a>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="section vision" id="vision" aria-labelledby="vision-t">
+    <div class="vision-grid">
+      <div class="vision-title">
+        <p class="section-tag">Nuestra visión</p>
+        <h2 class="split" id="vision-t">
+          <span class="line">La calma</span>
+          <span class="line tone">también se diseña</span>
+        </h2>
+      </div>
+      <p class="vision-kicker reveal">Materia, luz<br />y paisaje</p>
+      <div class="vision-photo vision-photo-a reveal">
+        <Foto foto={duna.espacios[0]} sizes="(max-width:767px) 100vw, 20vw" />
+      </div>
+      <p class="vision-copy reveal">
+        Materiales que se sienten. Espacios que respiran. Una relación cercana con el paisaje y la luz natural, pensada para que la casa acompañe el ritmo de la costa en lugar de imponerse a ella.
+      </p>
+      <dl class="vision-facts reveal">
+        <div>
+          <dt>Destinos</dt>
+          <dd>{RESIDENCIAS.map((r) => r.region).join(' · ')}</dd>
+        </div>
+        <div>
+          <dt>Casa Duna</dt>
+          <dd>{duna.materiales.slice(0, 3).join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Casa Palma</dt>
+          <dd>{palma.materiales.slice(0, 3).join(', ')}</dd>
+        </div>
+        <div><a class="link-dots" href="#coleccion">Ver las residencias <i class="dots" aria-hidden="true"><b></b><b></b></i></a></div>
+      </dl>
+      <div class="vision-photo vision-photo-b reveal">
+        <Foto foto={palma.espacios[0]} sizes="(max-width:767px) 100vw, 32vw" />
+      </div>
+      <div class="vision-photo vision-photo-c reveal">
+        <Foto foto={duna.espacios[2]} sizes="(max-width:767px) 100vw, 22vw" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section advantages" id="habitar" aria-labelledby="habitar-t">
+    <div class="section-head">
+      <span></span>
+      <div>
+        <p class="section-tag">Una forma de habitar</p>
+        <h2 class="split" id="habitar-t">
+          <span class="line">El paisaje</span>
+          <span class="line tone">entra en casa</span>
+        </h2>
+      </div>
+    </div>
+    <div class="bento">
+      <article class="bento-note b1 reveal">
+        <h3>Horizonte<br />abierto</h3>
+        <p>Fachadas bajas que dejan el protagonismo al mar.</p>
+      </article>
+      <article class="bento-image b2 reveal">
+        <Foto foto={duna.terraza} sizes="(max-width:767px) 100vw, 33vw" />
+        <h3><strong>{String(RESIDENCIAS.length).padStart(2, '0')}</strong> Destinos<br />costeros</h3>
+      </article>
+      <article class="bento-note b3 reveal">
+        <h3>Interiores<br />que respiran</h3>
+        <div class="bento-stack" aria-hidden="true">
+          <img src={src(palma.espacios[2])} alt="" loading="lazy" width="1280" height="720" />
+          <img src={src(duna.espacios[1])} alt="" loading="lazy" width="1280" height="720" />
+          <img src={src(palma.espacios[0])} alt="" loading="lazy" width="1280" height="720" />
+        </div>
+      </article>
+      <article class="bento-note b4 reveal">
+        <div class="bento-strip" aria-hidden="true">
+          {[duna.hero, palma.hero, duna.terraza, palma.terraza].map((f) => <img src={src(f)} alt="" loading="lazy" width="1280" height="720" />)}
+        </div>
+        <h3>De la fachada<br />a la terraza</h3>
+      </article>
+      <article class="bento-brand b5 reveal" aria-hidden="true"><span>{SITE.brand}</span></article>
+      <article class="bento-image b6 reveal">
+        <Foto foto={palma.terraza} sizes="(max-width:767px) 50vw, 16vw" />
+        <h3>Vida al<br />exterior</h3>
+      </article>
+      <article class="bento-image b7 reveal">
+        <Foto foto={duna.espacios[1]} sizes="(max-width:767px) 50vw, 16vw" />
+        <h3>Piedra<br />y agua</h3>
+      </article>
+      <article class="bento-stat b8 reveal">
+        <h3><strong>{vistas}</strong> Vistas<br />en la colección</h3>
+      </article>
+    </div>
+  </section>
+
+  <section class="section faq" id="preguntas" aria-labelledby="preguntas-t">
+    <div class="section-head">
+      <div>
+        <p class="section-tag">Conversemos</p>
+        <h2 class="split" id="preguntas-t">
+          <span class="line">Preguntas</span>
+          <span class="line tone">frecuentes</span>
+        </h2>
+      </div>
+      <p class="section-lead reveal">Cada espacio empieza por una pregunta. Estas son las más habituales sobre la colección.</p>
+    </div>
+    <div class="faq-list">
+      {
+        FAQ.map((item) => (
+          <details class="reveal">
+            <summary>
+              {item.q}
+              <span class="plus" aria-hidden="true" />
+            </summary>
+            <div class="answer">
+              <p>{item.a}</p>
+            </div>
+          </details>
+        ))
+      }
+    </div>
+  </section>
+</Base>

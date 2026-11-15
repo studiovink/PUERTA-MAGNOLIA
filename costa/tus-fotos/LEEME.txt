@@ -1,0 +1,1 @@
+Añadir aquí las fotografías reales que proporcione el usuario. Actualizar assets.json y starter/config.js para incorporarlas. Mantener en sus propias colecciones y no presentarlas como tomas del mismo inmueble que una residencia generada si son propiedades diferentes.

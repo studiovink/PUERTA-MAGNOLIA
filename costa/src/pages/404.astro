@@ -1,0 +1,12 @@
+---
+import Base from '../layouts/Base.astro';
+import { url } from '../data/site';
+---
+
+<Base title="Página no encontrada" claro>
+  <section class="section vacio">
+    <p class="section-tag">Error 404</p>
+    <h1>Esta página<br /><span class="tone">no está en la colección</span></h1>
+    <a class="link-dots" href={url('/')}>Volver al inicio <i class="dots" aria-hidden="true"><b></b><b></b></i></a>
+  </section>
+</Base>
