@@ -8,16 +8,16 @@
 <meta name="description" content="Demo conceptual de Vink Studio: landing para una firma de abogados ficticia.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400..700&display=swap" rel="stylesheet">
 <script>document.documentElement.classList.add('js')</script>
 <style>
 :root{
-  --tinta:#0e1815; --tinta-2:#15231f; --tinta-3:#1e302a;
-  --hueso:#f4f0e7; --hueso-2:#eae4d6; --papel:#fbf9f4;
-  --laton:#b48f56; --laton-claro:#d6b783;
-  --texto:#1b2622; --suave:#5d6a64; --linea:#0e181524; --linea-clara:#f4f0e726;
-  --serif:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
-  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --tinta:#101211; --tinta-2:#161918; --tinta-3:#1f2322;
+  --hueso:#f6f5f1; --hueso-2:#e9e7e1; --papel:#fbfaf7;
+  --laton:#8b8b86; --laton-claro:#b4b4ae;
+  --texto:#121413; --suave:#6b6e6a; --linea:#10121124; --linea-clara:#f6f5f126;
+  --serif:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --sans:"Instrument Sans","Helvetica Neue",Helvetica,Arial,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
   --ancho:1240px; --pad:clamp(20px,5vw,56px);
   --ease:cubic-bezier(.2,.7,.2,1);
 }
@@ -39,7 +39,7 @@ h2.titulo em{font-style:italic;color:var(--laton)}
 .lead{color:var(--suave);font-size:clamp(16px,1.3vw,19px);max-width:54ch}
 section{padding-block:clamp(72px,10vw,140px)}
 .oscuro{background:var(--tinta);color:var(--hueso)}
-.oscuro .lead{color:#f4f0e7b3}
+.oscuro .lead{color:#f6f5f1b3}
 
 /* Botones */
 .btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid transparent;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease)}
@@ -56,12 +56,13 @@ section{padding-block:clamp(72px,10vw,140px)}
 .js [data-r]{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
 .js [data-r].in{opacity:1;transform:none}
 .js [data-r="linea"]{transform:scaleX(0);transform-origin:left;opacity:1}
-.js [data-r="imagen"]{clip-path:inset(0 0 100% 0);transform:none;opacity:1;transition:clip-path 1.3s var(--ease)}
-.js [data-r="imagen"].in{clip-path:inset(0)}
+.js [data-r="imagen"]{transform:none;opacity:1}
+.js [data-r="imagen"]>svg{clip-path:inset(0 0 100% 0);transition:clip-path 1.3s var(--ease)}
+.js [data-r="imagen"].in>svg{clip-path:inset(0)}
 
 /* Encabezado */
 .cabecera{position:fixed;inset:0 0 auto 0;z-index:50;color:var(--hueso);transition:background .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);padding-block:22px}
-.cabecera.fija{background:#0e1815f2;backdrop-filter:blur(10px);padding-block:14px;box-shadow:0 1px 0 var(--linea-clara)}
+.cabecera.fija{background:#101211f2;backdrop-filter:blur(10px);padding-block:14px;box-shadow:0 1px 0 var(--linea-clara)}
 .cabecera .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
 .marca{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:21px;letter-spacing:-.01em}
 .marca b{font-weight:400;font-style:italic;color:var(--laton-claro)}
@@ -81,7 +82,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 .hero{padding:0;min-height:100svh;display:grid;position:relative;isolation:isolate;overflow:hidden}
 .hero-foto{position:absolute;inset:0;z-index:-1}
 .hero-foto svg{width:100%;height:100%}
-.hero-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0e1815 0%,#0e1815e6 34%,#0e181566 62%,#0e181526 100%),linear-gradient(0deg,#0e1815 2%,transparent 38%)}
+.hero-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#101211 0%,#101211e6 34%,#10121166 62%,#10121126 100%),linear-gradient(0deg,#101211 2%,transparent 38%)}
 .hero .wrap{display:flex;flex-direction:column;justify-content:flex-end;padding-top:150px;padding-bottom:clamp(36px,5vw,64px)}
 .hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,7.4vw,112px);line-height:.96;letter-spacing:-.03em;margin-top:26px;max-width:13ch}
 .hero h1 em{font-style:italic;color:var(--laton-claro)}
@@ -92,11 +93,11 @@ section{padding-block:clamp(72px,10vw,140px)}
 .hero .lead{margin-top:28px;max-width:46ch}
 .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
 .hero-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:clamp(48px,7vw,88px);padding-top:26px;border-top:1px solid var(--linea-clara)}
-.hero-datos dt{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f4f0e780}
+.hero-datos dt{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f6f5f180}
 .hero-datos dd{margin:6px 0 0;font-family:var(--serif);font-size:clamp(18px,1.8vw,24px)}
 
 /* Franja de valores */
-.cinta{background:var(--tinta-2);color:#f4f0e799;padding:20px 0;overflow:hidden;border-top:1px solid var(--linea-clara)}
+.cinta{background:var(--tinta-2);color:#f6f5f199;padding:20px 0;overflow:hidden;border-top:1px solid var(--linea-clara)}
 .cinta-pista{display:flex;gap:56px;width:max-content;animation:cinta 38s linear infinite;font-family:var(--serif);font-style:italic;font-size:20px;white-space:nowrap}
 .cinta-pista span::after{content:"✦";margin-left:56px;color:var(--laton);font-style:normal;font-size:12px;vertical-align:middle}
 @keyframes cinta{to{transform:translateX(-50%)}}
@@ -119,7 +120,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 .area:hover{padding-inline:14px}.area:hover::before{opacity:1}
 .area .n{font-size:13px;letter-spacing:.14em;color:var(--laton)}
 .area h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,36px);line-height:1.1}
-.area p{color:#f4f0e799;font-size:15.5px}
+.area p{color:#f6f5f199;font-size:15.5px}
 .area .fl{width:44px;height:44px;border:1px solid var(--linea-clara);border-radius:50%;display:grid;place-items:center;transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
 .area .fl svg{width:15px;height:15px;stroke:var(--hueso);fill:none;stroke-width:1.5}
 .area:hover .fl{background:var(--laton);border-color:var(--laton);transform:rotate(-45deg)}
@@ -146,7 +147,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 .metodo{background:var(--hueso)}
 .pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:paso}
 .paso{background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:28px 26px 30px;counter-increment:paso;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
-.paso:hover{transform:translateY(-6px);box-shadow:0 24px 40px -28px #0e181566}
+.paso:hover{transform:translateY(-6px);box-shadow:0 24px 40px -28px #10121166}
 .paso::before{content:"0" counter(paso);font-family:var(--serif);font-style:italic;font-size:44px;color:var(--laton);line-height:1}
 .paso h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:44px 0 10px}
 .paso p{color:var(--suave);font-size:15.5px}
@@ -175,7 +176,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 .cita figcaption i{width:42px;height:42px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-family:var(--serif);font-size:15px;opacity:.85;flex:none}
 .cita figcaption b{display:block;font-weight:600}
 .cita figcaption span{opacity:.7}
-.nota{margin-top:22px;font-size:13px;color:#f4f0e766}
+.nota{margin-top:22px;font-size:13px;color:#f6f5f166}
 
 /* Ubicación */
 .ubicacion{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,72px);align-items:stretch}
@@ -214,7 +215,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 .campo{display:grid;gap:7px}
 .campo.todo{grid-column:1/-1}
 .campo label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--suave)}
-.campo input,.campo select,.campo textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #0e181540;padding:10px 0 12px;font-size:16.5px;border-radius:0;transition:border-color .3s}
+.campo input,.campo select,.campo textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #10121140;padding:10px 0 12px;font-size:16.5px;border-radius:0;transition:border-color .3s}
 .campo textarea{resize:vertical;min-height:84px}
 .campo input:focus,.campo select:focus,.campo textarea:focus{outline:0;border-color:var(--laton);box-shadow:0 1px 0 var(--laton)}
 .campo .error{font-size:13px;color:#a03a2c;min-height:0}
@@ -232,7 +233,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 @keyframes sube{from{opacity:0;transform:translateY(16px)}}
 
 /* Pie */
-.pie{background:#0a1210;color:#f4f0e799;padding:56px 0 96px;font-size:14.5px}
+.pie{background:#0a1210;color:#f6f5f199;padding:56px 0 96px;font-size:14.5px}
 .pie .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
 .pie .marca{color:var(--hueso);margin-bottom:16px}
 .pie h4{margin:0 0 14px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--laton);font-weight:600}
@@ -241,7 +242,45 @@ section{padding-block:clamp(72px,10vw,140px)}
 .pie .aviso{grid-column:1/-1;border-top:1px solid var(--linea-clara);padding-top:22px;font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 
 /* Etiqueta de concepto */
-.concepto{position:fixed;left:18px;bottom:18px;z-index:60;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#f4f0e7cc;background:#0e1815b3;backdrop-filter:blur(8px);border:1px solid #f4f0e726;padding:8px 13px;border-radius:999px;pointer-events:none}
+.concepto{position:fixed;left:18px;bottom:18px;z-index:60;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#f6f5f1cc;background:#101211b3;backdrop-filter:blur(8px);border:1px solid #f6f5f126;padding:8px 13px;border-radius:999px;pointer-events:none}
+
+/* Dirección monocroma */
+em,.marca b,.sello,.paso::before,.socio figure span{font-style:normal!important}
+h2.titulo,.hero h1{font-weight:400;letter-spacing:-.035em}
+.hero h1{font-size:clamp(44px,6.6vw,100px);max-width:none}
+.hero-cuerpo{display:grid;grid-template-columns:1.25fr .75fr;gap:clamp(28px,5vw,80px);align-items:end}
+.hero-der .lead{margin-top:0;color:#f6f5f1e6;font-size:clamp(17px,1.5vw,21px)}
+.hero-foto svg,.despacho figure svg,.contacto .fondo svg,.mapa svg{filter:grayscale(1) contrast(1.05)}
+.btn-laton{background:#fff;color:var(--tinta)}.btn-laton:hover{background:var(--hueso-2)}
+.eyebrow{font-weight:500;letter-spacing:.12em}
+.cinta{background:var(--papel);color:#12141373;border:0;padding:56px 0 8px}
+.cinta-tit{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--suave);margin-bottom:30px}
+.cinta-pista{gap:0;font-style:normal;font-size:27px;font-weight:600;letter-spacing:-.03em;animation-duration:44s;-webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.cinta-pista span{padding-inline:54px}.cinta-pista span::after{content:none}
+.cinta-pista .m1{font-weight:400;letter-spacing:-.01em}.cinta-pista .m2{font-weight:700;letter-spacing:-.05em}.cinta-pista .m3{font-weight:500;letter-spacing:.04em;font-size:22px;text-transform:uppercase}
+.manifiesto .wrap{display:grid;grid-template-columns:.9fr 1.1fr;gap:32px;align-items:start}
+.frase{font-size:clamp(28px,3.5vw,52px);line-height:1.1;letter-spacing:-.03em}.frase span{color:var(--laton)}
+.areas-sec{background:var(--hueso)}
+.areas-sec .areas{border-top-color:var(--linea)}
+.areas-sec .area{border-bottom-color:var(--linea)}
+.areas-sec .area::before{background:var(--hueso-2)}
+.areas-sec .area .n{color:var(--texto);font-size:clamp(18px,1.8vw,24px);letter-spacing:0}
+.areas-sec .area h3{text-transform:uppercase;font-size:clamp(20px,2.1vw,29px);letter-spacing:-.02em}
+.areas-sec .area p{color:var(--suave)}
+.areas-sec .area .fl{border-color:var(--linea)}.areas-sec .area .fl svg{stroke:var(--tinta)}
+.areas-sec .area:hover .fl{background:var(--tinta);border-color:var(--tinta)}.areas-sec .area:hover .fl svg{stroke:var(--hueso)}
+.cifras{background:var(--tinta);color:var(--hueso)}.cifras li>span{color:#f6f5f199}
+.cifras b{font-weight:400}
+.cita:first-child{background:var(--hueso);color:var(--tinta)}
+.checks li::before{background:var(--tinta)}
+.paso::before{color:var(--texto);font-size:36px}
+.socio figure span{color:var(--hueso);font-weight:400}
+.socio .rol,.pie h4,.directo a span{color:var(--suave)}
+.oscuro .eyebrow,.pie h4,.directo a span{color:#f6f5f199}
+.campo input:focus,.campo select:focus,.campo textarea:focus{border-color:var(--tinta);box-shadow:0 1px 0 var(--tinta)}
+.exito svg{stroke:var(--tinta)}
+@media (max-width:1040px){.area .n{font-size:16px!important}}
+@media (max-width:760px){.hero-cuerpo,.manifiesto .wrap{grid-template-columns:1fr}.hero-cuerpo{gap:24px}.hero-cta{margin-top:26px}.cinta-pista{font-size:22px}.cinta-pista span{padding-inline:30px}}
 
 /* Tableta y móvil */
 @media (max-width:1040px){
@@ -267,7 +306,7 @@ section{padding-block:clamp(72px,10vw,140px)}
   .cab-sec,.despacho,.ubicacion,.faq,.contacto .wrap{grid-template-columns:1fr}
   .cab-sec{gap:18px}
   .hero .wrap{padding-top:120px}
-  .hero-foto::after{background:linear-gradient(0deg,#0e1815 22%,#0e1815cc 55%,#0e181573 100%)}
+  .hero-foto::after{background:linear-gradient(0deg,#101211 22%,#101211cc 55%,#10121173 100%)}
   .hero-cta .btn{width:100%;justify-content:center}
   .hero-datos{grid-template-columns:1fr;gap:14px}
   .hero-datos div{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
@@ -293,7 +332,7 @@ section{padding-block:clamp(72px,10vw,140px)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .js [data-r],.js .hero h1 .l span{opacity:1!important;transform:none!important;clip-path:none!important}
+  .js [data-r],.js [data-r]>svg,.js .hero h1 .l span{opacity:1!important;transform:none!important;clip-path:none!important}
 }
 </style>
 </head>
@@ -358,13 +397,16 @@ section{padding-block:clamp(72px,10vw,140px)}
 <section class="hero oscuro" id="inicio">
   <div class="hero-foto" aria-hidden="true"><svg id="heroArte"><use href="#columnata"/></svg></div>
   <div class="wrap">
+    <div class="hero-cuerpo"><div>
     <p class="eyebrow" data-r>Abogados · Guadalajara · Desde 1998</p>
     <h1><span class="l" style="--d:0"><span>Claridad legal</span></span><span class="l" style="--d:1"><span>para decidir</span></span><span class="l" style="--d:2"><span><em>con calma.</em></span></span></h1>
+    </div><div class="hero-der">
     <p class="lead" data-r style="--d:5">Acompañamos a empresas, familias y patrimonios en los momentos que importan. Un socio lleva tu asunto de principio a fin y te explica cada paso sin tecnicismos.</p>
     <div class="hero-cta" data-r style="--d:6">
       <a href="#consulta" class="btn btn-laton">Agenda tu consulta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
       <a href="#areas" class="btn btn-linea">Ver áreas de práctica</a>
     </div>
+    </div></div>
     <dl class="hero-datos" data-r style="--d:7">
       <div><dt>Primera consulta</dt><dd>45 minutos, sin costo</dd></div>
       <div><dt>Respuesta</dt><dd>En 24 horas hábiles</dd></div>
@@ -373,14 +415,19 @@ section{padding-block:clamp(72px,10vw,140px)}
   </div>
 </section>
 
-<div class="cinta" aria-hidden="true">
-  <div class="cinta-pista">
-    <span>Corporativo</span><span>Inmobiliario</span><span>Familiar y sucesiones</span><span>Laboral</span><span>Litigio civil y mercantil</span><span>Propiedad intelectual</span>
-    <span>Corporativo</span><span>Inmobiliario</span><span>Familiar y sucesiones</span><span>Laboral</span><span>Litigio civil y mercantil</span><span>Propiedad intelectual</span>
-  </div>
+<div class="cinta" aria-label="Empresas ficticias que confían en la firma">
+  <p class="wrap cinta-tit">Confían en nosotros</p>
+  <div class="cinta-pista" aria-hidden="true"><span class="m0">Nortia</span><span class="m1">● Almadía</span><span class="m2">Grupo Sereno</span><span class="m3">Tálamo</span><span class="m0">Vértice Sur</span><span class="m1">Casa Olmo</span><span class="m2">Lindero</span><span class="m3">Brújula & Co.</span><span class="m0">Nortia</span><span class="m1">● Almadía</span><span class="m2">Grupo Sereno</span><span class="m3">Tálamo</span><span class="m0">Vértice Sur</span><span class="m1">Casa Olmo</span><span class="m2">Lindero</span><span class="m3">Brújula & Co.</span></div>
 </div>
 
-<section id="firma">
+<section class="manifiesto" id="firma">
+  <div class="wrap">
+    <p class="eyebrow" data-r>La firma</p>
+    <p class="frase" data-r style="--d:1">Somos un despacho de abogados en Guadalajara <span>que explica antes de cobrar, responde el mismo día y lleva cada asunto como si fuera propio.</span></p>
+  </div>
+</section>
+
+<section style="padding-top:0">
   <div class="wrap">
     <div class="cab-sec">
       <div><p class="eyebrow" data-r>Por qué elegirnos</p><h2 class="titulo" data-r style="--d:1">Un despacho que responde, <em>explica y cumple.</em></h2></div>
@@ -395,19 +442,19 @@ section{padding-block:clamp(72px,10vw,140px)}
   </div>
 </section>
 
-<section class="oscuro" id="areas">
+<section class="areas-sec" id="areas">
   <div class="wrap">
     <div class="cab-sec">
       <div><p class="eyebrow" data-r>Áreas de práctica</p><h2 class="titulo" data-r style="--d:1">Seis especialidades, <em>un solo criterio.</em></h2></div>
       <p class="lead" data-r style="--d:2">Cada área tiene un socio responsable. Cuando tu caso cruza varias materias, las coordinamos por ti.</p>
     </div>
     <ol class="areas">
-      <li class="area" data-r><span class="n">01</span><h3>Corporativo y mercantil</h3><p>Constitución de sociedades, contratos, gobierno corporativo, compraventa de empresas.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
-      <li class="area" data-r><span class="n">02</span><h3>Inmobiliario</h3><p>Compraventas, arrendamientos, regularización de propiedades y revisión de títulos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
-      <li class="area" data-r><span class="n">03</span><h3>Familiar y sucesiones</h3><p>Testamentos, planeación patrimonial, divorcios, pensiones y juicios sucesorios.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
-      <li class="area" data-r><span class="n">04</span><h3>Laboral</h3><p>Contratos, reglamentos internos, terminaciones y defensa ante tribunales laborales.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
-      <li class="area" data-r><span class="n">05</span><h3>Litigio civil y mercantil</h3><p>Cobranza, incumplimiento de contratos, responsabilidad civil y medios alternos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
-      <li class="area" data-r><span class="n">06</span><h3>Propiedad intelectual</h3><p>Registro y defensa de marcas, derechos de autor, licencias y franquicias.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">001</span><h3>Corporativo y mercantil</h3><p>Constitución de sociedades, contratos, gobierno corporativo, compraventa de empresas.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">002</span><h3>Inmobiliario</h3><p>Compraventas, arrendamientos, regularización de propiedades y revisión de títulos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">003</span><h3>Familiar y sucesiones</h3><p>Testamentos, planeación patrimonial, divorcios, pensiones y juicios sucesorios.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">004</span><h3>Laboral</h3><p>Contratos, reglamentos internos, terminaciones y defensa ante tribunales laborales.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">005</span><h3>Litigio civil y mercantil</h3><p>Cobranza, incumplimiento de contratos, responsabilidad civil y medios alternos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">006</span><h3>Propiedad intelectual</h3><p>Registro y defensa de marcas, derechos de autor, licencias y franquicias.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
     </ol>
   </div>
 </section>
@@ -500,8 +547,8 @@ section{padding-block:clamp(72px,10vw,140px)}
         <rect width="700" height="520" fill="#e6dfcf"/>
         <path d="M-20 420q200-80 380-40t360-60v220H-20z" fill="#cfd8c4"/><ellipse cx="560" cy="110" rx="120" ry="70" fill="#cfd8c4"/>
         <g stroke="#fbf9f4" stroke-linecap="round" fill="none"><path d="M-20 250h740" stroke-width="26"/><path d="M330-20v560" stroke-width="26"/><path d="M-20 90l740 60M-20 380l740-90M120-20l60 560M540-20l-40 560" stroke-width="12"/><path d="M-20 170h740M-20 330h740M220-20v560M440-20v560M630-20v560" stroke-width="5"/></g>
-        <g fill="#0e181599" font-family="Manrope,sans-serif" font-size="11" letter-spacing="2"><text x="350" y="244" transform="rotate(0)">AV. DE LOS LAURELES</text><text x="560" y="114" text-anchor="middle">PARQUE</text></g>
-        <circle class="pin" cx="330" cy="250" r="16" fill="#b48f56"/><circle cx="330" cy="250" r="11" fill="#0e1815"/><circle cx="330" cy="250" r="4" fill="#d6b783"/>
+        <g fill="#10121199" font-family="Manrope,sans-serif" font-size="11" letter-spacing="2"><text x="350" y="244" transform="rotate(0)">AV. DE LOS LAURELES</text><text x="560" y="114" text-anchor="middle">PARQUE</text></g>
+        <circle class="pin" cx="330" cy="250" r="16" fill="#101211" opacity=".35"/><circle cx="330" cy="250" r="11" fill="#101211"/><circle cx="330" cy="250" r="4" fill="#d6b783"/>
       </svg>
     </div>
   </div>
