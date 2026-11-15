@@ -1,0 +1,55 @@
+/* Base del kit MOZVAR (web/tokens.css): fuente local, colores y medidas. */
+@font-face {
+  font-family: "Instrument Sans";
+  src: url("/fonts/InstrumentSans-Variable.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+}
+
+:root {
+  --color-white: #ffffff;
+  --color-paper: #faf9f6;
+  --color-ink: #151515;
+  --color-muted: #6b6a66;
+  --color-rule: #dedcd6;
+  --color-suit: #152431;
+  --color-error: #a3271b;
+  --font-sans: "Instrument Sans", Arial, sans-serif;
+  --gutter: clamp(20px, 3.35vw, 56px);
+  --gap: clamp(16px, 1.7vw, 24px);
+  --section-space: clamp(72px, 8.5vw, 140px);
+  --content-width: 1480px;
+  --nav-height: 88px;
+  --radius-image: 2px;
+  --radius-button: 999px;
+  --duration-ui: 220ms;
+  --ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 767px) {
+  :root { --nav-height: 72px; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: var(--nav-height); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-ink);
+  background: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+}
+img { display: block; max-width: 100%; height: auto; }
+h1, h2, h3, p, ul, ol, dl, dd { margin: 0; padding: 0; }
+ul, ol { list-style: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
