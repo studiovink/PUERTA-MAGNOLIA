@@ -310,11 +310,11 @@ html:not(.motion) .marquee__half { flex-wrap: wrap; }
 /* ---------- Entrada ---------- */
 .opening { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; background: var(--color-ink); color: var(--color-white); clip-path: inset(0 0 0 0); transition: clip-path 1050ms cubic-bezier(.76, 0, .24, 1) 120ms; }
 .opening--out { clip-path: inset(0 0 100% 0); pointer-events: none; }
-.opening { --crest: #cdbb91; }
+.opening { --crest: #ffffff; }
 .opening__center { display: flex; flex-direction: column; align-items: center; margin-top: -4vh; transition: transform 900ms cubic-bezier(.76, 0, .24, 1), opacity 600ms var(--ease-ui); }
 .opening--out .opening__center { transform: translateY(-40px) scale(1.06); opacity: 0; }
-.crest { width: clamp(150px, 19vw, 250px); height: auto; overflow: visible; }
-.crest__line { stroke: var(--crest); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: crest-draw 1300ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: var(--d, 0ms); }
+.crest { width: clamp(84px, 8.4vw, 124px); height: auto; overflow: visible; }
+.crest__line { stroke: var(--crest); stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; animation: crest-draw 1200ms cubic-bezier(.65, 0, .35, 1) both; animation-delay: var(--d, 0ms); }
 .crest__line--thin { stroke-width: 1.1; opacity: .8; }
 .crest__leaf { fill: var(--crest); transform-box: fill-box; transform-origin: 50% 100%; animation: crest-leaf 700ms var(--ease-ui) both; animation-delay: var(--d, 0ms); }
 .crest__dot { fill: var(--crest); transform-box: fill-box; transform-origin: center; animation: crest-pop 600ms var(--ease-ui) both; animation-delay: var(--d, 0ms); }
@@ -322,14 +322,14 @@ html:not(.motion) .marquee__half { flex-wrap: wrap; }
 @keyframes crest-leaf { from { transform: scale(0); opacity: 0; } }
 @keyframes crest-pop { from { transform: scale(0) rotate(-90deg); opacity: 0; } }
 .opening__mark { width: clamp(170px, 20vw, 270px); overflow: hidden; margin-top: clamp(22px, 2.6vw, 36px); }
-.opening__tag { margin-top: 14px; font-size: 12px; font-weight: 500; letter-spacing: .34em; text-transform: uppercase; color: var(--crest); padding-left: .34em; animation: hero-rise 800ms var(--ease-ui) 2050ms both; }
+.opening__tag { margin-top: 14px; font-size: 12px; font-weight: 500; letter-spacing: .34em; text-transform: uppercase; color: rgba(255,255,255,.62); padding-left: .34em; animation: hero-rise 800ms var(--ease-ui) 1650ms both; }
 .opening__mark svg { display: block; width: 100%; height: auto; }
-.opening__mark path { fill: var(--color-white); animation: intro-letter 950ms var(--ease-ui) 1500ms both; transition: translate 700ms cubic-bezier(.76, 0, .24, 1); }
-.opening__mark path:nth-child(2) { animation-delay: 1570ms; transition-delay: 40ms; }
-.opening__mark path:nth-child(3) { animation-delay: 1640ms; transition-delay: 80ms; }
-.opening__mark path:nth-child(4) { animation-delay: 1710ms; transition-delay: 120ms; }
-.opening__mark path:nth-child(5) { animation-delay: 1780ms; transition-delay: 160ms; }
-.opening__mark path:nth-child(6) { animation-delay: 1850ms; transition-delay: 200ms; }
+.opening__mark path { fill: var(--color-white); animation: intro-letter 950ms var(--ease-ui) 1150ms both; transition: translate 700ms cubic-bezier(.76, 0, .24, 1); }
+.opening__mark path:nth-child(2) { animation-delay: 1220ms; transition-delay: 40ms; }
+.opening__mark path:nth-child(3) { animation-delay: 1290ms; transition-delay: 80ms; }
+.opening__mark path:nth-child(4) { animation-delay: 1360ms; transition-delay: 120ms; }
+.opening__mark path:nth-child(5) { animation-delay: 1430ms; transition-delay: 160ms; }
+.opening__mark path:nth-child(6) { animation-delay: 1500ms; transition-delay: 200ms; }
 .opening--out .opening__mark path { translate: 0 -125px; }
 @keyframes intro-letter { from { translate: 0 125px; } }
 .opening__foot { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(24px, 3.4vw, 48px); display: flex; justify-content: space-between; align-items: baseline; padding-top: 16px; font-size: 14px; font-weight: 500; transition: opacity 400ms var(--ease-ui); }
