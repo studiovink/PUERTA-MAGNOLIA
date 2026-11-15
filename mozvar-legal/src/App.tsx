@@ -5,6 +5,9 @@ import { Intro, Services, Approach, Method, Matters } from './components/Section
 import Faq from './components/Faq';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Marquee from './components/Marquee';
+import { services } from './content';
+import { initMotion } from './motion';
 
 /** Revela con suavidad los bloques marcados con data-reveal al entrar en pantalla. */
 function useReveal() {
@@ -31,6 +34,7 @@ function useReveal() {
 
 export default function App() {
   useReveal();
+  useEffect(() => initMotion(), []);
   return (
     <>
       <a className="skip-link" href="#contenido">Saltar al contenido</a>
@@ -40,6 +44,7 @@ export default function App() {
         <Intro />
         <Services />
         <Approach />
+        <Marquee items={services.items.map((s) => s.title)} />
         <Method />
         <Matters />
         <Faq />

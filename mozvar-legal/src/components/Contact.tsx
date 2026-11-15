@@ -1,6 +1,7 @@
 import { useRef, useState, type FormEvent } from 'react';
 import { contactSection, site } from '../content';
 import Picture from './Picture';
+import Words from './Words';
 
 type Field = 'nombre' | 'correo' | 'telefono' | 'area' | 'mensaje';
 type Status = 'idle' | 'sending' | 'success' | 'error' | 'unconfigured';
@@ -83,7 +84,7 @@ export default function Contact() {
       <div className="container grid">
         <div className="contact__intro" data-reveal>
           <p className="label">{contactSection.label}</p>
-          <h2 className="section-title" id="contact-title">{contactSection.title}</h2>
+          <h2 className="section-title" id="contact-title" aria-label={contactSection.title}><Words text={contactSection.title} /></h2>
           <p className="body contact__support">{contactSection.support}</p>
           {details.length > 0 && (
             <dl className="contact__details">
@@ -95,7 +96,7 @@ export default function Contact() {
               ))}
             </dl>
           )}
-          <Picture className="contact__image" image={contactSection.image} sizes="(max-width: 767px) 100vw, 40vw" />
+          <Picture tilt className="contact__image" image={contactSection.image} sizes="(max-width: 767px) 100vw, 40vw" />
         </div>
 
         <form className="form" ref={formRef} onSubmit={onSubmit} noValidate data-reveal>

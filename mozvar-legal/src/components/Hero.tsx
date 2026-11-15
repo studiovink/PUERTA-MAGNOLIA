@@ -29,8 +29,10 @@ export default function Hero() {
           <a className="text-link text-link--light hero__link" href={hero.link.href}>{hero.link.label}</a>
         </div>
         <h1 className="hero__title" id="hero-title">
-          {hero.titleLines.map((line) => (
-            <span key={line}>{line} </span>
+          {hero.titleLines.map((line, i) => (
+            <span className="hero__line" key={line}>
+              <span style={{ ['--i' as string]: i }}>{line} </span>
+            </span>
           ))}
         </h1>
         <div className="hero__actions">

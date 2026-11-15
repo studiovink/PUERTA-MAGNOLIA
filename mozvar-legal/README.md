@@ -41,6 +41,19 @@ src/
 | Foto de portada (alternativa: `09-hero-alternativo`) | `hero.desktop` en `src/content.ts` |
 | Colores, tipografía, márgenes | `src/styles/tokens.css` |
 
+## Movimiento
+
+Todo el movimiento vive en `src/motion.ts` y en el bloque final de `src/styles/site.css`:
+
+- Portada con profundidad: la foto sigue al cursor y se desplaza al hacer scroll; el titular entra línea por línea.
+- Fotos que se descubren al entrar, con parallax interno e inclinación 3D con brillo al pasar el cursor.
+- Botones y enlaces magnéticos, y un cursor que acompaña al puntero.
+- Titulares que entran palabra por palabra y texto del despacho que se ilumina al avanzar.
+- Cinta de texto continua cuya velocidad responde al scroll.
+- Marca del pie que se levanta en 3D, letra por letra.
+
+Con `prefers-reduced-motion` no se activa nada de esto y el contenido se muestra completo. En pantallas táctiles se omiten el cursor, el efecto magnético y la inclinación.
+
 ## Pendientes antes de publicar
 
 - **Datos de contacto.** Están vacíos a propósito: no se inventó teléfono, correo, dirección ni WhatsApp. Un dato vacío no se muestra; al llenarlo aparece en la sección de contacto y, en su caso, en el pie.

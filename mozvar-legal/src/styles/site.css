@@ -216,3 +216,93 @@
   .site-footer__nav { margin-top: 36px; }
   .site-footer__bottom { flex-direction: column; }
 }
+
+/* ==========================================================
+   Movimiento. Todo vive bajo .motion, que solo existe si la
+   persona no pidió reducir el movimiento.
+   ========================================================== */
+
+/* Marco de las fotos: recorta para parallax y descubre al entrar */
+.media { display: block; position: relative; overflow: hidden; transform-style: preserve-3d; will-change: transform; }
+.media__clip { display: block; width: 100%; height: 100%; }
+.media img { width: 100%; height: 100%; object-fit: cover; }
+.motion [data-reveal="media"] { opacity: 1; transform: none; transition: box-shadow 400ms var(--ease-ui); }
+.motion .media__clip { clip-path: inset(0 0 100% 0); transform: scale(1.22); transition: clip-path 1200ms var(--ease-ui), transform 1500ms var(--ease-ui); }
+.motion .media.is-visible .media__clip { clip-path: inset(0); transform: none; }
+.motion .media img { transform: scale(1.18); will-change: transform; }
+.media[data-tilt]::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0; transition: opacity 300ms var(--ease-ui);
+  background: radial-gradient(circle at var(--gx, 50%) var(--gy, 50%), rgba(255,255,255,.26), transparent 55%); }
+@media (hover: hover) and (pointer: fine) {
+  .motion .media[data-tilt]:hover { box-shadow: 0 34px 60px -30px rgba(21,21,21,.55); z-index: 2; }
+  .motion .media[data-tilt]:hover::after { opacity: 1; }
+  .motion .services__list:hover .service-row { opacity: .4; }
+  .motion .services__list .service-row:hover { opacity: 1; }
+  .motion .service-row:hover .service-row__title { transform: translateX(14px); }
+}
+.service-row { transition: opacity 320ms var(--ease-ui); }
+.service-row__title { transition: transform 420ms var(--ease-ui); }
+
+/* Titulares que entran palabra por palabra */
+.w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: .12em; margin-bottom: -.12em; }
+.w__i { display: inline-block; }
+.motion [data-reveal] .section-title .w__i { transform: translateY(112%) rotate(4deg); transform-origin: left bottom; transition: transform 900ms var(--ease-ui); transition-delay: calc(var(--i) * 45ms + 80ms); }
+.motion [data-reveal].is-visible .section-title .w__i { transform: none; }
+
+/* Texto del despacho que se ilumina al avanzar */
+.motion [data-fill] .w { opacity: .16; transition: opacity 420ms var(--ease-ui); }
+.motion [data-fill] .w.is-on { opacity: 1; }
+
+/* Portada: líneas con máscara y foto con profundidad */
+.hero__line { display: block; overflow: hidden; padding-bottom: .1em; margin-bottom: -.1em; }
+.hero__line > span { display: block; }
+.motion .hero__title { animation: none; }
+.motion .hero__line > span { animation: hero-line 1100ms var(--ease-ui) both; animation-delay: calc(var(--i) * 110ms + 250ms); }
+.motion .hero__picture { animation: hero-zoom 1900ms var(--ease-ui) both; }
+.motion .hero__picture img { animation: none; transform: scale(1.07); will-change: transform; }
+.motion .hero__inner { will-change: transform, opacity; }
+@keyframes hero-line { from { transform: translateY(108%) rotate(3deg); } }
+@keyframes hero-zoom { from { transform: scale(1.14); opacity: 0; } }
+
+/* Barra de avance de lectura */
+.site-nav::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: currentColor; transform: scaleX(var(--progress, 0)); transform-origin: left; opacity: 0; }
+.motion .site-nav--solid::after { opacity: 1; }
+
+/* Cinta de texto */
+.marquee { overflow: hidden; padding-block: clamp(28px, 4vw, 64px); border-block: 1px solid var(--color-rule); background: var(--color-white); }
+.marquee__track { display: flex; width: max-content; will-change: transform; }
+.marquee__half { display: flex; flex: none; }
+.marquee__item { display: inline-flex; align-items: center; font-size: clamp(44px, 8.4vw, 128px); line-height: 1; letter-spacing: -.05em; white-space: nowrap; padding-right: .55em; }
+.marquee__item::after { content: ""; width: .16em; height: .16em; margin-left: .55em; background: var(--color-ink); border-radius: 50%; }
+.marquee__item:nth-child(even) { color: transparent; -webkit-text-stroke: 1px var(--color-ink); }
+html:not(.motion) .marquee__track { width: 100%; }
+html:not(.motion) .marquee__half + .marquee__half { display: none; }
+html:not(.motion) .marquee__half { flex-wrap: wrap; }
+
+/* Imagen amplia con respiración lenta */
+.motion .matters__image .media__clip { animation: breathe 16s ease-in-out infinite alternate; }
+.motion .matters__image.is-visible .media__clip { transform: none; }
+@keyframes breathe { to { scale: 1.07; } }
+
+/* Marca del pie: se levanta en 3D y sus letras suben una por una */
+.site-footer__stage { perspective: 1200px; margin: clamp(72px, 9vw, 150px) -0.8% 0; }
+.site-footer__wordmark { width: 100%; max-width: none; margin: 0; transform-origin: 50% 100%; will-change: transform; }
+.site-footer__wordmark svg { display: block; width: 100%; height: auto; overflow: visible; }
+.site-footer__wordmark path { fill: var(--color-white); }
+.motion [data-reveal="wordmark"] { opacity: 1; transform: none; }
+.motion [data-reveal="wordmark"] path { translate: 0 110px; opacity: 0; transition: translate 1100ms var(--ease-ui), opacity 700ms var(--ease-ui); }
+.motion [data-reveal="wordmark"].is-visible path { translate: 0 0; opacity: 1; }
+.motion [data-reveal="wordmark"] path:nth-child(2) { transition-delay: 70ms; }
+.motion [data-reveal="wordmark"] path:nth-child(3) { transition-delay: 140ms; }
+.motion [data-reveal="wordmark"] path:nth-child(4) { transition-delay: 210ms; }
+.motion [data-reveal="wordmark"] path:nth-child(5) { transition-delay: 280ms; }
+.motion [data-reveal="wordmark"] path:nth-child(6) { transition-delay: 350ms; }
+.site-footer { overflow: hidden; }
+
+/* Cursor */
+.cursor { position: fixed; left: 0; top: 0; z-index: 90; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 300ms var(--ease-ui); mix-blend-mode: difference; }
+.cursor::before { content: ""; position: absolute; left: -7px; top: -7px; width: 14px; height: 14px; border-radius: 50%; background: #fff; transition: transform 320ms var(--ease-ui); }
+.cursor.is-ready { opacity: 1; }
+.cursor.is-active::before { transform: scale(4.2); }
+.cursor.is-hidden { opacity: 0; }
+
+.button, .text-link, .site-nav__list a { will-change: transform; }

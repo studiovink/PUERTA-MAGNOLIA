@@ -1,4 +1,5 @@
 import { footer, hero, nav, site } from '../content';
+import wordmark from '../assets/wordmark.svg?raw';
 
 export default function Footer() {
   const { contact } = site;
@@ -23,7 +24,9 @@ export default function Footer() {
             <a className="button button--light" href={hero.cta.href}>{hero.cta.label}</a>
           </div>
         </div>
-        <img className="site-footer__wordmark" src="/brand/mozvar-blanco.svg" alt={site.name} width={439} height={102} loading="lazy" />
+        <div className="site-footer__stage" data-reveal="wordmark">
+          <div className="site-footer__wordmark" dangerouslySetInnerHTML={{ __html: wordmark }} />
+        </div>
         <div className="site-footer__bottom">
           <p>© {new Date().getFullYear()} {site.name} {site.descriptor}</p>
           <p>{footer.note}</p>

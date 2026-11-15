@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { faq } from '../content';
+import Words from './Words';
 
 export default function Faq() {
   const [open, setOpen] = useState<number | null>(0);
@@ -8,7 +9,7 @@ export default function Faq() {
       <div className="container grid">
         <div className="faq__head" data-reveal>
           <p className="label">{faq.label}</p>
-          <h2 className="section-title" id="faq-title">{faq.title}</h2>
+          <h2 className="section-title" id="faq-title" aria-label={faq.title}><Words text={faq.title} /></h2>
         </div>
         <div className="faq__list" data-reveal>
           {faq.items.map((item, i) => {
