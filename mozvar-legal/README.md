@@ -45,7 +45,7 @@ src/
 
 Todo el movimiento vive en `src/motion.ts` y en el bloque final de `src/styles/site.css`:
 
-- Entrada: pantalla tinta con la marca subiendo letra por letra y un contador; espera a la foto de portada y se retira como telón (`src/components/Opening.tsx`).
+- Entrada: sobre una pantalla tinta se dibuja un escudo (blasón, balanza y laureles) trazo por trazo, sube la marca y corre un contador; espera a la foto de portada y se retira como telón (`src/components/Opening.tsx`).
 - Portada con profundidad: la foto sigue al cursor y se desplaza al hacer scroll; el titular entra línea por línea.
 - Fotos que se descubren al entrar, con parallax interno e inclinación 3D con brillo al pasar el cursor.
 - Botones y enlaces magnéticos, y un cursor que acompaña al puntero.
