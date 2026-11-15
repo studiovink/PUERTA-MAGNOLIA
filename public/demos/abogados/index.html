@@ -1,0 +1,634 @@
+<!doctype html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Valdemar &amp; Roca · Abogados</title>
+<meta name="description" content="Demo conceptual de Vink Studio: landing para una firma de abogados ficticia.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=Manrope:wght@400..700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --tinta:#0e1815; --tinta-2:#15231f; --tinta-3:#1e302a;
+  --hueso:#f4f0e7; --hueso-2:#eae4d6; --papel:#fbf9f4;
+  --laton:#b48f56; --laton-claro:#d6b783;
+  --texto:#1b2622; --suave:#5d6a64; --linea:#0e181524; --linea-clara:#f4f0e726;
+  --serif:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --ancho:1240px; --pad:clamp(20px,5vw,56px);
+  --ease:cubic-bezier(.2,.7,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--papel);color:var(--texto);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,p,ul,ol,figure,blockquote{margin:0;padding:0}
+ul,ol{list-style:none}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--laton);outline-offset:3px}
+.wrap{width:min(100% - var(--pad)*2,var(--ancho));margin-inline:auto}
+.serif{font-family:var(--serif);font-weight:400;letter-spacing:-.015em}
+.eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;color:var(--laton);display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+h2.titulo{font-family:var(--serif);font-weight:400;font-size:clamp(34px,4.6vw,60px);line-height:1.05;letter-spacing:-.02em;margin-top:18px;text-wrap:balance}
+h2.titulo em{font-style:italic;color:var(--laton)}
+.lead{color:var(--suave);font-size:clamp(16px,1.3vw,19px);max-width:54ch}
+section{padding-block:clamp(72px,10vw,140px)}
+.oscuro{background:var(--tinta);color:var(--hueso)}
+.oscuro .lead{color:#f4f0e7b3}
+
+/* Botones */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 24px;border-radius:999px;font-weight:600;font-size:15px;border:1px solid transparent;cursor:pointer;transition:background .3s var(--ease),color .3s var(--ease),border-color .3s var(--ease),transform .3s var(--ease)}
+.btn svg{width:16px;height:16px;transition:transform .3s var(--ease)}
+.btn:hover svg{transform:translateX(4px)}
+.btn-laton{background:var(--laton);color:var(--tinta)}
+.btn-laton:hover{background:var(--laton-claro)}
+.btn-linea{border-color:var(--linea-clara);color:var(--hueso)}
+.btn-linea:hover{border-color:var(--hueso)}
+.btn-tinta{background:var(--tinta);color:var(--hueso)}
+.btn-tinta:hover{background:var(--tinta-3)}
+
+/* Aparición al hacer scroll */
+.js [data-r]{opacity:0;transform:translateY(28px);transition:opacity .9s var(--ease),transform .9s var(--ease);transition-delay:calc(var(--d,0)*90ms)}
+.js [data-r].in{opacity:1;transform:none}
+.js [data-r="linea"]{transform:scaleX(0);transform-origin:left;opacity:1}
+.js [data-r="imagen"]{clip-path:inset(0 0 100% 0);transform:none;opacity:1;transition:clip-path 1.3s var(--ease)}
+.js [data-r="imagen"].in{clip-path:inset(0)}
+
+/* Encabezado */
+.cabecera{position:fixed;inset:0 0 auto 0;z-index:50;color:var(--hueso);transition:background .4s var(--ease),box-shadow .4s var(--ease),padding .4s var(--ease);padding-block:22px}
+.cabecera.fija{background:#0e1815f2;backdrop-filter:blur(10px);padding-block:14px;box-shadow:0 1px 0 var(--linea-clara)}
+.cabecera .wrap{display:flex;align-items:center;justify-content:space-between;gap:24px}
+.marca{display:flex;align-items:center;gap:12px;font-family:var(--serif);font-size:21px;letter-spacing:-.01em}
+.marca b{font-weight:400;font-style:italic;color:var(--laton-claro)}
+.sello{width:38px;height:38px;border:1px solid var(--laton);border-radius:50%;display:grid;place-items:center;font-size:13px;font-family:var(--serif);font-style:italic;color:var(--laton-claro);flex:none}
+.nav{display:flex;gap:34px;font-size:14.5px}
+.nav a{opacity:.78;position:relative;padding-block:6px;transition:opacity .3s}
+.nav a::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1px;background:var(--laton);transform:scaleX(0);transform-origin:left;transition:transform .4s var(--ease)}
+.nav a:hover{opacity:1}.nav a:hover::after{transform:scaleX(1)}
+.cabecera .btn{padding:11px 20px;font-size:14px}
+.burger{display:none;width:44px;height:44px;border:1px solid var(--linea-clara);border-radius:50%;background:none;cursor:pointer;position:relative}
+.burger i{position:absolute;left:13px;right:13px;height:1.5px;background:var(--hueso);transition:transform .35s var(--ease),top .35s var(--ease)}
+.burger i:first-child{top:17px}.burger i:last-child{top:25px}
+.abierto .burger i:first-child{top:21px;transform:rotate(45deg)}
+.abierto .burger i:last-child{top:21px;transform:rotate(-45deg)}
+
+/* Hero */
+.hero{padding:0;min-height:100svh;display:grid;position:relative;isolation:isolate;overflow:hidden}
+.hero-foto{position:absolute;inset:0;z-index:-1}
+.hero-foto svg{width:100%;height:100%}
+.hero-foto::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,#0e1815 0%,#0e1815e6 34%,#0e181566 62%,#0e181526 100%),linear-gradient(0deg,#0e1815 2%,transparent 38%)}
+.hero .wrap{display:flex;flex-direction:column;justify-content:flex-end;padding-top:150px;padding-bottom:clamp(36px,5vw,64px)}
+.hero h1{font-family:var(--serif);font-weight:300;font-size:clamp(46px,7.4vw,112px);line-height:.96;letter-spacing:-.03em;margin-top:26px;max-width:13ch}
+.hero h1 em{font-style:italic;color:var(--laton-claro)}
+.hero h1 .l{display:block;overflow:hidden;padding-bottom:.08em}
+.hero h1 .l span{display:block}
+.js .hero h1 .l span{transform:translateY(105%);transition:transform 1.2s var(--ease);transition-delay:calc(var(--d)*130ms + 150ms)}
+.js.lista .hero h1 .l span{transform:none}
+.hero .lead{margin-top:28px;max-width:46ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:36px}
+.hero-datos{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:clamp(48px,7vw,88px);padding-top:26px;border-top:1px solid var(--linea-clara)}
+.hero-datos dt{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#f4f0e780}
+.hero-datos dd{margin:6px 0 0;font-family:var(--serif);font-size:clamp(18px,1.8vw,24px)}
+
+/* Franja de valores */
+.cinta{background:var(--tinta-2);color:#f4f0e799;padding:20px 0;overflow:hidden;border-top:1px solid var(--linea-clara)}
+.cinta-pista{display:flex;gap:56px;width:max-content;animation:cinta 38s linear infinite;font-family:var(--serif);font-style:italic;font-size:20px;white-space:nowrap}
+.cinta-pista span::after{content:"✦";margin-left:56px;color:var(--laton);font-style:normal;font-size:12px;vertical-align:middle}
+@keyframes cinta{to{transform:translateX(-50%)}}
+
+/* Beneficios */
+.cab-sec{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:end;margin-bottom:clamp(40px,6vw,72px)}
+.beneficios{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--linea)}
+.beneficio{padding:34px 28px 10px 0;border-right:1px solid var(--linea)}
+.beneficio+.beneficio{padding-left:28px}
+.beneficio:last-child{border-right:0}
+.beneficio svg{width:34px;height:34px;stroke:var(--laton);fill:none;stroke-width:1.2}
+.beneficio h3{font-family:var(--serif);font-weight:400;font-size:24px;line-height:1.15;margin:26px 0 10px}
+.beneficio p{color:var(--suave);font-size:15.5px}
+
+/* Áreas */
+.areas{border-top:1px solid var(--linea-clara)}
+.area{display:grid;grid-template-columns:90px 1fr 1.2fr 44px;gap:24px;align-items:center;padding:30px 0;border-bottom:1px solid var(--linea-clara);position:relative;transition:padding .5s var(--ease)}
+.area::before{content:"";position:absolute;inset:0 calc(var(--pad)*-.5);background:var(--tinta-3);opacity:0;transition:opacity .4s var(--ease);z-index:0;border-radius:6px}
+.area>*{position:relative;z-index:1}
+.area:hover{padding-inline:14px}.area:hover::before{opacity:1}
+.area .n{font-size:13px;letter-spacing:.14em;color:var(--laton)}
+.area h3{font-family:var(--serif);font-weight:400;font-size:clamp(24px,2.6vw,36px);line-height:1.1}
+.area p{color:#f4f0e799;font-size:15.5px}
+.area .fl{width:44px;height:44px;border:1px solid var(--linea-clara);border-radius:50%;display:grid;place-items:center;transition:background .4s var(--ease),border-color .4s var(--ease),transform .4s var(--ease)}
+.area .fl svg{width:15px;height:15px;stroke:var(--hueso);fill:none;stroke-width:1.5}
+.area:hover .fl{background:var(--laton);border-color:var(--laton);transform:rotate(-45deg)}
+.area:hover .fl svg{stroke:var(--tinta)}
+
+/* Cifras */
+.cifras{background:var(--hueso);padding-block:clamp(56px,7vw,96px)}
+.cifras ul{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.cifras b{display:block;font-family:var(--serif);font-weight:300;font-size:clamp(52px,6.4vw,92px);line-height:1;letter-spacing:-.03em}
+.cifras b sup{font-size:.42em;color:var(--laton);margin-left:2px}
+.cifras li>span{display:block;margin-top:12px;color:var(--suave);font-size:15px;max-width:22ch}
+
+/* Despacho */
+.despacho{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,88px);align-items:center}
+.despacho figure{aspect-ratio:4/5;border-radius:4px;overflow:hidden;background:var(--tinta)}
+.despacho figure svg{width:100%;height:100%}
+.despacho .lead{margin-top:22px}
+.checks{margin-top:30px;display:grid;gap:14px}
+.checks li{display:flex;gap:14px;align-items:flex-start;padding-top:14px;border-top:1px solid var(--linea);font-size:16px}
+.checks li::before{content:"";width:8px;height:8px;margin-top:9px;border-radius:50%;background:var(--laton);flex:none}
+.despacho .btn{margin-top:34px}
+
+/* Método */
+.metodo{background:var(--hueso)}
+.pasos{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:paso}
+.paso{background:var(--papel);border:1px solid var(--linea);border-radius:6px;padding:28px 26px 30px;counter-increment:paso;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+.paso:hover{transform:translateY(-6px);box-shadow:0 24px 40px -28px #0e181566}
+.paso::before{content:"0" counter(paso);font-family:var(--serif);font-style:italic;font-size:44px;color:var(--laton);line-height:1}
+.paso h3{font-family:var(--serif);font-weight:400;font-size:24px;margin:44px 0 10px}
+.paso p{color:var(--suave);font-size:15.5px}
+.paso small{display:block;margin-top:18px;font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--texto)}
+
+/* Equipo */
+.equipo{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.socio figure{aspect-ratio:4/5;border-radius:4px;overflow:hidden;position:relative;background:linear-gradient(160deg,var(--tinta-3),var(--tinta))}
+.socio figure{display:grid;place-items:center}
+.socio figure::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 78% 12%,#f1d9a640,transparent 60%)}
+.socio figure::after{content:"";position:absolute;inset:18px;border:1px solid #d6b78340;transition:inset .8s var(--ease)}
+.socio:hover figure::after{inset:10px}
+.socio figure span{font-family:var(--serif);font-style:italic;font-weight:300;font-size:clamp(84px,9vw,132px);color:var(--laton-claro);letter-spacing:-.04em;position:relative;transition:transform 1s var(--ease)}
+.socio:hover figure span{transform:scale(1.06)}
+.socio h3{font-family:var(--serif);font-weight:400;font-size:25px;margin-top:20px}
+.socio p{color:var(--suave);font-size:15px}
+.socio .rol{color:var(--laton);font-size:12px;letter-spacing:.16em;text-transform:uppercase;margin-top:4px;font-weight:600}
+
+/* Testimonios */
+.testi{display:grid;grid-template-columns:1.25fr 1fr 1fr;gap:20px}
+.cita{border:1px solid var(--linea-clara);border-radius:6px;padding:34px 30px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:340px}
+.cita:first-child{background:var(--laton);color:var(--tinta);border-color:transparent}
+.cita blockquote{font-family:var(--serif);font-size:21px;line-height:1.35;letter-spacing:-.01em}
+.cita:first-child blockquote{font-size:clamp(24px,2.3vw,31px);line-height:1.22}
+.cita figcaption{font-size:14px;display:flex;align-items:center;gap:14px}
+.cita figcaption i{width:42px;height:42px;border-radius:50%;border:1px solid currentColor;display:grid;place-items:center;font-family:var(--serif);font-size:15px;opacity:.85;flex:none}
+.cita figcaption b{display:block;font-weight:600}
+.cita figcaption span{opacity:.7}
+.nota{margin-top:22px;font-size:13px;color:#f4f0e766}
+
+/* Ubicación */
+.ubicacion{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,72px);align-items:stretch}
+.mapa{border-radius:6px;overflow:hidden;background:var(--hueso-2);min-height:440px;position:relative}
+.mapa svg{width:100%;height:100%;position:absolute;inset:0}
+.pin{animation:pulso 2.4s ease-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes pulso{0%{transform:scale(.4);opacity:.9}100%{transform:scale(2.6);opacity:0}}
+.datos{margin-top:34px;display:grid;gap:0}
+.datos div{display:grid;grid-template-columns:130px 1fr;gap:16px;padding:18px 0;border-top:1px solid var(--linea)}
+.datos dt{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--suave);padding-top:4px}
+.datos dd{margin:0;font-size:16.5px}
+
+/* FAQ */
+.faq{display:grid;grid-template-columns:.8fr 1.2fr;gap:clamp(28px,6vw,88px)}
+.faq details{border-top:1px solid var(--linea)}
+.faq details:last-child{border-bottom:1px solid var(--linea)}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 0;font-family:var(--serif);font-size:clamp(20px,1.9vw,25px);line-height:1.2}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";font-family:var(--sans);font-size:24px;font-weight:300;color:var(--laton);transition:transform .4s var(--ease);flex:none}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq details p{color:var(--suave);padding:0 48px 26px 0;max-width:60ch}
+
+/* Contacto */
+.contacto{position:relative;isolation:isolate;overflow:hidden}
+.contacto .fondo{position:absolute;inset:0;z-index:-1;opacity:.28}
+.contacto .fondo svg{width:100%;height:100%}
+.contacto .wrap{display:grid;grid-template-columns:1fr 1fr;gap:clamp(32px,6vw,88px);align-items:start}
+.contacto h2.titulo{font-size:clamp(40px,5.6vw,78px)}
+.contacto .lead{margin-top:22px}
+.directo{margin-top:40px;display:grid;gap:14px}
+.directo a{display:flex;align-items:center;gap:14px;font-family:var(--serif);font-size:23px}
+.directo a span{font-family:var(--sans);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--laton);width:92px}
+.form{background:var(--papel);color:var(--texto);border-radius:8px;padding:clamp(24px,3.4vw,44px);display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.form h3{grid-column:1/-1;font-family:var(--serif);font-weight:400;font-size:28px}
+.form .sub{grid-column:1/-1;color:var(--suave);font-size:15px;margin-top:-10px}
+.campo{display:grid;gap:7px}
+.campo.todo{grid-column:1/-1}
+.campo label{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--suave)}
+.campo input,.campo select,.campo textarea{width:100%;background:transparent;border:0;border-bottom:1px solid #0e181540;padding:10px 0 12px;font-size:16.5px;border-radius:0;transition:border-color .3s}
+.campo textarea{resize:vertical;min-height:84px}
+.campo input:focus,.campo select:focus,.campo textarea:focus{outline:0;border-color:var(--laton);box-shadow:0 1px 0 var(--laton)}
+.campo .error{font-size:13px;color:#a03a2c;min-height:0}
+.campo.mal input,.campo.mal select{border-color:#a03a2c}
+.acepto{grid-column:1/-1;display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--suave)}
+.acepto input{margin-top:4px;accent-color:var(--tinta);width:17px;height:17px;flex:none}
+.form .btn{grid-column:1/-1;justify-content:center;padding:17px 24px}
+.form .legal{grid-column:1/-1;font-size:12.5px;color:var(--suave);text-align:center}
+.exito{display:none;grid-column:1/-1;text-align:center;padding:48px 8px}
+.exito svg{width:54px;height:54px;margin:0 auto 22px;stroke:var(--laton);fill:none;stroke-width:1.3}
+.exito h3{font-family:var(--serif);font-weight:400;font-size:32px}
+.exito p{color:var(--suave);margin-top:10px}
+.form.enviado>*:not(.exito){display:none}
+.form.enviado .exito{display:block;animation:sube .8s var(--ease)}
+@keyframes sube{from{opacity:0;transform:translateY(16px)}}
+
+/* Pie */
+.pie{background:#0a1210;color:#f4f0e799;padding:56px 0 96px;font-size:14.5px}
+.pie .wrap{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px}
+.pie .marca{color:var(--hueso);margin-bottom:16px}
+.pie h4{margin:0 0 14px;font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--laton);font-weight:600}
+.pie li{margin-bottom:8px}
+.pie a:hover{color:var(--hueso)}
+.pie .aviso{grid-column:1/-1;border-top:1px solid var(--linea-clara);padding-top:22px;font-size:13px;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+
+/* Etiqueta de concepto */
+.concepto{position:fixed;left:18px;bottom:18px;z-index:60;font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:600;color:#f4f0e7cc;background:#0e1815b3;backdrop-filter:blur(8px);border:1px solid #f4f0e726;padding:8px 13px;border-radius:999px;pointer-events:none}
+
+/* Tableta y móvil */
+@media (max-width:1040px){
+  .nav{display:none}
+  .burger{display:block}
+  .cabecera .btn{display:none}
+  .nav{position:fixed;inset:0;background:var(--tinta);flex-direction:column;justify-content:center;align-items:flex-start;padding:0 var(--pad);gap:18px;font-family:var(--serif);font-size:38px;z-index:-1}
+  .abierto .nav{display:flex}
+  .nav a{opacity:1}
+  .beneficios{grid-template-columns:1fr 1fr}
+  .beneficio{padding:30px 22px 26px 0;border-bottom:1px solid var(--linea)}
+  .beneficio:nth-child(2n){border-right:0;padding-left:22px}
+  .beneficio:nth-child(2n+1){padding-left:0}
+  .pasos{grid-template-columns:1fr 1fr}
+  .testi{grid-template-columns:1fr 1fr}
+  .cita:first-child{grid-column:1/-1;min-height:0}
+  .area{grid-template-columns:56px 1fr 44px}
+  .area p{grid-column:2/3}
+  .area .fl{grid-column:3;grid-row:1}
+}
+@media (max-width:760px){
+  body{font-size:16px}
+  .cab-sec,.despacho,.ubicacion,.faq,.contacto .wrap{grid-template-columns:1fr}
+  .cab-sec{gap:18px}
+  .hero .wrap{padding-top:120px}
+  .hero-foto::after{background:linear-gradient(0deg,#0e1815 22%,#0e1815cc 55%,#0e181573 100%)}
+  .hero-cta .btn{width:100%;justify-content:center}
+  .hero-datos{grid-template-columns:1fr;gap:14px}
+  .hero-datos div{display:flex;justify-content:space-between;align-items:baseline;gap:16px}
+  .hero-datos dd{margin:0;font-size:17px;text-align:right}
+  .beneficios{grid-template-columns:1fr}
+  .beneficio,.beneficio+.beneficio,.beneficio:nth-child(2n){padding:26px 0;border-right:0}
+  .beneficio h3{margin-top:18px}
+  .cifras ul{grid-template-columns:1fr 1fr;gap:36px 20px}
+  .pasos,.equipo,.testi{grid-template-columns:1fr}
+  .paso h3{margin-top:26px}
+  .cita{min-height:0}
+  .equipo{gap:36px}
+  .mapa{min-height:300px}
+  .datos div{grid-template-columns:1fr;gap:4px}
+  .form{grid-template-columns:1fr}
+  .directo a{font-size:20px}
+  .pie .wrap{grid-template-columns:1fr}
+  .faq details p{padding-right:0}
+  .concepto{left:12px;bottom:12px;font-size:10px;padding:7px 11px}
+  .eyebrow{font-size:11px;letter-spacing:.14em;gap:10px}
+  .eyebrow::before{width:18px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .js [data-r],.js .hero h1 .l span{opacity:1!important;transform:none!important;clip-path:none!important}
+}
+</style>
+</head>
+<body>
+
+<!-- Ilustraciones reutilizables (sin fotos ni marcas reales) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="g-muro" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#2b4038"/><stop offset=".55" stop-color="#16241f"/><stop offset="1" stop-color="#0b1411"/></linearGradient>
+    <linearGradient id="g-col" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#e9dcc0"/><stop offset=".28" stop-color="#c9b48d"/><stop offset=".7" stop-color="#6f6249"/><stop offset="1" stop-color="#2c2a22"/></linearGradient>
+    <linearGradient id="g-piso" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a4a41"/><stop offset="1" stop-color="#0c1512"/></linearGradient>
+    <radialGradient id="g-luz" cx=".78" cy=".2" r=".8"><stop offset="0" stop-color="#f1d9a6" stop-opacity=".85"/><stop offset=".35" stop-color="#c49a58" stop-opacity=".28"/><stop offset="1" stop-color="#c49a58" stop-opacity="0"/></radialGradient>
+    <filter id="grano"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" seed="4"/><feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 .09 0"/></filter>
+    <symbol id="columna" viewBox="0 0 120 900" preserveAspectRatio="none">
+      <rect x="0" y="0" width="120" height="26" fill="#d9c8a4"/><rect x="8" y="26" width="104" height="16" fill="#b7a27c"/>
+      <rect x="18" y="42" width="84" height="800" fill="url(#g-col)"/>
+      <g stroke="#00000030" stroke-width="2"><path d="M34 42V842M50 42V842M66 42V842M82 42V842"/></g>
+      <rect x="8" y="842" width="104" height="18" fill="#9c8a68"/><rect x="0" y="860" width="120" height="40" fill="#7f7055"/>
+    </symbol>
+    <symbol id="columnata" viewBox="0 0 1600 1000" preserveAspectRatio="xMidYMid slice">
+      <rect width="1600" height="1000" fill="url(#g-muro)"/>
+      <path d="M1040 0h330v560h-330z" fill="#f3dfb2" opacity=".5"/><path d="M1040 0h330v560h-330z" fill="none" stroke="#0b1411" stroke-width="10"/><path d="M1205 0v560M1040 280h330" stroke="#0b1411" stroke-width="8"/>
+      <path d="M0 800h1600v200H0z" fill="url(#g-piso)"/>
+      <path d="M1040 800l-520 200h620l230-200z" fill="#f1d9a6" opacity=".2"/>
+      <g stroke="#00000040" stroke-width="2"><path d="M0 860h1600M0 930h1600M800 800L560 1000M800 800l240 200M800 800L80 1000M800 800l720 200"/></g>
+      <use href="#columna" x="560" y="40" width="96" height="790"/>
+      <use href="#columna" x="800" y="20" width="118" height="830"/>
+      <use href="#columna" x="1100" y="-10" width="150" height="890"/>
+      <use href="#columna" x="1420" y="-60" width="200" height="980"/>
+      <rect width="1600" height="1000" fill="url(#g-luz)"/>
+      <rect width="1600" height="1000" filter="url(#grano)"/>
+    </symbol>
+    <symbol id="biblioteca" viewBox="0 0 800 1000" preserveAspectRatio="xMidYMid slice">
+      <rect width="800" height="1000" fill="url(#g-muro)"/>
+      <g fill="#0b1411"><rect x="60" y="120" width="680" height="14"/><rect x="60" y="340" width="680" height="14"/><rect x="60" y="560" width="680" height="14"/><rect x="60" y="780" width="680" height="14"/><rect x="60" y="120" width="14" height="880"/><rect x="726" y="120" width="14" height="880"/></g>
+      <g id="lomos">
+        <g fill="#b48f56"><rect x="96" y="170" width="34" height="170"/><rect x="262" y="150" width="28" height="190"/><rect x="520" y="182" width="40" height="158"/><rect x="640" y="160" width="30" height="180"/></g>
+        <g fill="#3d5a4f"><rect x="134" y="186" width="26" height="154"/><rect x="164" y="160" width="44" height="180"/><rect x="294" y="176" width="38" height="164"/><rect x="430" y="158" width="30" height="182"/><rect x="564" y="170" width="34" height="170"/></g>
+        <g fill="#e9dcc0"><rect x="212" y="196" width="24" height="144"/><rect x="336" y="166" width="22" height="174"/><rect x="464" y="190" width="52" height="150"/><rect x="602" y="200" width="34" height="140"/><rect x="674" y="188" width="40" height="152"/></g>
+        <g fill="#5b2f25"><rect x="240" y="204" width="18" height="136"/><rect x="362" y="180" width="64" height="160"/></g>
+      </g>
+      <use href="#lomos" y="220"/><use href="#lomos" y="440" transform="translate(800 0) scale(-1 1)"/>
+      <rect x="0" y="794" width="800" height="206" fill="#0b1411" opacity=".7"/>
+      <path d="M180 1000V880q0-40 40-40h360q40 0 40 40v120z" fill="#22352e"/><circle cx="400" cy="760" r="54" fill="#f1d9a6" opacity=".22"/><rect x="394" y="780" width="12" height="80" fill="#b48f56"/><path d="M350 760q50-70 100 0z" fill="#e9dcc0"/>
+      <rect width="800" height="1000" fill="url(#g-luz)"/><rect width="800" height="1000" filter="url(#grano)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="cabecera" id="cabecera">
+  <div class="wrap">
+    <a href="#inicio" class="marca" aria-label="Valdemar y Roca, inicio"><span class="sello">V&amp;R</span><span>Valdemar <b>&amp;</b> Roca</span></a>
+    <nav class="nav" id="nav" aria-label="Principal">
+      <a href="#firma">La firma</a><a href="#areas">Áreas</a><a href="#metodo">Método</a><a href="#equipo">Equipo</a><a href="#ubicacion">Oficina</a>
+    </nav>
+    <a href="#consulta" class="btn btn-laton">Agenda tu consulta</a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><i></i><i></i></button>
+  </div>
+</header>
+
+<main>
+<section class="hero oscuro" id="inicio">
+  <div class="hero-foto" aria-hidden="true"><svg id="heroArte"><use href="#columnata"/></svg></div>
+  <div class="wrap">
+    <p class="eyebrow" data-r>Abogados · Guadalajara · Desde 1998</p>
+    <h1><span class="l" style="--d:0"><span>Claridad legal</span></span><span class="l" style="--d:1"><span>para decidir</span></span><span class="l" style="--d:2"><span><em>con calma.</em></span></span></h1>
+    <p class="lead" data-r style="--d:5">Acompañamos a empresas, familias y patrimonios en los momentos que importan. Un socio lleva tu asunto de principio a fin y te explica cada paso sin tecnicismos.</p>
+    <div class="hero-cta" data-r style="--d:6">
+      <a href="#consulta" class="btn btn-laton">Agenda tu consulta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+      <a href="#areas" class="btn btn-linea">Ver áreas de práctica</a>
+    </div>
+    <dl class="hero-datos" data-r style="--d:7">
+      <div><dt>Primera consulta</dt><dd>45 minutos, sin costo</dd></div>
+      <div><dt>Respuesta</dt><dd>En 24 horas hábiles</dd></div>
+      <div><dt>Atención</dt><dd>Presencial o por videollamada</dd></div>
+    </dl>
+  </div>
+</section>
+
+<div class="cinta" aria-hidden="true">
+  <div class="cinta-pista">
+    <span>Corporativo</span><span>Inmobiliario</span><span>Familiar y sucesiones</span><span>Laboral</span><span>Litigio civil y mercantil</span><span>Propiedad intelectual</span>
+    <span>Corporativo</span><span>Inmobiliario</span><span>Familiar y sucesiones</span><span>Laboral</span><span>Litigio civil y mercantil</span><span>Propiedad intelectual</span>
+  </div>
+</div>
+
+<section id="firma">
+  <div class="wrap">
+    <div class="cab-sec">
+      <div><p class="eyebrow" data-r>Por qué elegirnos</p><h2 class="titulo" data-r style="--d:1">Un despacho que responde, <em>explica y cumple.</em></h2></div>
+      <p class="lead" data-r style="--d:2">Sabemos que buscar abogado casi nunca ocurre en un buen momento. Por eso trabajamos con reglas simples que puedes exigirnos desde el primer día.</p>
+    </div>
+    <ul class="beneficios">
+      <li class="beneficio" data-r style="--d:0"><svg viewBox="0 0 34 34"><circle cx="17" cy="11" r="6"/><path d="M5 30c1-7 6-10 12-10s11 3 12 10"/></svg><h3>Un socio a cargo</h3><p>Tu asunto no pasa de mano en mano. Quien te recibe es quien lo lleva y quien te contesta.</p></li>
+      <li class="beneficio" data-r style="--d:1"><svg viewBox="0 0 34 34"><rect x="6" y="4" width="22" height="26" rx="1"/><path d="M11 11h12M11 17h12M11 23h7"/></svg><h3>Honorarios claros</h3><p>Propuesta por escrito antes de empezar, con alcance, etapas y costo. Sin sorpresas al final.</p></li>
+      <li class="beneficio" data-r style="--d:2"><svg viewBox="0 0 34 34"><circle cx="17" cy="17" r="13"/><path d="M17 9v8l5 4"/></svg><h3>Respuesta en 24 horas</h3><p>Toda llamada o mensaje tiene respuesta al siguiente día hábil, aunque sea para decirte en qué vamos.</p></li>
+      <li class="beneficio" data-r style="--d:3"><svg viewBox="0 0 34 34"><path d="M17 3l11 4v9c0 7-5 12-11 15C11 28 6 23 6 16V7z"/><path d="M12 17l4 4 7-8"/></svg><h3>Confidencialidad total</h3><p>Lo que nos cuentas se queda aquí. Expedientes cifrados y acceso restringido a tu equipo legal.</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="oscuro" id="areas">
+  <div class="wrap">
+    <div class="cab-sec">
+      <div><p class="eyebrow" data-r>Áreas de práctica</p><h2 class="titulo" data-r style="--d:1">Seis especialidades, <em>un solo criterio.</em></h2></div>
+      <p class="lead" data-r style="--d:2">Cada área tiene un socio responsable. Cuando tu caso cruza varias materias, las coordinamos por ti.</p>
+    </div>
+    <ol class="areas">
+      <li class="area" data-r><span class="n">01</span><h3>Corporativo y mercantil</h3><p>Constitución de sociedades, contratos, gobierno corporativo, compraventa de empresas.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">02</span><h3>Inmobiliario</h3><p>Compraventas, arrendamientos, regularización de propiedades y revisión de títulos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">03</span><h3>Familiar y sucesiones</h3><p>Testamentos, planeación patrimonial, divorcios, pensiones y juicios sucesorios.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">04</span><h3>Laboral</h3><p>Contratos, reglamentos internos, terminaciones y defensa ante tribunales laborales.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">05</span><h3>Litigio civil y mercantil</h3><p>Cobranza, incumplimiento de contratos, responsabilidad civil y medios alternos.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+      <li class="area" data-r><span class="n">06</span><h3>Propiedad intelectual</h3><p>Registro y defensa de marcas, derechos de autor, licencias y franquicias.</p><span class="fl"><svg viewBox="0 0 16 16"><path d="M2 8h12M9 3l5 5-5 5"/></svg></span></li>
+    </ol>
+  </div>
+</section>
+
+<section class="cifras" aria-label="La firma en cifras">
+  <div class="wrap">
+    <ul>
+      <li data-r style="--d:0"><b><span data-cuenta="27">27</span></b><span>años de práctica continua</span></li>
+      <li data-r style="--d:1"><b><span data-cuenta="1200" data-miles>1,200</span><sup>+</sup></b><span>asuntos concluidos</span></li>
+      <li data-r style="--d:2"><b><span data-cuenta="18">18</span></b><span>abogados en seis áreas</span></li>
+      <li data-r style="--d:3"><b><span data-cuenta="94">94</span><sup>%</sup></b><span>de clientes nos recomienda</span></li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="wrap despacho">
+    <figure data-r="imagen"><svg role="img" aria-label="Ilustración de la biblioteca del despacho"><use href="#biblioteca"/></svg></figure>
+    <div>
+      <p class="eyebrow" data-r>El despacho</p>
+      <h2 class="titulo" data-r style="--d:1">Trato de firma pequeña, <em>respaldo de firma grande.</em></h2>
+      <p class="lead" data-r style="--d:2">Nacimos como un despacho de dos socios y crecimos sin perder la costumbre de conocer a cada cliente por su nombre.</p>
+      <ul class="checks">
+        <li data-r style="--d:3">Reporte mensual de avances, en lenguaje claro.</li>
+        <li data-r style="--d:4">Expediente digital disponible para ti en todo momento.</li>
+        <li data-r style="--d:5">Red de notarios, peritos y corresponsales en todo el país.</li>
+      </ul>
+      <a href="#consulta" class="btn btn-tinta" data-r style="--d:6">Cuéntanos tu caso <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></a>
+    </div>
+  </div>
+</section>
+
+<section class="metodo" id="metodo">
+  <div class="wrap">
+    <div class="cab-sec">
+      <div><p class="eyebrow" data-r>Cómo trabajamos</p><h2 class="titulo" data-r style="--d:1">Cuatro pasos, <em>sin letra chica.</em></h2></div>
+      <p class="lead" data-r style="--d:2">Sabrás en qué etapa está tu asunto, qué sigue y cuánto falta.</p>
+    </div>
+    <ol class="pasos">
+      <li class="paso" data-r style="--d:0"><h3>Escuchamos</h3><p>Primera consulta sin costo para entender tu situación y revisar tus documentos.</p><small>Día 1</small></li>
+      <li class="paso" data-r style="--d:1"><h3>Diagnóstico</h3><p>Te entregamos por escrito los escenarios posibles, sus riesgos y nuestra recomendación.</p><small>Días 2 a 5</small></li>
+      <li class="paso" data-r style="--d:2"><h3>Estrategia</h3><p>Acordamos el plan, las etapas y los honorarios. Nada avanza sin tu visto bueno.</p><small>Semana 1</small></li>
+      <li class="paso" data-r style="--d:3"><h3>Ejecución</h3><p>Llevamos el asunto y te informamos cada avance hasta cerrarlo.</p><small>Hasta concluir</small></li>
+    </ol>
+  </div>
+</section>
+
+<section id="equipo">
+  <div class="wrap">
+    <div class="cab-sec">
+      <div><p class="eyebrow" data-r>Socios</p><h2 class="titulo" data-r style="--d:1">Las personas <em>detrás de tu caso.</em></h2></div>
+      <p class="lead" data-r style="--d:2">Tres socios con más de veinte años de experiencia cada uno, respaldados por un equipo de quince abogados.</p>
+    </div>
+    <ul class="equipo">
+      <li class="socio" data-r style="--d:0"><figure aria-hidden="true"><span>EV</span></figure><h3>Elena Valdemar Ruiz</h3><p class="rol">Socia fundadora</p><p>Corporativo y mercantil</p></li>
+      <li class="socio" data-r style="--d:1"><figure aria-hidden="true"><span>TR</span></figure><h3>Tomás Roca Aldama</h3><p class="rol">Socio fundador</p><p>Litigio civil y mercantil</p></li>
+      <li class="socio" data-r style="--d:2"><figure aria-hidden="true"><span>IM</span></figure><h3>Inés Montaño Ferrer</h3><p class="rol">Socia</p><p>Familiar y sucesiones</p></li>
+    </ul>
+  </div>
+</section>
+
+<section class="oscuro">
+  <div class="wrap">
+    <div class="cab-sec">
+      <div><p class="eyebrow" data-r>Testimonios</p><h2 class="titulo" data-r style="--d:1">Lo que dicen <em>quienes ya confiaron.</em></h2></div>
+    </div>
+    <div class="testi">
+      <figure class="cita" data-r style="--d:0"><blockquote>“Vendimos la empresa familiar después de treinta años. Nos explicaron cada cláusula hasta que todos en la mesa estuvimos tranquilos.”</blockquote><figcaption><i>MH</i><div><b>Mariana H.</b><span>Directora, empresa de alimentos</span></div></figcaption></figure>
+      <figure class="cita" data-r style="--d:1"><blockquote>“Siempre supe en qué iba mi juicio. Me contestaban el mismo día.”</blockquote><figcaption><i>RG</i><div><b>Rodrigo G.</b><span>Litigio mercantil</span></div></figcaption></figure>
+      <figure class="cita" data-r style="--d:2"><blockquote>“Dejamos en orden el testamento y las propiedades de mis papás sin pleitos entre hermanos.”</blockquote><figcaption><i>LP</i><div><b>Lucía P.</b><span>Sucesiones</span></div></figcaption></figure>
+    </div>
+    <p class="nota">Testimonios ilustrativos para esta demo.</p>
+  </div>
+</section>
+
+<section id="ubicacion">
+  <div class="wrap ubicacion">
+    <div>
+      <p class="eyebrow" data-r>Oficina</p>
+      <h2 class="titulo" data-r style="--d:1">Te recibimos <em>en persona.</em></h2>
+      <p class="lead" data-r style="--d:2;margin-top:22px">A unos pasos del corredor financiero, con estacionamiento de cortesía para clientes.</p>
+      <dl class="datos">
+        <div data-r style="--d:3"><dt>Dirección</dt><dd>Av. de los Laureles 1840, piso 12<br>Col. Mirador del Bosque, Guadalajara, Jal.</dd></div>
+        <div data-r style="--d:4"><dt>Horario</dt><dd>Lunes a viernes, 9:00 a 19:00<br>Sábados con cita</dd></div>
+        <div data-r style="--d:5"><dt>Teléfono</dt><dd><a href="#consulta">33 5550 0142</a></dd></div>
+      </dl>
+    </div>
+    <div class="mapa" data-r="imagen">
+      <svg viewBox="0 0 700 520" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Mapa ilustrativo de la ubicación de la oficina">
+        <rect width="700" height="520" fill="#e6dfcf"/>
+        <path d="M-20 420q200-80 380-40t360-60v220H-20z" fill="#cfd8c4"/><ellipse cx="560" cy="110" rx="120" ry="70" fill="#cfd8c4"/>
+        <g stroke="#fbf9f4" stroke-linecap="round" fill="none"><path d="M-20 250h740" stroke-width="26"/><path d="M330-20v560" stroke-width="26"/><path d="M-20 90l740 60M-20 380l740-90M120-20l60 560M540-20l-40 560" stroke-width="12"/><path d="M-20 170h740M-20 330h740M220-20v560M440-20v560M630-20v560" stroke-width="5"/></g>
+        <g fill="#0e181599" font-family="Manrope,sans-serif" font-size="11" letter-spacing="2"><text x="350" y="244" transform="rotate(0)">AV. DE LOS LAURELES</text><text x="560" y="114" text-anchor="middle">PARQUE</text></g>
+        <circle class="pin" cx="330" cy="250" r="16" fill="#b48f56"/><circle cx="330" cy="250" r="11" fill="#0e1815"/><circle cx="330" cy="250" r="4" fill="#d6b783"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap faq">
+    <div><p class="eyebrow" data-r>Preguntas frecuentes</p><h2 class="titulo" data-r style="--d:1">Antes de <em>escribirnos.</em></h2></div>
+    <div data-r style="--d:2">
+      <details open><summary>¿La primera consulta tiene costo?</summary><p>No. Son 45 minutos para entender tu caso y decirte con honestidad si podemos ayudarte y cómo.</p></details>
+      <details><summary>¿Cómo se calculan los honorarios?</summary><p>Según el asunto: cuota fija por etapa, iguala mensual o por hora. Siempre lo acordamos por escrito antes de iniciar.</p></details>
+      <details><summary>¿Atienden asuntos fuera de Guadalajara?</summary><p>Sí. Trabajamos por videollamada y contamos con corresponsales en las principales ciudades del país.</p></details>
+      <details><summary>¿Qué documentos debo llevar?</summary><p>Lo que tengas a la mano: contratos, escrituras, notificaciones o correos. Al agendar te enviamos una lista según tu caso.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="oscuro contacto" id="consulta">
+  <div class="fondo" aria-hidden="true"><svg><use href="#columnata"/></svg></div>
+  <div class="wrap">
+    <div>
+      <p class="eyebrow" data-r>Primera consulta sin costo</p>
+      <h2 class="titulo" data-r style="--d:1">Agenda tu consulta <em>hoy.</em></h2>
+      <p class="lead" data-r style="--d:2">Cuéntanos brevemente qué necesitas. Un socio del área te llamará en menos de 24 horas hábiles.</p>
+      <div class="directo" data-r style="--d:3">
+        <a href="#consulta"><span>Teléfono</span>33 5550 0142</a>
+        <a href="#consulta"><span>Correo</span>hola@valdemarroca.example</a>
+      </div>
+    </div>
+    <form class="form" id="form" novalidate data-r style="--d:2">
+      <h3>Solicita tu cita</h3>
+      <p class="sub">Todo lo que compartas es confidencial.</p>
+      <div class="campo"><label for="nombre">Nombre completo</label><input id="nombre" name="nombre" autocomplete="name" required><span class="error" aria-live="polite"></span></div>
+      <div class="campo"><label for="tel">Teléfono</label><input id="tel" name="tel" type="tel" inputmode="tel" autocomplete="tel" required><span class="error" aria-live="polite"></span></div>
+      <div class="campo"><label for="correo">Correo</label><input id="correo" name="correo" type="email" autocomplete="email" required><span class="error" aria-live="polite"></span></div>
+      <div class="campo"><label for="area">Área de interés</label><select id="area" name="area" required><option value="">Selecciona una</option><option>Corporativo y mercantil</option><option>Inmobiliario</option><option>Familiar y sucesiones</option><option>Laboral</option><option>Litigio civil y mercantil</option><option>Propiedad intelectual</option><option>No estoy seguro</option></select><span class="error" aria-live="polite"></span></div>
+      <div class="campo todo"><label for="msj">Cuéntanos tu caso (opcional)</label><textarea id="msj" name="msj" rows="3"></textarea></div>
+      <label class="acepto"><input type="checkbox" id="acepto" required><span>Acepto el aviso de privacidad y que me contacten por teléfono o correo.</span></label>
+      <button class="btn btn-tinta" type="submit">Agenda tu consulta <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M2 8h12M9 3l5 5-5 5"/></svg></button>
+      <p class="legal">Demo: este formulario no envía ni guarda datos.</p>
+      <div class="exito" role="status"><svg viewBox="0 0 54 54"><circle cx="27" cy="27" r="25"/><path d="M17 28l7 7 14-16"/></svg><h3>Recibimos tu solicitud</h3><p>Un socio te llamará en menos de 24 horas hábiles.</p></div>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer class="pie">
+  <div class="wrap">
+    <div><div class="marca"><span class="sello">V&amp;R</span><span>Valdemar <b>&amp;</b> Roca</span></div><p>Abogados. Claridad legal para empresas, familias y patrimonios desde 1998.</p></div>
+    <div><h4>Áreas</h4><ul><li><a href="#areas">Corporativo y mercantil</a></li><li><a href="#areas">Inmobiliario</a></li><li><a href="#areas">Familiar y sucesiones</a></li><li><a href="#areas">Laboral</a></li></ul></div>
+    <div><h4>Contacto</h4><ul><li>33 5550 0142</li><li>hola@valdemarroca.example</li><li>Av. de los Laureles 1840, piso 12</li></ul></div>
+    <div class="aviso"><span>© 2026 Valdemar &amp; Roca. Firma ficticia creada como demostración.</span><span>El contenido no constituye asesoría legal.</span></div>
+  </div>
+</footer>
+
+<div class="concepto">Concepto · Vink Studio</div>
+
+<script>
+(() => {
+  const html = document.documentElement, cab = document.getElementById('cabecera');
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  requestAnimationFrame(() => html.classList.add('lista'));
+
+  // Encabezado y parallax suave del hero
+  const arte = document.getElementById('heroArte');
+  let tic = false;
+  const alScroll = () => {
+    cab.classList.toggle('fija', scrollY > 40);
+    if (!reduce && scrollY < innerHeight) arte.style.transform = `translateY(${scrollY * .18}px) scale(${1 + scrollY * .00012})`;
+    tic = false;
+  };
+  addEventListener('scroll', () => { if (!tic) { tic = true; requestAnimationFrame(alScroll); } }, { passive: true });
+  alScroll();
+
+  // Menú móvil
+  const burger = document.getElementById('burger');
+  const cerrar = () => { cab.classList.remove('abierto'); burger.setAttribute('aria-expanded', 'false'); document.body.style.overflow = ''; };
+  burger.addEventListener('click', () => {
+    const abre = !cab.classList.contains('abierto');
+    cab.classList.toggle('abierto', abre); burger.setAttribute('aria-expanded', abre); document.body.style.overflow = abre ? 'hidden' : '';
+  });
+  document.querySelectorAll('#nav a').forEach(a => a.addEventListener('click', cerrar));
+  addEventListener('keydown', e => e.key === 'Escape' && cerrar());
+
+  // Apariciones y contadores
+  const fmt = new Intl.NumberFormat('es-MX');
+  const contar = el => {
+    const fin = +el.dataset.cuenta, t0 = performance.now(), dur = 1600;
+    const paso = t => { const p = Math.min((t - t0) / dur, 1), v = Math.round(fin * (1 - Math.pow(1 - p, 3))); el.textContent = fmt.format(v); if (p < 1) requestAnimationFrame(paso); };
+    requestAnimationFrame(paso);
+  };
+  if (!('IntersectionObserver' in window)) { document.querySelectorAll('[data-r]').forEach(e => e.classList.add('in')); }
+  else {
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      if (!reduce) e.target.querySelectorAll('[data-cuenta]').forEach(contar);
+      io.unobserve(e.target);
+    }), { threshold: .14, rootMargin: '0px 0px -6% 0px' });
+    document.querySelectorAll('[data-r]').forEach(e => io.observe(e));
+  }
+
+  // FAQ: una abierta a la vez
+  const dets = document.querySelectorAll('.faq details');
+  dets.forEach(d => d.addEventListener('toggle', () => d.open && dets.forEach(o => o !== d && (o.open = false))));
+
+  // Formulario de demostración (no envía datos)
+  const form = document.getElementById('form');
+  const msj = { nombre: 'Escribe tu nombre.', tel: 'Escribe un teléfono de 10 dígitos.', correo: 'Escribe un correo válido.', area: 'Elige un área.' };
+  const valida = c => {
+    let ok = c.value.trim() !== '';
+    if (ok && c.id === 'tel') ok = c.value.replace(/\D/g, '').length >= 10;
+    if (ok && c.id === 'correo') ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(c.value);
+    const caja = c.closest('.campo'); caja.classList.toggle('mal', !ok); caja.querySelector('.error').textContent = ok ? '' : msj[c.id];
+    c.setAttribute('aria-invalid', !ok); return ok;
+  };
+  const campos = ['nombre', 'tel', 'correo', 'area'].map(id => document.getElementById(id));
+  campos.forEach(c => c.addEventListener('blur', () => c.closest('.campo').classList.contains('mal') && valida(c)));
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const malos = campos.filter(c => !valida(c));
+    const acepto = document.getElementById('acepto');
+    if (malos.length) { malos[0].focus(); return; }
+    if (!acepto.checked) { acepto.focus(); acepto.reportValidity(); return; }
+    form.classList.add('enviado');
+  });
+})();
+</script>
+</body>
+</html>
