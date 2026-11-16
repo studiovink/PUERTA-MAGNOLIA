@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Foto from '../components/Foto.astro';
+import Marquee from '../components/Marquee.astro';
 import { SITE, RESIDENCIAS, FAQ, src, srcset, url } from '../data/site';
 
 const [duna, palma] = RESIDENCIAS;
@@ -40,22 +41,22 @@ const vistas = RESIDENCIAS.length * 6;
           <span class="line tone">frente al mar</span>
         </h2>
       </div>
-      <p class="section-lead reveal">
+      <p class="section-lead scrub">
         Dos maneras de habitar la costa: la calma mineral de Los Cabos y la vegetación de Punta Mita. Cada residencia se recorre completa, de la fachada a la terraza.
       </p>
     </div>
     <div class="property-grid">
       {
         RESIDENCIAS.map((r) => (
-          <article class="property reveal">
+          <article class="property">
             <a class="property-link" href={url(`/residencias/${r.id}`)}>
-              <div class="property-caption">
+              <div class="property-caption reveal">
                 <span class="hero-corner" aria-hidden="true" />
                 <h3 class="property-name">{r.title}, {r.region}</h3>
                 <p class="property-desc">{r.description}</p>
                 <p class="property-more">Ver residencia <i class="dots" aria-hidden="true"><b /><b /></i></p>
               </div>
-              <div class="property-image">
+              <div class="property-image wipe">
                 <Foto foto={r.hero} sizes="(max-width:767px) 100vw, 50vw" />
                 {SITE.demo && <span class="badge">Concepto <i /></span>}
               </div>
@@ -65,6 +66,8 @@ const vistas = RESIDENCIAS.length * 6;
       }
     </div>
   </section>
+
+  <Marquee />
 
   <section class="section vision" id="vision" aria-labelledby="vision-t">
     <div class="vision-grid">
@@ -76,7 +79,7 @@ const vistas = RESIDENCIAS.length * 6;
         </h2>
       </div>
       <p class="vision-kicker reveal">Materia, luz<br />y paisaje</p>
-      <div class="vision-photo vision-photo-a reveal">
+      <div class="vision-photo vision-photo-a wipe">
         <Foto foto={duna.espacios[0]} sizes="(max-width:767px) 100vw, 20vw" />
       </div>
       <p class="vision-copy reveal">
@@ -97,10 +100,10 @@ const vistas = RESIDENCIAS.length * 6;
         </div>
         <div><a class="link-dots" href="#coleccion">Ver las residencias <i class="dots" aria-hidden="true"><b></b><b></b></i></a></div>
       </dl>
-      <div class="vision-photo vision-photo-b reveal">
+      <div class="vision-photo vision-photo-b wipe">
         <Foto foto={palma.espacios[0]} sizes="(max-width:767px) 100vw, 32vw" />
       </div>
-      <div class="vision-photo vision-photo-c reveal">
+      <div class="vision-photo vision-photo-c wipe">
         <Foto foto={duna.espacios[2]} sizes="(max-width:767px) 100vw, 22vw" />
       </div>
     </div>
@@ -124,7 +127,7 @@ const vistas = RESIDENCIAS.length * 6;
       </article>
       <article class="bento-image b2 reveal">
         <Foto foto={duna.terraza} sizes="(max-width:767px) 100vw, 33vw" />
-        <h3><strong>{String(RESIDENCIAS.length).padStart(2, '0')}</strong> Destinos<br />costeros</h3>
+        <h3><strong data-count>{String(RESIDENCIAS.length).padStart(2, '0')}</strong> Destinos<br />costeros</h3>
       </article>
       <article class="bento-note b3 reveal">
         <h3>Interiores<br />que respiran</h3>
@@ -150,7 +153,7 @@ const vistas = RESIDENCIAS.length * 6;
         <h3>Piedra<br />y agua</h3>
       </article>
       <article class="bento-stat b8 reveal">
-        <h3><strong>{vistas}</strong> Vistas<br />en la colección</h3>
+        <h3><strong data-count>{vistas}</strong> Vistas<br />en la colección</h3>
       </article>
     </div>
   </section>
@@ -164,7 +167,7 @@ const vistas = RESIDENCIAS.length * 6;
           <span class="line tone">frecuentes</span>
         </h2>
       </div>
-      <p class="section-lead reveal">Cada espacio empieza por una pregunta. Estas son las más habituales sobre la colección.</p>
+      <p class="section-lead scrub">Cada espacio empieza por una pregunta. Estas son las más habituales sobre la colección.</p>
     </div>
     <div class="faq-list">
       {

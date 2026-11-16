@@ -3,6 +3,7 @@
  * Los tiempos viven en src/data/site.ts (MOTION); la guía, en docs/MOTION_SPEC.md.
  */
 import { FLAT, MOTION, RESIDENCIAS, src, srcset, url } from '../data/site';
+import { setupMotion } from './motion';
 
 const root = document.documentElement;
 const q = <T extends HTMLElement = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel);
@@ -65,12 +66,40 @@ function revealHero(zoom = true) {
   if (zoom) release(play(heroImage, [{ transform: 'scale(1.045)' }, { transform: 'scale(1)' }], { duration: MOTION.heroZoom }));
   release(play(q('.hero-shade', hero), [{ opacity: 0 }, { opacity: 1 }], { duration: 700 }));
   release(play(q('.hero-corner', hero), [{ opacity: 0 }, { opacity: 0.9 }], { duration: 700, delay: 110 }));
-  [q('.hero-title', hero), q('.hero-location', hero)].forEach((line, i) => {
-    release(play(line, [{ transform: 'translateY(112%)' }, { transform: 'none' }], { duration: MOTION.titleReveal, delay: 110 + i * MOTION.titleStagger }));
-  });
+  heroTitle();
   release(play(q('.hero-meta', hero), [{ opacity: 0, transform: 'translateY(15px)' }, { opacity: 0.92, transform: 'none' }], { duration: 700, delay: 360 }));
   release(play(q('.hero-side', hero), [{ opacity: 0 }, { opacity: 1 }], { duration: 700, delay: 300 }));
   release(play(q('.hero-rail', hero), [{ opacity: 0, transform: 'translateY(42px)' }, { opacity: 1, transform: 'none' }], { duration: 850, delay: 300 }));
+}
+
+/** Parte el título de portada en letras que suben con un leve giro, una tras otra. */
+function heroTitle(texts?: [string, string]) {
+  if (!hero) return;
+  const lines = [q('.hero-title', hero), q('.hero-location', hero)];
+  const h1 = q('h1', hero);
+  lines.forEach((line, i) => {
+    if (!line) return;
+    const text = texts?.[i] ?? line.textContent ?? '';
+    if (reduced) {
+      line.textContent = text;
+      return;
+    }
+    line.textContent = '';
+    Array.from(text).forEach((char, j) => {
+      const span = document.createElement('span');
+      span.className = 'hc';
+      span.setAttribute('aria-hidden', 'true');
+      span.textContent = char === ' ' ? '\u00a0' : char;
+      line.appendChild(span);
+      release(
+        play(span, [{ transform: 'translateY(118%) rotate(9deg)' }, { transform: 'none' }], {
+          duration: MOTION.titleReveal,
+          delay: 110 + i * 140 + j * 26,
+        }),
+      );
+    });
+  });
+  h1?.setAttribute('aria-label', lines.map((l) => l?.textContent?.replace(/\u00a0/g, ' ') ?? '').join(' '));
 }
 
 /* ---------- Introducción ---------- */
@@ -186,6 +215,21 @@ function setupRail() {
       }
     });
   });
+  // Mientras nadie la toca, la franja se despliega sola para invitar a explorarla.
+  let auto = !reduced;
+  let turn = -1;
+  const stop = () => {
+    auto = false;
+  };
+  rail.addEventListener('pointerenter', stop);
+  rail.addEventListener('focusin', stop);
+  rail.addEventListener('pointerdown', stop);
+  window.setInterval(() => {
+    if (!auto || document.hidden || root.classList.contains('is-booting') || root.classList.contains('menu-open')) return;
+    if (window.scrollY > window.innerHeight * 0.5) return;
+    turn = (turn + 1) % (cards.length + 1);
+    set(turn === cards.length ? -1 : turn);
+  }, 2200);
   rail.addEventListener('pointerleave', (e) => {
     if ((e as PointerEvent).pointerType === 'mouse' && !rail.contains(document.activeElement)) set(-1);
   });
@@ -219,8 +263,7 @@ function setupSwitch() {
         heroImage.src = src(item.hero);
         heroImage.alt = item.hero.alt;
         hero.dataset.residencia = item.id;
-        q('.hero-title', hero)!.textContent = `${item.title},`;
-        q('.hero-location', hero)!.textContent = item.region;
+        heroTitle([`${item.title},`, item.region]);
         qa('.space-card', hero).forEach((card, i) => {
           const foto = item.espacios[i];
           const image = q<HTMLImageElement>('img', card)!;
@@ -406,7 +449,7 @@ function splitHeading(heading: HTMLElement) {
   });
 }
 function setupReveals() {
-  const blocks = qa('.reveal');
+  const blocks = qa('.reveal, .wipe');
   const headings = qa('.split');
   if (reduced || !('IntersectionObserver' in window)) {
     blocks.forEach((el) => el.classList.add('in', 'done'));
@@ -421,9 +464,9 @@ function setupReveals() {
         if (!entry.isIntersecting) return;
         const el = entry.target as HTMLElement;
         observer.unobserve(el);
-        if (el.classList.contains('reveal')) {
+        if (el.classList.contains('reveal') || el.classList.contains('wipe')) {
           el.style.setProperty('--d', `${Math.min(order++, 4) * 80}ms`);
-          setTimeout(() => el.classList.add('done'), 1300);
+          setTimeout(() => el.classList.add('done'), 1800);
         }
         el.classList.add('in');
       });
@@ -559,6 +602,7 @@ setupLinks();
 setupReveals();
 setupFAQ();
 setupLightbox();
+setupMotion();
 
 if (root.classList.contains('is-booting')) runIntro().catch(() => finishIntro(true));
 else revealHero(true);

@@ -7,7 +7,9 @@ export const SITE = {
   brand: 'NUMA',
   descriptor: 'Private Residences',
   /** Ruta de un logo oficial dentro de public/ (por ejemplo "/brand/logo.svg"). Vacío = texto. */
-  logo: '',
+  logo: '/brand/numa.png',
+  /** Proporción ancho/alto del logo, para reservar su hueco. */
+  logoRatio: 900 / 270,
   /** Foto real para el bloque de perfil (ruta dentro de public/). Vacío = inicial de la marca. */
   profileImage: '',
   /** Datos reales de contacto. Mientras estén vacíos no se publica ningún enlace. */

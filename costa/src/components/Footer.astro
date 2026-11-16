@@ -11,7 +11,9 @@ const year = new Date().getFullYear();
 <footer class="footer" id="contacto">
   <Foto foto={fondo} sizes="100vw" alt="" class="footer-bg" />
   <div class="footer-top">
-    <a class="brand" href={url('/')}>{SITE.brand}</a>
+    <a class="brand" href={url('/')} aria-label={`${SITE.brand}, inicio`}>
+      {SITE.logo ? <span class="brand-logo" style={`--logo:url(${url(SITE.logo)});--ratio:${SITE.logoRatio}`} /> : SITE.brand}
+    </a>
     <nav aria-label="Pie de página">
       <a href={url('/')}>Inicio</a>
       <a href={url('/#coleccion')}>Residencias</a>

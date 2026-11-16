@@ -7,7 +7,7 @@ const wa = SITE.whatsapp ? `https://wa.me/${SITE.whatsapp}` : '';
 
 <header class="nav">
   <a class="brand" href={url('/')} aria-label={`${SITE.brand}, inicio`}>
-    {SITE.logo ? <img src={url(SITE.logo)} alt={SITE.brand} /> : SITE.brand}
+    {SITE.logo ? <span class="brand-logo" style={`--logo:url(${url(SITE.logo)});--ratio:${SITE.logoRatio}`} /> : SITE.brand}
   </a>
   <a class="nav-call" href={url('/#contacto')}>
     <span>Hablemos</span>

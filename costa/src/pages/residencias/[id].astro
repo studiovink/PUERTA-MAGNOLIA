@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Hero from '../../components/Hero.astro';
 import Foto from '../../components/Foto.astro';
+import Marquee from '../../components/Marquee.astro';
 import { SITE, RESIDENCIAS, type Residencia, galeria, full, dims, url } from '../../data/site';
 
 export function getStaticPaths() {
@@ -29,7 +30,7 @@ const [nombreA, ...nombreB] = r.title.split(' ');
         </h2>
       </div>
       <div class="ficha-texto">
-        <p class="section-lead reveal">{r.texto[0]}</p>
+        <p class="section-lead scrub">{r.texto[0]}</p>
         <p class="ficha-segundo reveal">{r.texto[1]}</p>
         <dl class="ficha-datos reveal">
           <div>
@@ -54,8 +55,8 @@ const [nombreA, ...nombreB] = r.title.split(' ');
     <div class="galeria-grid">
       {
         fotos.map((f, i) => (
-          <figure class:list={['galeria-item', 'reveal', { ancha: i === 0 }]}>
-            <button type="button" data-lightbox={i} data-full={full(f)} data-w={dims(f).width} data-h={dims(f).height} data-alt={f.alt} aria-label={`Ampliar: ${f.label}`}>
+          <figure class:list={['galeria-item', { ancha: i === 0 }]}>
+            <button class="wipe" type="button" data-lightbox={i} data-full={full(f)} data-w={dims(f).width} data-h={dims(f).height} data-alt={f.alt} aria-label={`Ampliar: ${f.label}`}>
               <Foto foto={f} sizes={i === 0 ? '100vw' : '(max-width:767px) 100vw, 50vw'} />
             </button>
             <figcaption>
@@ -68,6 +69,8 @@ const [nombreA, ...nombreB] = r.title.split(' ');
     </div>
   </section>
 
+  <Marquee />
+
   <section class="section siguiente" aria-label="Otra residencia">
     <a class="siguiente-link" href={url(`/residencias/${otra.id}`)}>
       <span class="siguiente-texto">
@@ -75,7 +78,7 @@ const [nombreA, ...nombreB] = r.title.split(' ');
         <span class="siguiente-nombre">{otra.title}, <span class="tone">{otra.region}</span></span>
         <span class="link-dots">Descubrir <i class="dots" aria-hidden="true"><b></b><b></b></i></span>
       </span>
-      <span class="property-image reveal">
+      <span class="property-image wipe">
         <Foto foto={otra.hero} sizes="(max-width:767px) 100vw, 66vw" />
       </span>
     </a>

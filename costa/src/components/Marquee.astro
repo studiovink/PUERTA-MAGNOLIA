@@ -1,0 +1,26 @@
+---
+import { RESIDENCIAS, src } from '../data/site';
+
+// Banda de texto en movimiento: nombres y regiones reales de la colección, con una foto entre cada uno.
+const piezas = RESIDENCIAS.flatMap((r) => [
+  { texto: r.title, foto: r.espacios[0], tono: false },
+  { texto: r.region, foto: r.terraza, tono: true },
+]);
+---
+
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    {
+      [0, 1].map(() => (
+        <div class="marquee-group">
+          {piezas.map((p) => (
+            <>
+              <span class:list={{ tone: p.tono }}>{p.texto}</span>
+              <img src={src(p.foto)} alt="" loading="lazy" decoding="async" width="1280" height="720" />
+            </>
+          ))}
+        </div>
+      ))
+    }
+  </div>
+</div>
