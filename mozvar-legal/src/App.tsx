@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import { Intro, Services, Approach, Method, Matters } from './components/Sections';
@@ -33,9 +33,30 @@ function useReveal() {
   }, []);
 }
 
+/**
+ * Sigue la preferencia de movimiento reducido también si cambia durante la visita.
+ * Al activarla se detiene todo y el contenido queda visible; al quitarla no se repite la portada.
+ */
+function useMotionPreference() {
+  const [on, setOn] = useState(() => document.documentElement.classList.contains('motion'));
+  useEffect(() => {
+    const root = document.documentElement;
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => {
+      if (!mq.matches) root.classList.add('no-intro');
+      root.classList.toggle('motion', !mq.matches);
+      setOn(!mq.matches);
+    };
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, []);
+  return on;
+}
+
 export default function App() {
   useReveal();
-  useEffect(() => initMotion(), []);
+  const motion = useMotionPreference();
+  useEffect(() => (motion ? initMotion() : undefined), [motion]);
   return (
     <>
       <Opening />

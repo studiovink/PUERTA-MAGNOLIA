@@ -1,0 +1,4 @@
+interface:
+  display_name: "VINK Web Interactiva"
+  short_description: "Adapta animaciones e interacciones a cada sitio web"
+  default_prompt: "Usa $vink-web-interactiva para mejorar esta web con movimiento e interacciones adaptadas a su marca."

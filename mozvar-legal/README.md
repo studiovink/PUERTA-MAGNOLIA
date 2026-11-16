@@ -53,7 +53,11 @@ Todo el movimiento vive en `src/motion.ts` y en el bloque final de `src/styles/s
 - Cinta de texto continua cuya velocidad responde al scroll.
 - Marca del pie que se levanta en 3D, letra por letra.
 
-Con `prefers-reduced-motion` no se activa nada de esto y el contenido se muestra completo. En pantallas táctiles se omiten el cursor, el efecto magnético y la inclinación.
+- Método: en escritorio la foto queda fija mientras se recorren los tres pasos; el paso activo se resalta y un contador indica en cuál vas.
+
+La entrada se salta con un toque, una tecla o al girar la rueda. Con `prefers-reduced-motion` no se activa nada de esto y el contenido se muestra completo; si la preferencia cambia durante la visita, el movimiento se detiene o se reanuda sin repetir la portada. Sin JavaScript se muestra un resumen con el titular y los servicios.
+
+El movimiento sigue la guía *VINK Web Interactiva* (perfil editorial y servicios), incluida en `.claude/skills/vink-web-interactiva/` en la raíz del repositorio. En pantallas táctiles se omiten el cursor, el efecto magnético y la inclinación.
 
 ## Pendientes antes de publicar
 

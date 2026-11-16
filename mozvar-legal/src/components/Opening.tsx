@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { site } from '../content';
 import wordmark from '../assets/wordmark.svg?raw';
 
@@ -34,6 +34,7 @@ export default function Opening() {
   const root = document.documentElement;
   const [phase, setPhase] = useState<'in' | 'out' | 'done'>(() => (root.classList.contains('motion') ? 'in' : 'done'));
   const [count, setCount] = useState(0);
+  const skip = useRef(false);
 
   useEffect(() => {
     if (phase !== 'in') return;
@@ -43,6 +44,14 @@ export default function Opening() {
     const onLoad = () => { loaded = true; };
     img?.addEventListener('load', onLoad);
     img?.addEventListener('error', onLoad);
+    const onSkip = () => { skip.current = true; };
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const onReduce = () => mq.matches && setPhase('done');
+    window.addEventListener('keydown', onSkip);
+    window.addEventListener('pointerdown', onSkip);
+    window.addEventListener('wheel', onSkip, { passive: true });
+    window.addEventListener('touchmove', onSkip, { passive: true });
+    mq.addEventListener('change', onReduce);
     const start = performance.now();
     let raf = 0;
     const tick = (now: number) => {
@@ -50,7 +59,7 @@ export default function Opening() {
       const p = Math.min(elapsed / MIN_MS, 1);
       const eased = 1 - Math.pow(1 - p, 3);
       setCount(Math.round(Math.min(eased, loaded ? 1 : 0.92) * 100));
-      if ((p >= 1 && loaded) || elapsed > MAX_MS) { setCount(100); setPhase('out'); return; }
+      if ((p >= 1 && loaded) || elapsed > MAX_MS || (skip.current && elapsed > 250)) { setCount(100); setPhase('out'); return; }
       raf = requestAnimationFrame(tick);
     };
     raf = requestAnimationFrame(tick);
@@ -58,6 +67,11 @@ export default function Opening() {
       cancelAnimationFrame(raf);
       img?.removeEventListener('load', onLoad);
       img?.removeEventListener('error', onLoad);
+      window.removeEventListener('keydown', onSkip);
+      window.removeEventListener('pointerdown', onSkip);
+      window.removeEventListener('wheel', onSkip);
+      window.removeEventListener('touchmove', onSkip);
+      mq.removeEventListener('change', onReduce);
       document.body.style.overflow = '';
     };
   }, [phase]);

@@ -1,0 +1,9 @@
+/* Scope this to the story module; keep text in normal document order. */
+.vink-story { display: grid; gap: 2rem; align-items: start; }
+.vink-story-stage { overflow: hidden; }
+.vink-story-visual { width: 100%; height: auto; display: block; }
+@media (min-width: 1000px) and (prefers-reduced-motion: no-preference) {
+  .vink-story { grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); }
+  .vink-story-stage { min-width: 0; }
+  .vink-story-step { min-height: 65svh; display: grid; align-content: center; }
+}

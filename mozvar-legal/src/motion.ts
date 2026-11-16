@@ -156,5 +156,13 @@ export function initMotion(): () => void {
     ac.abort();
     io.disconnect();
     cursor?.remove();
+    const clear = (el: HTMLElement | null | undefined, ...props: string[]) => props.forEach((p) => el?.style.removeProperty(p));
+    clear(heroImg, 'transform');
+    clear(heroInner, 'transform', 'opacity');
+    medias.forEach((m) => { clear(m.img, 'transform'); clear(m.el, 'transform'); });
+    magnets.forEach((m) => clear(m.el, 'transform'));
+    tracks.forEach((t) => clear(t.el, 'transform'));
+    clear(wordmark, 'transform', 'opacity');
+    root.style.removeProperty('--progress');
   };
 }

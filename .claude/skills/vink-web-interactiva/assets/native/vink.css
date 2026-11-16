@@ -1,0 +1,35 @@
+/* Copy alongside native modules. No brand colors or global resets. */
+.vink-button {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+.vink-button:active { transform: translateY(1px); }
+.vink-button:focus-visible,
+[data-vink-filter]:focus-visible,
+[data-vink-compare-range]:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 5px;
+}
+[data-vink-filter-item][hidden] { display: none !important; }
+[data-vink-parallax] {
+  transform: translate3d(0, var(--vink-parallax-y, 0px), 0);
+}
+[data-vink-tilt] {
+  transform: perspective(1100px)
+    rotateX(var(--vink-rotate-x, 0deg)) rotateY(var(--vink-rotate-y, 0deg));
+  transition: transform 200ms ease-out;
+}
+[data-vink-compare] { --vink-compare: 50%; }
+.vink-compare-stage { position: relative; overflow: hidden; }
+.vink-compare-layer { position: absolute; inset: 0; }
+.vink-compare-overlay { clip-path: inset(0 calc(100% - var(--vink-compare)) 0 0); }
+.vink-compare-line {
+  position: absolute; inset-block: 0; left: var(--vink-compare);
+  width: 2px; background: currentColor; pointer-events: none;
+}
+@media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  .vink-button:hover { transform: translateY(-2px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vink-button, [data-vink-tilt] { transition: none; }
+  [data-vink-parallax], [data-vink-tilt] { transform: none; }
+}

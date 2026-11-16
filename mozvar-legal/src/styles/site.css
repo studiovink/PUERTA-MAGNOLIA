@@ -127,7 +127,9 @@
 
 /* ---------- Método ---------- */
 .method__grid { align-items: start; }
-.method__image { grid-column: 1 / 6; width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-image); background: var(--color-rule); }
+.method__visual { grid-column: 1 / 6; }
+.method__counter { display: none; }
+.method__image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: var(--radius-image); background: var(--color-rule); }
 .steps { grid-column: 7 / 13; }
 .steps__item { display: grid; grid-template-columns: clamp(56px, 8vw, 128px) 1fr; padding-block: clamp(24px, 2.6vw, 36px); border-top: 1px solid var(--color-rule); }
 .steps__item:last-child { border-bottom: 1px solid var(--color-rule); }
@@ -345,3 +347,19 @@ html:not(.motion) .marquee__half { flex-wrap: wrap; }
 .motion:not(.is-loaded) .hero__actions { animation-play-state: paused; }
 .motion:not(.is-loaded) .site-nav { opacity: 0; transform: translateY(-14px); }
 .motion .site-nav { transition: background var(--duration-ui) var(--ease-ui), color var(--duration-ui) var(--ease-ui), border-color var(--duration-ui) var(--ease-ui), opacity 800ms var(--ease-ui) 500ms, transform 800ms var(--ease-ui) 500ms; }
+
+/* ---------- Método: imagen fija y paso activo (escritorio con movimiento) ---------- */
+@media (min-width: 1000px) {
+  .motion .method__visual { position: sticky; top: calc(var(--nav-height) + 32px); }
+  .motion .method__counter { display: flex; justify-content: space-between; gap: 16px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--color-rule); font-size: 14px; color: var(--color-muted); font-variant-numeric: tabular-nums; }
+  .motion .steps__item { min-height: 40svh; align-content: center; transition: opacity 420ms var(--ease-ui); }
+  .motion .steps__item:not(.is-active) { opacity: .3; }
+  .motion .steps__item .steps__number { transition: transform 420ms var(--ease-ui); }
+  .motion .steps__item.is-active .steps__number { transform: translateX(8px); }
+}
+
+/* Si el movimiento se activa a mitad de la visita, la portada no se repite */
+.no-intro .hero__picture, .no-intro .hero__line > span, .no-intro .hero__aside, .no-intro .hero__actions { animation: none !important; }
+
+/* Durante el revelado no se ve el fondo provisional del marco */
+.motion .media { background: transparent; }

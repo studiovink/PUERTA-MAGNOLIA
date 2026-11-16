@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>VINK — Laboratorio de movimiento</title>
+  <link rel="stylesheet" href="../native/vink.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a class="skip" href="#pruebas">Saltar a las pruebas</a>
+  <header class="top"><a class="wordmark" href="#inicio" aria-label="VINK, inicio">VINK<span>®</span></a><p>Web Interactiva / 01</p><a href="#pruebas">Explorar</a></header>
+  <main id="motion-root" data-vink-profile="inmobiliaria">
+    <section class="hero" id="inicio" aria-labelledby="hero-title">
+      <div class="intro">
+        <p class="eyebrow" data-vink-enter="fade">Movimiento con intención</p>
+        <h1 id="hero-title" data-vink-enter="rise">Cada marca<br>tiene su<br><em>propio ritmo.</em></h1>
+        <p class="lead" data-vink-enter="rise">Una apertura que se siente. Una respuesta que ayuda. Una experiencia que conserva tu identidad.</p>
+        <a class="solid vink-button" href="#pruebas">Pruébalo aquí <span aria-hidden="true">↘</span></a>
+      </div>
+      <div class="hero-art" data-vink-reveal="scale">
+        <div class="offset" data-vink-parallax>
+          <div class="composition" data-vink-tilt aria-hidden="true">
+            <div class="gridlines"></div><div class="slab"></div><div class="sphere"></div><div class="orbit"></div><div class="label">FORMA<br>Y RESPUESTA</div><span class="index">01 / 07</span>
+          </div>
+        </div>
+        <div class="art-caption"><span>Estudio de profundidad</span><span>Mueve el cursor</span></div>
+      </div>
+    </section>
+
+    <section class="rhythm" aria-labelledby="rhythm-title">
+      <div><p class="eyebrow">01 / Dirección</p><h2 id="rhythm-title">Elige el ritmo.<br>Conserva la marca.</h2></div>
+      <div class="profile-box">
+        <label for="profile">Perfil de movimiento</label>
+        <select id="profile">
+          <option value="inmobiliaria">Inmobiliaria</option><option value="salud">Salud</option><option value="gastronomia">Gastronomía</option><option value="tecnologia">Tecnología</option><option value="deporte">Deporte</option><option value="estudio">Estudio creativo</option><option value="editorial">Editorial</option>
+        </select>
+        <p id="profile-description" role="status">Recorridos amplios y transiciones que dejan respirar la fotografía.</p>
+        <button class="text-button vink-button" type="button" id="replay">Repetir la entrada <span aria-hidden="true">↗</span></button>
+      </div>
+    </section>
+
+    <section class="work" id="pruebas" data-vink-filter-group aria-labelledby="work-title">
+      <div class="section-head"><div><p class="eyebrow">02 / Exploración</p><h2 id="work-title">Encuentra tu enfoque.</h2></div><p class="aside">Filtra los ejemplos.<br>La respuesta es parte del diseño.</p></div>
+      <div class="filter-row" role="group" aria-label="Filtrar ejemplos">
+        <button type="button" data-vink-filter="all" aria-pressed="true">Todos</button><button type="button" data-vink-filter="espacios" aria-pressed="false">Espacios</button><button type="button" data-vink-filter="marcas" aria-pressed="false">Marcas</button>
+      </div>
+      <p class="filter-status" data-vink-filter-status role="status" aria-live="polite">6 resultados</p>
+      <div class="cards">
+        <article class="card" data-vink-filter-item="espacios" data-vink-reveal="rise"><div class="card-art casa" aria-hidden="true"><i></i><b>01</b></div><h3>Habitar</h3><p>Inmobiliaria · Recorrer y elegir</p></article>
+        <article class="card" data-vink-filter-item="marcas" data-vink-reveal="rise"><div class="card-art salud" aria-hidden="true"><i></i><b>02</b></div><h3>Cuidar</h3><p>Salud · Comprender y contactar</p></article>
+        <article class="card" data-vink-filter-item="marcas" data-vink-reveal="rise"><div class="card-art cocina" aria-hidden="true"><i></i><b>03</b></div><h3>Compartir</h3><p>Gastronomía · Explorar la carta</p></article>
+        <article class="card" data-vink-filter-item="marcas" data-vink-reveal="rise"><div class="card-art producto" aria-hidden="true"><i></i><b>04</b></div><h3>Descubrir</h3><p>Tecnología · Comparar detalles</p></article>
+        <article class="card" data-vink-filter-item="espacios" data-vink-reveal="rise"><div class="card-art deporte" aria-hidden="true"><i></i><b>05</b></div><h3>Avanzar</h3><p>Deporte · Encontrar un programa</p></article>
+        <article class="card" data-vink-filter-item="espacios marcas" data-vink-reveal="rise"><div class="card-art estudio" aria-hidden="true"><i></i><b>06</b></div><h3>Crear</h3><p>Estudio · Explorar proyectos</p></article>
+      </div>
+    </section>
+
+    <section class="compare-section" aria-labelledby="compare-title">
+      <div><p class="eyebrow">03 / Control</p><h2 id="compare-title">No solo mirar.<br><em>Poder elegir.</em></h2><p class="compare-copy">Mueve el control para comparar dos tratamientos de una misma composición.</p></div>
+      <div class="compare" data-vink-compare>
+        <div class="vink-compare-stage compare-stage" role="img" aria-label="Composición geométrica en una variante clara y otra oscura">
+          <div class="vink-compare-layer variant light"><span>Claro</span><i></i><b></b></div>
+          <div class="vink-compare-layer vink-compare-overlay variant dark"><span>Oscuro</span><i></i><b></b></div>
+          <div class="vink-compare-line" aria-hidden="true"></div>
+        </div>
+        <label for="comparison">Proporción de la variante oscura</label>
+        <input id="comparison" type="range" min="0" max="100" value="50" data-vink-compare-range>
+      </div>
+    </section>
+    <section class="end"><p class="eyebrow">Una firma por proyecto</p><h2>El movimiento<br>también es identidad.</h2><a class="solid vink-button" href="#inicio">Volver al inicio <span aria-hidden="true">↑</span></a></section>
+  </main>
+  <footer><span>VINK / Web Interactiva</span><span>Demostración de comportamiento. Adapta el diseño a cada marca.</span></footer>
+  <script type="module" src="./demo.mjs"></script>
+</body>
+</html>

@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from 'react';
 import { approach, intro, matters, method, services } from '../content';
 import Picture from './Picture';
 import Words from './Words';
@@ -67,6 +68,22 @@ export function Approach() {
 }
 
 export function Method() {
+  const [active, setActive] = useState(0);
+  const listRef = useRef<HTMLOListElement>(null);
+
+  // Marca como activo el paso que cruza el centro de la pantalla.
+  useEffect(() => {
+    const items = Array.from(listRef.current?.querySelectorAll<HTMLElement>('[data-step]') ?? []);
+    if (!items.length || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.isIntersecting && setActive(Number((e.target as HTMLElement).dataset.step))),
+      { rootMargin: '-45% 0px -45% 0px' },
+    );
+    items.forEach((el) => io.observe(el));
+    return () => io.disconnect();
+  }, []);
+
+  const pad = (n: number) => String(n).padStart(2, '0');
   return (
     <section className="section section--paper method" id="metodo" aria-labelledby="method-title">
       <div className="container">
@@ -77,10 +94,16 @@ export function Method() {
           </div>
         </div>
         <div className="grid method__grid">
-          <Picture tilt className="method__image" image={method.image} sizes="(max-width: 767px) 100vw, 42vw" />
-          <ol className="steps" data-reveal>
+          <div className="method__visual">
+            <Picture tilt className="method__image" image={method.image} sizes="(max-width: 767px) 100vw, 42vw" />
+            <p className="method__counter" aria-hidden="true">
+              <span>{pad(active + 1)} · {method.steps[active].title}</span>
+              <span>/ {pad(method.steps.length)}</span>
+            </p>
+          </div>
+          <ol className="steps" data-reveal ref={listRef}>
             {method.steps.map((step, i) => (
-              <li className="steps__item" key={step.title}>
+              <li className={`steps__item${i === active ? ' is-active' : ''}`} key={step.title} data-step={i}>
                 <span className="steps__number" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
                 <div>
                   <h3 className="steps__title">{step.title}</h3>
