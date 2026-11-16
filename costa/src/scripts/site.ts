@@ -2,7 +2,7 @@
  * Movimiento e interacción. Sin dependencias: HTML, CSS y Web Animations API.
  * Los tiempos viven en src/data/site.ts (MOTION); la guía, en docs/MOTION_SPEC.md.
  */
-import { MOTION, RESIDENCIAS, src, srcset, url } from '../data/site';
+import { FLAT, MOTION, RESIDENCIAS, src, srcset, url } from '../data/site';
 
 const root = document.documentElement;
 const q = <T extends HTMLElement = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel);
@@ -330,7 +330,8 @@ function setupMenu() {
 const samePath = (a: string, b: string) => a.replace(/\/$/, '') === b.replace(/\/$/, '');
 /** null = inicio de esta página; elemento = ancla en esta página; undefined = otra página. */
 function samePageTarget(link: HTMLAnchorElement): HTMLElement | null | undefined {
-  if (link.origin !== location.origin || !samePath(link.pathname, location.pathname)) return undefined;
+  const flatHome = FLAT && !!document.getElementById('coleccion') && link.pathname.endsWith('/index.html');
+  if (link.origin !== location.origin || (!samePath(link.pathname, location.pathname) && !flatHome)) return undefined;
   if (!link.hash) return null;
   return document.getElementById(decodeURIComponent(link.hash.slice(1))) ?? null;
 }

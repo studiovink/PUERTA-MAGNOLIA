@@ -152,7 +152,15 @@ export const FAQ = [
 
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 /** Antepone la base del sitio a una ruta interna. */
-export const url = (path: string) => `${BASE}${path.startsWith('/') ? path : `/${path}`}`;
+/** Versión plana (rutas relativas y páginas .html en una sola carpeta) para vistas previas alojadas. */
+export const FLAT = import.meta.env.PUBLIC_FLAT === '1';
+export const url = (path: string) => {
+  const p = path.startsWith('/') ? path : `/${path}`;
+  if (!FLAT) return `${BASE}${p}`;
+  if (p === '/' || p.startsWith('/#')) return `index.html${p.slice(1)}`;
+  if (p.startsWith('/residencias/')) return `${p.slice('/residencias/'.length)}.html`;
+  return p.slice(1);
+};
 
 const WIDTHS: Record<Formato, number[]> = { h: [1280, 1920, 3840], v: [900, 1290, 2160] };
 const RATIO: Record<Formato, number> = { h: 9 / 16, v: 16 / 9 };
