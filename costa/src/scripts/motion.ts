@@ -6,13 +6,100 @@
 const qa = <T extends HTMLElement = HTMLElement>(sel: string, el: ParentNode = document) => Array.from(el.querySelectorAll<T>(sel));
 const clamp = (v: number, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 
+/**
+ * Recorrido fotográfico de la ficha: en pantallas amplias la galería queda fija y cada
+ * fotografía se descubre sobre la anterior al avanzar el scroll; la primera crece desde
+ * su marco hasta llenar la ventana. En móvil y con movimiento reducido es la galería normal.
+ */
+function setupRecorrido() {
+  const section = document.querySelector<HTMLElement>('.galeria');
+  const grid = section?.querySelector<HTMLElement>('.galeria-grid');
+  if (!section || !grid) return null;
+  const items = qa('.galeria-item', grid);
+  if (items.length < 2) return null;
+  const wide = window.matchMedia('(min-width: 1000px) and (min-height: 560px)');
+  const STEP = 0.85; // fracción de la altura de la ventana por fotografía
+  const FIRST = 0.7;
+  const steps = FIRST + items.length - 1;
+  const navHeight = () => document.querySelector<HTMLElement>('.nav')?.offsetHeight ?? 62;
+  const counter = document.createElement('p');
+  counter.className = 'recorrido-count';
+  counter.setAttribute('aria-hidden', 'true');
+  let on = false;
+  let shown = -1;
+
+  const layout = () => {
+    if (!on) return;
+    section.style.setProperty('--navh', `${navHeight()}px`);
+    section.style.height = `${grid.offsetHeight + steps * STEP * window.innerHeight}px`;
+  };
+  const start = (i: number) => (i === 0 ? 0 : FIRST + (i - 1));
+  const enable = () => {
+    on = true;
+    section.classList.add('recorrido');
+    grid.appendChild(counter);
+    layout();
+  };
+  const disable = () => {
+    on = false;
+    shown = -1;
+    section.classList.remove('recorrido');
+    section.style.height = '';
+    counter.remove();
+    items.forEach((item) => {
+      item.style.removeProperty('--k');
+      item.style.removeProperty('--z');
+    });
+  };
+  const update = () => {
+    if (!on) return;
+    const travelled = clamp((navHeight() - section.getBoundingClientRect().top) / (STEP * window.innerHeight), 0, steps);
+    let current = 0;
+    items.forEach((item, i) => {
+      const k = clamp((travelled - start(i)) / (i === 0 ? FIRST : 1));
+      if (i > 0 && k >= 0.5) current = i;
+      item.style.setProperty('--k', k.toFixed(4));
+      item.style.setProperty('--z', clamp((travelled - start(i)) / 2.4).toFixed(4));
+    });
+    if (current !== shown) {
+      shown = current;
+      counter.textContent = `${String(current + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')}`;
+    }
+  };
+  // Con teclado, enfocar una fotografía lleva el scroll hasta su momento del recorrido.
+  const onFocus = (event: FocusEvent) => {
+    if (!on) return;
+    const i = items.findIndex((item) => item.contains(event.target as Node));
+    if (i < 0 || !(event.target as HTMLElement).matches(':focus-visible')) return;
+    const top = section.getBoundingClientRect().top + window.scrollY - navHeight();
+    window.scrollTo({ top: top + (start(i) + (i === 0 ? FIRST : 1)) * STEP * window.innerHeight });
+  };
+  const onChange = () => (wide.matches ? enable() : disable());
+  grid.addEventListener('focusin', onFocus);
+  wide.addEventListener('change', onChange);
+  window.addEventListener('resize', layout);
+  if (wide.matches) enable();
+  return {
+    update,
+    destroy() {
+      grid.removeEventListener('focusin', onFocus);
+      wide.removeEventListener('change', onChange);
+      window.removeEventListener('resize', layout);
+      disable();
+    },
+  };
+}
+
 export function setupMotion() {
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  if (reduce.matches) return;
+  let stopped = false;
+  const recorrido = setupRecorrido();
   const root = document.documentElement;
   const fine = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
   /* Parallax de las fotografías dentro de su marco */
-  const parallax = qa<HTMLImageElement>('.property-image img, .vision-photo img, .galeria-item img, .bento-image > img, .footer-bg');
+  const parallax = qa<HTMLImageElement>('.property-image img, .vision-photo img, .galeria-item img, .bento-image > img, .footer-bg, .filtro-foto img');
   parallax.forEach((img) => img.setAttribute('data-par', ''));
 
   /* Texto que se enciende palabra a palabra */
@@ -113,6 +200,8 @@ export function setupMotion() {
   let direction = -1;
 
   const frame = (now: number) => {
+    if (stopped) return;
+    recorrido?.update();
     const dt = Math.min(64, now - lastT) / 1000;
     lastT = now;
     const y = window.scrollY;
@@ -174,4 +263,21 @@ export function setupMotion() {
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
+
+  // Si la persona activa «reducir movimiento» durante la visita, todo se detiene y queda visible.
+  reduce.addEventListener?.('change', (event) => {
+    if (!event.matches || stopped) return;
+    stopped = true;
+    recorrido?.destroy();
+    cursor?.remove();
+    parallax.forEach((img) => {
+      img.removeAttribute('data-par');
+      img.style.removeProperty('--py');
+    });
+    scrubs.forEach((s) => s.spans.forEach((span) => (span.style.opacity = '')));
+    marquees.forEach((m) => (m.track.style.transform = ''));
+    if (hero) ['--hx', '--hy', '--cx', '--cy', '--ho'].forEach((name) => hero.style.removeProperty(name));
+    qa('.reveal, .wipe').forEach((el) => el.classList.add('in', 'done'));
+    qa('.split').forEach((el) => el.classList.add('in'));
+  });
 }

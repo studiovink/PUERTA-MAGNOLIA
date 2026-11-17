@@ -128,6 +128,15 @@ export const RESIDENCIAS: Residencia[] = [
   },
 ];
 
+/** Etiquetas de espacio para el filtro, en el mismo orden que `galeria`. */
+export const ESPACIOS = [
+  { tag: 'fachada', label: 'Fachada' },
+  { tag: 'sala', label: 'Sala' },
+  { tag: 'recamara', label: 'Recámara' },
+  { tag: 'bano', label: 'Baño' },
+  { tag: 'terraza', label: 'Terraza' },
+] as const;
+
 /** Fotos de la galería completa de una residencia, en orden de recorrido. */
 export const galeria = (r: Residencia): Foto[] => [r.hero, r.espacios[0], r.espacios[2], r.espacios[1], r.terraza];
 

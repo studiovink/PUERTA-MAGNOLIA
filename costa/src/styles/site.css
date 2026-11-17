@@ -1899,3 +1899,341 @@ details[open] > summary {
     clip-path: none;
   }
 }
+
+/* ---------- Explora: filtro de espacios y comparador ---------- */
+.explora {
+  padding-top: 0;
+}
+.explora .section-head::before {
+  top: 0;
+}
+.filtro-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px 24px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.filtro-chips {
+  display: none;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+.js .filtro-chips {
+  display: flex;
+}
+.filtro-chips button {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 14px;
+  font-weight: 500;
+  transition: background-color 300ms, color 300ms, border-color 300ms, transform 300ms var(--ease);
+}
+.filtro-chips button:hover {
+  border-color: var(--ink);
+}
+.filtro-chips button:active {
+  transform: scale(0.96);
+}
+.filtro-chips button[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--white);
+}
+.filtro-sep {
+  width: 1px;
+  height: 22px;
+  background: var(--line);
+  margin: 0 6px;
+}
+.filtro-status {
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+}
+.filtro-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px var(--gap);
+}
+.filtro-item {
+  flex: 1 1 calc(20% - var(--gap));
+  min-width: 0;
+  max-width: calc(50% - var(--gap) / 2);
+}
+.filtro-item[hidden] {
+  display: none !important;
+}
+.filtro-foto {
+  display: block;
+  overflow: hidden;
+  border-radius: var(--radius);
+  background: var(--paper);
+}
+.filtro-foto img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  transition: transform 900ms var(--ease), scale 1600ms var(--ease);
+}
+.filtro-item:hover .filtro-foto img {
+  transform: scale(1.04);
+}
+.filtro-pie {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 13px;
+}
+.filtro-pie strong {
+  font-weight: 600;
+}
+.filtro-pie span {
+  color: var(--muted);
+}
+.comparar {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: var(--gap);
+  align-items: start;
+  margin-top: clamp(70px, 9vw, 150px);
+}
+.comparar-texto h3 {
+  font-size: clamp(30px, 2.5vw, 50px);
+  line-height: 1.1;
+  letter-spacing: -0.045em;
+  margin-bottom: 22px;
+}
+.comparar-texto p:last-child {
+  font-size: 15px;
+  line-height: 1.55;
+  font-weight: 500;
+  max-width: 26em;
+}
+[data-vink-compare] {
+  --vink-compare: 50%;
+}
+.vink-compare-stage {
+  position: relative;
+  overflow: hidden;
+}
+.vink-compare-layer {
+  position: absolute;
+  inset: 0;
+}
+.vink-compare-overlay {
+  clip-path: inset(0 calc(100% - var(--vink-compare)) 0 0);
+}
+.vink-compare-line {
+  position: absolute;
+  inset-block: 0;
+  left: var(--vink-compare);
+  width: 2px;
+  margin-left: -1px;
+  background: #fff;
+  pointer-events: none;
+}
+.vink-compare-line i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 54px;
+  height: 54px;
+  margin: -27px 0 0 -27px;
+  border-radius: 50%;
+  background: #fff;
+  transition: scale 300ms var(--ease);
+}
+.vink-compare-line i::before,
+.vink-compare-line i::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  width: 7px;
+  height: 7px;
+  margin-top: -4px;
+  border-left: 1.5px solid var(--ink);
+  border-bottom: 1.5px solid var(--ink);
+}
+.vink-compare-line i::before {
+  left: 16px;
+  transform: rotate(45deg);
+}
+.vink-compare-line i::after {
+  right: 16px;
+  transform: rotate(-135deg);
+}
+.comparador-stage {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius);
+  cursor: ew-resize;
+  touch-action: pan-y;
+  user-select: none;
+  color: #fff;
+}
+.comparador-stage.arrastrando .vink-compare-line i {
+  scale: 0.86;
+}
+.comparador-stage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+}
+.comparador-tag {
+  position: absolute;
+  bottom: 16px;
+  padding: 7px 12px;
+  border-radius: 6px;
+  background: #fff;
+  color: var(--ink);
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.comparador-tag.izq {
+  left: 16px;
+}
+.comparador-tag.der {
+  right: 16px;
+}
+.comparador label {
+  display: block;
+  margin: 16px 0 6px;
+  font-size: 13px;
+  color: var(--muted);
+  font-weight: 500;
+}
+.comparador input[type='range'] {
+  width: 100%;
+  height: 28px;
+  accent-color: var(--ink);
+  cursor: ew-resize;
+}
+[data-vink-filter]:focus-visible,
+[data-vink-compare-range]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* ---------- Recorrido fotográfico de la ficha (solo pantallas amplias) ---------- */
+.recorrido {
+  padding: 0;
+}
+.recorrido .galeria-grid {
+  position: sticky;
+  top: var(--navh, 62px);
+  height: calc(100svh - var(--navh, 62px));
+  display: block;
+  overflow: hidden;
+  background: var(--white);
+}
+.recorrido .galeria-item {
+  position: absolute;
+  inset: 0;
+  clip-path: inset(calc((1 - var(--k, 0)) * 100%) 0 0 0);
+}
+.recorrido .galeria-item:first-child {
+  clip-path: inset(
+    calc((1 - var(--k, 0)) * 20px) calc((1 - var(--k, 0)) * var(--g)) calc((1 - var(--k, 0)) * 56px) round calc((1 - var(--k, 0)) * 6px)
+  );
+}
+.recorrido .galeria-item button {
+  height: 100%;
+  border-radius: 0;
+}
+.recorrido .galeria-item img,
+.recorrido .galeria-item.ancha img {
+  height: 100%;
+  aspect-ratio: auto;
+  clip-path: none !important;
+  translate: none;
+  scale: calc(1.16 - var(--z, 0) * 0.16);
+  transition: none !important;
+}
+.recorrido .galeria-item::after {
+  content: '';
+  position: absolute;
+  inset: 55% 0 0;
+  background: linear-gradient(transparent, rgba(8, 14, 16, 0.5));
+  pointer-events: none;
+}
+.recorrido .galeria-item figcaption {
+  position: absolute;
+  z-index: 2;
+  left: calc(var(--g) * (2 - var(--k, 1)));
+  bottom: clamp(34px, 7vh, 76px);
+  margin: 0;
+  align-items: flex-start;
+  gap: 18px;
+  color: #fff;
+  font-size: clamp(34px, 4.6vw, 84px);
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  pointer-events: none;
+}
+.recorrido .galeria-item figcaption span {
+  color: #fff;
+  opacity: 0.8;
+  font-size: 14px;
+  letter-spacing: 0;
+  font-weight: 500;
+  padding-top: 0.5em;
+}
+.recorrido-count {
+  position: absolute;
+  z-index: 3;
+  right: var(--g);
+  bottom: clamp(34px, 7vh, 76px);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+@media (max-width: 1000px) {
+  .filtro-item {
+    flex-basis: calc(33.333% - var(--gap));
+  }
+}
+@media (max-width: 767px) {
+  .filtro-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    margin-inline: calc(-1 * var(--g));
+    padding: 4px var(--g);
+    scrollbar-width: none;
+    width: calc(100% + 2 * var(--g));
+  }
+  .filtro-chips button {
+    flex: none;
+  }
+  .filtro-item {
+    flex-basis: calc(50% - var(--gap));
+  }
+  .comparar {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .comparador-stage {
+    aspect-ratio: 4 / 3;
+  }
+  .comparador-tag {
+    font-size: 11px;
+    bottom: 10px;
+  }
+  .comparador-tag.izq {
+    left: 10px;
+  }
+  .comparador-tag.der {
+    right: 10px;
+  }
+}

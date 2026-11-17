@@ -10,6 +10,7 @@ npm install
 npm run dev        # http://localhost:4321
 npm run build      # astro check + sitio estático en dist/
 npm run preview    # sirve dist/
+bash scripts/plano.sh   # copia con rutas relativas en dist-flat/, para vistas previas alojadas
 ```
 
 Requiere Node 20 o superior. Para publicarlo en Vercel o Netlify, crea un proyecto aparte con `costa` como directorio raíz (build `npm run build`, salida `dist`).
@@ -18,6 +19,8 @@ Requiere Node 20 o superior. Para publicarlo en Vercel o Netlify, crea un proyec
 
 - **Inicio** (`src/pages/index.astro`): entrada de fotografías inclinadas, portada a pantalla completa con Casa Duna (alternable a Casa Palma), franja de perfil + Sala / Baño / Recámara expandibles + Explorar, colección, Nuestra visión, bloque oscuro tipo bento, preguntas y pie con llamada al contacto.
 - **Fichas** (`/residencias/casa-duna`, `/residencias/casa-palma`): portada, texto editable, galería completa con visor a 4K y enlace a la otra residencia.
+- **Explora** (inicio): filtro real de las 10 vistas por residencia o tipo de espacio y comparador deslizable de las dos fachadas. Usa `src/scripts/vink-controls.mjs`, del paquete VINK Web Interactiva.
+- **Recorrido** (fichas, pantallas de 1000 px o más): la galería queda fija y cada foto se descubre con el scroll; en móvil, con movimiento reducido o sin JavaScript es la galería normal.
 - **Menú** a pantalla completa con Escape, foco atrapado, fondo inerte y bloqueo de scroll.
 
 ## Dónde cambiar cada cosa

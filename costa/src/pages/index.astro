@@ -3,11 +3,12 @@ import Base from '../layouts/Base.astro';
 import Hero from '../components/Hero.astro';
 import Foto from '../components/Foto.astro';
 import Marquee from '../components/Marquee.astro';
-import { SITE, RESIDENCIAS, FAQ, src, srcset, url } from '../data/site';
+import { SITE, RESIDENCIAS, FAQ, ESPACIOS, galeria, src, srcset, url } from '../data/site';
 
 const [duna, palma] = RESIDENCIAS;
 const introFotos = [duna.espacios[2], palma.espacios[0], palma.espacios[1]];
 const vistas = RESIDENCIAS.length * 6;
+const vistasFiltro = RESIDENCIAS.flatMap((r) => galeria(r).map((foto, i) => ({ r, foto, espacio: ESPACIOS[i] })));
 ---
 
 <Base portada={duna} intro>
@@ -64,6 +65,69 @@ const vistas = RESIDENCIAS.length * 6;
           </article>
         ))
       }
+    </div>
+  </section>
+
+  <section class="section explora" id="espacios" aria-labelledby="espacios-t">
+    <div class="section-head">
+      <div>
+        <p class="section-tag">Explora</p>
+        <h2 class="split" id="espacios-t">
+          <span class="line">Espacio por espacio,</span>
+          <span class="line tone">casa por casa</span>
+        </h2>
+      </div>
+      <p class="section-lead scrub">Elige una residencia o un tipo de espacio y recorre solo lo que quieres ver. Cada vista lleva a su ficha.</p>
+    </div>
+
+    <div class="filtro" data-vink-filter-group aria-label="Vistas de la colección">
+      <div class="filtro-barra">
+        <div class="filtro-chips" role="group" aria-label="Filtrar vistas">
+          <button type="button" data-vink-filter="all" aria-pressed="true">Todas</button>
+          {RESIDENCIAS.map((r) => <button type="button" data-vink-filter={r.id} aria-pressed="false">{r.title}</button>)}
+          <span class="filtro-sep" aria-hidden="true"></span>
+          {ESPACIOS.map((e) => <button type="button" data-vink-filter={e.tag} aria-pressed="false">{e.label}</button>)}
+        </div>
+        <p class="filtro-status" data-vink-filter-status role="status" aria-live="polite"></p>
+      </div>
+      <div class="filtro-grid">
+        {
+          vistasFiltro.map(({ r, foto, espacio }) => (
+            <a class="filtro-item" href={url(`/residencias/${r.id}`)} data-vink-filter-item={`${r.id} ${espacio.tag}`}>
+              <span class="filtro-foto">
+                <Foto foto={foto} sizes="(max-width:767px) 50vw, 33vw" />
+              </span>
+              <span class="filtro-pie">
+                <strong>{espacio.label}</strong>
+                <span>{r.title}</span>
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+
+    <div class="comparar">
+      <div class="comparar-texto">
+        <p class="section-tag">Lado a lado</p>
+        <h3 class="reveal">Dos costas,<br /><span class="tone">una misma calma</span></h3>
+        <p class="reveal">Desliza para pasar de la piedra y el desierto de Los Cabos a las palmeras de Punta Mita. Son dos conceptos distintos, no un antes y un después.</p>
+      </div>
+      <div class="comparador reveal" data-vink-compare>
+        <div class="vink-compare-stage comparador-stage" role="img" aria-label={`Fachada de ${palma.title} a la izquierda y de ${duna.title} a la derecha`}>
+          <div class="vink-compare-layer">
+            <Foto foto={duna.hero} sizes="(max-width:767px) 100vw, 66vw" alt="" />
+            <span class="comparador-tag der">{duna.title} · {duna.region}</span>
+          </div>
+          <div class="vink-compare-layer vink-compare-overlay">
+            <Foto foto={palma.hero} sizes="(max-width:767px) 100vw, 66vw" alt="" />
+            <span class="comparador-tag izq">{palma.title} · {palma.region}</span>
+          </div>
+          <div class="vink-compare-line" aria-hidden="true"><i></i></div>
+        </div>
+        <label for="comparar-rango">Cuánto se ve de {palma.title}</label>
+        <input id="comparar-rango" type="range" min="0" max="100" value="50" data-vink-compare-range />
+      </div>
     </div>
   </section>
 

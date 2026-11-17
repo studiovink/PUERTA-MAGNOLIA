@@ -4,6 +4,7 @@
  */
 import { FLAT, MOTION, RESIDENCIAS, src, srcset, url } from '../data/site';
 import { setupMotion } from './motion';
+import { initControls } from './vink-controls.mjs';
 
 const root = document.documentElement;
 const q = <T extends HTMLElement = HTMLElement>(sel: string, el: ParentNode = document) => el.querySelector<T>(sel);
@@ -562,6 +563,55 @@ function setupLightbox() {
   });
 }
 
+/* ---------- Filtro de espacios y comparador (controles de VINK Web Interactiva) ---------- */
+function setupControls() {
+  initControls(document.documentElement);
+
+  // Al cambiar el filtro, las vistas que quedan entran escalonadas.
+  qa('[data-vink-filter-group]').forEach((group) => {
+    let first = true;
+    const enter = () => {
+      if (first) {
+        first = false;
+        return;
+      }
+      qa('[data-vink-filter-item]', group)
+        .filter((item) => !item.hidden)
+        .forEach((item, i) => {
+          release(play(item, [{ opacity: 0, transform: 'translateY(26px) scale(.96)' }, { opacity: 1, transform: 'none' }], { duration: 620, delay: Math.min(i, 9) * 45 }));
+        });
+    };
+    first = false;
+    group.addEventListener('vink:layout', enter);
+  });
+
+  // El comparador también se arrastra directamente sobre la fotografía.
+  qa('[data-vink-compare]').forEach((compare) => {
+    const stage = q('.vink-compare-stage', compare);
+    const range = q<HTMLInputElement>('[data-vink-compare-range]', compare);
+    if (!stage || !range) return;
+    const set = (event: PointerEvent) => {
+      const box = stage.getBoundingClientRect();
+      range.value = String(Math.round(((event.clientX - box.left) / box.width) * 100));
+      range.dispatchEvent(new Event('input', { bubbles: true }));
+    };
+    stage.addEventListener('pointerdown', (event) => {
+      stage.setPointerCapture(event.pointerId);
+      stage.classList.add('arrastrando');
+      set(event);
+    });
+    stage.addEventListener('pointermove', (event) => {
+      if (stage.hasPointerCapture(event.pointerId)) set(event);
+    });
+    const end = (event: PointerEvent) => {
+      stage.classList.remove('arrastrando');
+      if (stage.hasPointerCapture(event.pointerId)) stage.releasePointerCapture(event.pointerId);
+    };
+    stage.addEventListener('pointerup', end);
+    stage.addEventListener('pointercancel', end);
+  });
+}
+
 /* ---------- Estado de la navegación ---------- */
 function setupNav() {
   if (!hero) return;
@@ -602,6 +652,7 @@ setupLinks();
 setupReveals();
 setupFAQ();
 setupLightbox();
+setupControls();
 setupMotion();
 
 if (root.classList.contains('is-booting')) runIntro().catch(() => finishIntro(true));
